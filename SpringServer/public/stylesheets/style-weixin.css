@@ -1,0 +1,268 @@
+.shengluehao{white-space:nowrap; text-overflow:ellipsis; overflow:hidden;}
+.padded5{padding:5px;}
+.padded10{padding:10px;}
+.shuoming2{ color:#D20000;}
+.font-size20{ font-size:20px;}
+.font-size21{ font-size:21px;}
+.font-size22{ font-size:22px;}
+.font-size23{ font-size:23px;}
+.font-size24{ font-size:24px;}
+.font-size25{ font-size:25px;}
+.font-size26{ font-size:26px;}
+.font-size27{ font-size:27px;}
+.font-size28{ font-size:28px;}
+.width49{width:49%; height:auto;}
+.bordertb{ border:1px dotted #ccc;border-left:0; border-right:0;}
+
+@media (max-width:767px) {
+    .mainBody {padding-left: 20px;padding-right: 20px}
+}
+@media (max-width:767px) {
+    .margin-top{ margin-top:5px;}
+    .box2{width:100%;height:auto;}
+    .date{color:#aaa;font-size:13px;}
+    .top-pic1{width:100%;height:80px;overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .top-pic2{width:100%;height:80px;overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    /*****我的积分*******************/
+    .jifen-pic{width:100%;height:120px; margin-bottom:10px;}
+    .jifen-title{width:100%; color:#333; height:auto;}
+    .jifen-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .jifen-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .jifen{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .jifen2{width:100%;height:auto; margin-top:5px; color:#F60; font-weight:bold;}
+    /*****积分列表*******************/
+    .jfl-pic{width:40px;height:40px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .jfl-title{width:100%; color:#333; height:auto;}
+    .jfl-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .jfl-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .jfl1{width:82%;height:auto; color:#333;}
+    .jfl2{width:100%;height:auto; margin-top:5px;}
+    .shouru{color:#F60;}
+    .zhichu{color:#240000;}
+    .jfl3{ margin-bottom:5px;}
+    /*****会员积分转赠详情*******************/
+    .hyjfzz-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .hyjfzz-title{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hyjfzz-title2{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hyjfzz-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .hyjfzz-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .hyjfzz{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .hyjfzz2{width:100%;height:auto; margin-top:5px; color:#F60; font-weight:bold;}
+    .hyjfzz-title .input-prepend input[type="text"] {padding-left: 5px; text-align:center;}
+    .hyjfzz-title .input-prepend input[type="number"] {padding-left: 5px; text-align:center;}
+    /*****会员积分转换贝客积分详情*******************/
+    .zh-title{width:100%; color:#333; height:auto; padding:5px 0; }
+    .zh-title strong{ color:#F00;}
+    .zh-hr{width:90%; margin-left:5%; border-bottom:1px dotted #ccc; height:1px; }
+    .zh-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .zh-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****贝客积分转赠详情*******************/
+    .bkjfzz-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .bkjfzz-title{width:100%; color:#333; height:auto; padding:5px 0; }
+    .bkjfzz-title2{width:100%; color:#333; height:auto; padding:5px 0; }
+    .bkjfzz-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .bkjfzz-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .bkjfzz{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .bkjfzz2{width:100%;height:auto; margin-top:5px; color:#F60; font-weight:bold;}
+    /*****门店列表*******************/
+    .mendian-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .mendian-title{width:100%;height:auto;}
+    .mendian-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px; margin-top:-20px; position:relative; background:#000; opacity:0.7; font-size:14px; line-height:14px; color:#CCC;}
+    .mendian-bottom{width:100%;height:auto; margin-top:10px;}
+    .telephone2{ color:#BB3150; width:100%; height:auto; line-height:200%;padding-bottom:5px;}
+    .address2{width:100%;height:auto; overflow:hidden; border-top:1px dotted #ccc; line-height:200%; padding-top:5px; }
+    /*****门店列表详情*******************/
+    .mendianlx-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .mendianlx-title{width:100%; height:auto; font-size:16px; font-weight:bold;}
+    .mendianlx-title2{width:100%; height:auto; font-size:14px; font-weight:bold; color:#4D4D4D; margin-top:0px;}
+    .mendianlx-content{width:100%;height:auto; margin-top:5px;  font-size:13px;  border:1px dotted #ccc; border-right:0; border-left:0; padding:5px 0; margin-bottom:15px; }
+    .mendianlx-content2{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .mendianlx-tel{ color:#BB3150; width:100%; height:auto;padding-bottom:5px;line-height:200%; font-size:18px; }
+    .mendianlx-addr{width:100%;height:auto; overflow:hidden; border-top:1px dotted #ccc;  padding-top:5px; line-height:200%; margin-bottom:10px; font-size:16px;}
+    .mendianlx{width:100%;height:auto; overflow:hidden;padding:5px 0; margin-top:5px; margin-top:-24px; position:relative; background:#000; opacity:0.7; font-size:14px; color:#CCC; }
+    .i-tel{font-size:18px;}
+    /*****门店服务详情*******************/
+    .mendianfx-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .mendianfx-title{width:100%; color:#333; height:auto;}
+    .mendianfx-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .mendianfx-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****商户服务*******************/
+    .shfu-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .shfu-title{width:70%;}
+    .shfu-date{width:30%;}
+    .shfu-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px;border-top:1px dotted #ccc;}
+    /*****服务列表*******************/
+    .fuwu-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .content-title{width:100%;height:auto;}
+    .content-fuwu{width:100%;height:auto; text-indent:2em;}
+    /*****商户列表*******************/
+    .shanghu-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .shanghu-title{width:100%;height:auto;}
+    .shanghu-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px;border-top:1px dotted #ccc;}
+    /*****我的包包*******************/
+    .bag-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .bag-title{ color:#0080C0;  font-size:14px;letter-spacing:1px; width:70%;}
+    .content2{width:50%;height:auto; overflow:hidden;}
+    .hr{width:100%; margin:0 auto; margin:3% 0; margin-bottom:0; border-bottom:1px dotted #ccc; }
+    .margin-top{ margin-top:10px;}
+    /*****我的包包详细*******************/
+    .bagx-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .bagx-title{ color:#0080C0;letter-spacing:1px; width:100%;}
+    .bagx-content{width:100%;height:auto; padding:3px 0;   }
+    .bagx-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****商户服务详情*******************/
+    .shfux-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .shfux-title{width:100%; color:#333; height:auto;}
+    .shfux-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .shfux-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****商户详情*******************/
+    .shx-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .shx-title{width:100%; color:#333; height:auto;}
+    .shx-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .shx-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .shx-telephone2{ width:100%; height:auto;padding-bottom:5px;line-height:200%;}
+    .shx-telephone3{ color:#BB3150; width:90%; height:auto;}
+    .shx-telephone4{ color:#BB3150; width:80%; height:auto;width:10%; height:auto;}
+    .shx-site{width:100%;height:auto; overflow:hidden; border-top:1px dotted #ccc; line-height:200%; padding-top:5px; }
+    .shx-site2{ width:90%; height:auto;}
+    .shx-site3{width:10%; height:auto;color:#ff0000;}
+    /*****商户活动*******************/
+    .shhd-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0; margin-top:10px;}
+    .shhd-title{width:75%;}
+    .shhd-date{width:25%;}
+    .shhd-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px}
+    /*****商户活动详情*******************/
+    .shhdx-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0; margin-top:10px;}
+    .shhdx-title{width:100%; color:#333; height:auto; margin-bottom:10px;}
+    .shhdx-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px}
+    /*****会员卡使用*******************/
+    .hy-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .hy-title{width:100%; color:#333; height:auto; padding:5px 0; background:#000; opacity:0.6; border-radius:0 0 3px 3px; color:#FFF;}
+    .hy-title2{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hy-title3{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hy{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .hy-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .hy-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+}
+@media screen and (min-width:769px ) {
+    .top-pic1{width:100%;height:160px;overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .top-pic2{width:100%;height:160px;overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    /*****会员卡使用*******************/
+    .hy-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .hy-title{width:100%; color:#333; height:auto; padding:5px 0; background:#000; opacity:0.6; border-radius:0 0 3px 3px; color:#FFF;}
+    .hy-title2{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hy-title3{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hy{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .hy-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .hy-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****我的积分*******************/
+    .jifen-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .jifen-title{width:100%; color:#333; height:auto;}
+    .jifen-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .jifen-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .jifen{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .jifen2{width:100%;height:auto; margin-top:5px; color:#F60; font-weight:bold;}
+    /*****积分列表*******************/
+    .jfl-pic{width:80px;height:80px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .jfl-title{width:100%; color:#333; height:auto;}
+    .jfl-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .jfl-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .jfl1{width:92%;height:auto; color:#333;}
+    .jfl2{width:100%;height:auto; margin-top:5px;}
+    .jfl2 strong{color:#F60;}
+    .jfl3 strong{color:#F60;}
+    .jfl3{ margin-bottom:5px;}
+    /*****会员积分转赠详情*******************/
+    .hyjfzz-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .hyjfzz-title{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hyjfzz-title2{width:100%; color:#333; height:auto; padding:5px 0; }
+    .hyjfzz-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .hyjfzz-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .hyjfzz{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .hyjfzz2{width:100%;height:auto; margin-top:5px; color:#F60; font-weight:bold;}
+    .hyjfzz-title .input-prepend input[type="text"] {padding-left: 5px; text-align:center;}
+    .hyjfzz-title .input-prepend input[type="number"] {padding-left: 5px; text-align:center;}
+    /*****贝客积分转赠详情*******************/
+    .bkjfzz-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .bkjfzz-title{width:100%; color:#333; height:auto; padding:5px 0; }
+    .bkjfzz-title2{width:100%; color:#333; height:auto; padding:5px 0; }
+    .bkjfzz-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .bkjfzz-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .bkjfzz{width:100%;height:auto; margin-top:5px; color:#333;font-weight:bold;}
+    .bkjfzz2{width:100%;height:auto; margin-top:5px; color:#F60; font-weight:bold;}
+    /*****会员积分转换贝客积分详情*******************/
+    .zh-title{width:100%; color:#333; height:auto; padding:5px 0; }
+    .zh-title strong{ color:#F00;}
+    .zh-hr{width:90%; margin-left:5%; border-bottom:1px dotted #ccc;  }
+    /*****门店列表*******************/
+    .mendian-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .mendian-title{width:100%;}
+    .mendian-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px; margin-top:-20px; position:relative; background:#000; opacity:0.7; font-size:14px; line-height:14px; color:#CCC;}
+    .mendian-bottom{width:100%;height:auto; margin-top:5px;}
+    .telephone2{ color:#BB3150; width:100%; height:auto; line-height:200%;padding-bottom:5px;}
+    .address2{width:100%;height:auto; overflow:hidden; border-top:1px dotted #ccc; line-height:200%; padding-top:5px; }
+    /*****门店列表详情*******************/
+    .mendianlx-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .mendianlx-title{width:100%; height:auto; font-size:14px; font-weight:bold;}
+    .mendianlx-title2{width:100%; height:auto; font-size:14px; font-weight:bold; color:#4D4D4D; margin-top:0px;}
+    .mendianlx-content{width:100%;height:auto; margin-top:5px;  font-size:13px;  border:1px dotted #ccc; border-right:0; border-left:0; padding:5px 0; margin-bottom:15px; }
+    .mendianlx-content2{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .mendianlx-tel{ color:#BB3150; width:100%; height:auto;padding-bottom:5px;line-height:200%; font-size:18px;}
+    .mendianlx-addr{width:100%;height:auto; overflow:hidden; border-top:1px dotted #ccc;  padding-top:5px; line-height:200%; margin-bottom:10px; font-size:16px;}
+    .mendianlx{width:100%;height:auto; overflow:hidden;padding:5px 0; margin-top:5px; margin-top:-24px; position:relative; background:#000; opacity:0.7; font-size:14px; line-height:14px; color:#CCC; }
+    .i-tel{font-size:18px;}
+    /*****门店服务详情*******************/
+    .mendianfx-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .mendianfx-title{width:100%; color:#333; height:auto;}
+    .mendianfx-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .mendianfx-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****商户服务*******************/
+    .shfu-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .shfu-title{width:80%;}
+    .shfu-date{width:20%;}
+    .shfu-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px;border-top:1px dotted #ccc;}
+    /*****服务列表*******************/
+    .fuwu-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .content-title{width:100%;height:auto;}
+    .content-fuwu{width:100%;height:auto;}
+    /*****商户列表*******************/
+    .shanghu-pic{width:100%;height:120px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .shanghu-title{width:100%;height:auto;}
+    .shanghu-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px;border-top:1px dotted #ccc;}
+    /*****商户详情*******************/
+    .shx-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .shx-title{width:100%; color:#333; height:auto;}
+    .shx-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .shx-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    .shx-telephone2{ width:100%; height:auto;padding-bottom:5px;line-height:200%;}
+    .shx-telephone3{ color:#BB3150; width:90%; height:auto;}
+    .shx-telephone4{ color:#BB3150; width:80%; height:auto;width:10%; height:auto;}
+    .shx-site{width:100%;height:auto; overflow:hidden; border-top:1px dotted #ccc; line-height:200%; padding-top:5px; }
+    .shx-site2{ width:90%; height:auto;}
+    .shx-site3{width:10%; height:auto;color:#ff0000;}
+    /*****我的包包*******************/
+    .bag-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .bag-title{ color:#0080C0;letter-spacing:1px; width:90%;}
+    .content2{width:60%;height:auto; overflow:hidden;}
+    .hr{width:100%; margin:0 auto; margin:1% 0; margin-bottom:0; border-bottom:1px dotted #ccc; padding-bottom:14px;}
+    .margin-top{ margin-top:15px;}
+    /*****我的包包详细*******************/
+    .bagx-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;}
+    .bagx-title{ color:#0080C0;letter-spacing:1px; width:100%;}
+    .bagx-content{width:100%;height:auto; padding:3px 0;   }
+    .bagx-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****商户服务详细*******************/
+    .shfux-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0;margin-bottom:10px;}
+    .shfux-title{width:100%; color:#333; height:auto;}
+    .shfux-content{width:100%;height:auto; padding:3px 0; margin-top:5px;  font-size:13px;  }
+    .shfux-content2{width:100%;height:auto;border:1px solid #ccc; border-radius:3px; padding:5px 0; }
+    /*****商户活动*******************/
+    .shhd-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0; margin-top:10px;}
+    .shhd-title{width:90%;}
+    .shhd-date{width:10%;}
+    .shhd-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px}
+    /*****商户活动详情*******************/
+    .shhdx-pic{width:100%;height:240px; overflow:hidden;  border:1px solid #FFF; border-radius:5px; border:0; margin-top:10px;}
+    .shhdx-title{width:100%; color:#333; height:auto; margin-bottom:10px;}
+    .shhdx-content{width:100%;height:auto; overflow:hidden;padding:3px 0; margin-top:5px}
+}

@@ -1,0 +1,78 @@
+!!! 5
+html(lang="zh-cn")
+  title 商户详细
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container.mainbody
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          .box-content
+            .row-fluid
+              img.shx-pic(src= imageRoot + merchant.logoImage)
+          .box(style='border:none; background:none;box-shadow:none;')
+            .row-fluid
+              .box.padded5(style='margin-bottom:20px;')
+                .row-fluid
+                  .shx-title.text-center(style='color:#AE000D;')
+                    strong= merchant.merchantName
+              - if(merchant.customerServicePhone || merchant.webSite)
+                .box.padded5(style='margin-bottom:20px;')
+                  .row-fluid
+                    - if(merchant.isPublicTel&&merchant.customerServicePhone)
+                      - var tel = "tel:" + merchant.customerServicePhone;
+                      a(href= tel)
+                        .shx-telephone2
+                          .row-fluid
+                            span.pull-left.shx-telephone3
+                              i.icon-phone-sign.font-size24
+                              span.font-size22= merchant.customerServicePhone
+                            span.pull-right.shx-telephone4.text-right
+                              i.icon-angle-right.font-size24
+                    - if(merchant.webSite)
+                      a(href= merchant.webSite)
+                        .shx-site.pull-left
+                          span.pull-left.shx-site2
+                            i.icon-spin.icon-spinner.font-size24(style='color:#ff0000')
+                            span= merchant.webSite
+                          span.pull-right.shx-site3.text-right
+                            i.icon-angle-right.font-size24
+              - if(merchant.description)
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-sort(style='margin-bottom:5px; display:block;')   描述信息
+                  .box.padded5(style='margin-bottom:20px;')= merchant.description
+              - if(merchant.rate)
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-exchange(style='margin-bottom:5px; display:block;')   积分兑换率:
+                  .box.padded5(style='margin-bottom:20px;')= merchant.rate + '会员积分 = 1 贝客积分'
+              - else
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-exchange(style='margin-bottom:5px; display:block;')   积分兑换率:
+                  .box.padded5(style='margin-bottom:20px;') 商户禁止兑换功能
+              - if(merchant.rate&&merchant.rateExplain)
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-sort(style='margin-bottom:5px; display:block;')   兑换说明
+                  .box.padded5(style='margin-bottom:20px;')= merchant.rateExplain
+              - if(merchant.useExplain)
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-sort(style='margin-bottom:5px; display:block;')   会员积分使用说明:
+                  .box.padded5(style='margin-bottom:20px;')= merchant.useExplain
+              - if(merchant.largessExplain)
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-sort(style='margin-bottom:5px; display:block;')   会员积分转赠说明:
+                  .box.padded5(style='margin-bottom:20px;')= merchant.largessExplain
+              - if(merchant.intro)
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-sort(style='margin-bottom:5px; display:block;')   商户简介:
+                  .box.padded5(style='margin-bottom:20px;')!= merchant.intro
+              - if(merchant.merchantRank&&merchant.merchantRank.merchantRankName)
+                .box-content(style='margin-bottom:20px;')
+                  i.icon-sort(style='margin-bottom:5px; display:block;')   商户支付类型:
+                  .box.padded5(style='margin-bottom:20px;')= merchant.merchantRank.merchantRankName
+              .box-content(style='margin-bottom:20px;')
+                i.icon-sort(style='margin-bottom:5px; display:block;')   商户加盟时间:
+                .box.padded5(style='margin-bottom:20px;')
+                  strong(style='color:#36c;')= merchant.createdAt
+
+  include partials/footer
+  include partials/foot

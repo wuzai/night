@@ -1,0 +1,64 @@
+!!! 5
+html(lang="zh-cn")
+  title 我的服务
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #memberServiceLargessDiv.container.mainbody
+      input.params.merchantId(type='hidden',value= merchantId)
+      input.params.FromUserName(type='hidden',value= FromUserName)
+      input.params.userId(type='hidden',value= userId)
+      input.memberServiceId(type='hidden',value= memberService._id)
+      input.memberServiceType(type='hidden',value= memberService.memberServiceType)
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none; margin-bottom:0;')
+          .box-content
+            .row-fluid
+              img.hy-pic(src= imageRoot + memberService.iconImage)
+          .hy-title.text-center(style='margin-top:-25px; position:relative;')
+            strong= memberService.memberServiceName
+        .box.padded10(style='border:none; background:none;box-shadow:none; padding-top:0;')
+          .row-fluid
+            .box.padded10
+              .row-fluid
+                .hy-title2.pull-left
+                  span.pull-left.text-center.hy
+                    .input-prepend
+                      input.largess-input.telephone-input(type='text', placeholder='请输入转赠获得者的电话号码')
+                  .pull-left.hy-title3
+                    button.largess.btn.btn-large.btn-block.btn-danger(type='button', style='margin-bottom:0; margin-top:20px;')
+                      i.icon-exclamation-sign.font-size24
+                        strong   转 赠
+
+  include partials/footer
+  include partials/foot
+  script
+    $("#memberServiceLargessDiv button.largess").click(function(){
+      var telephone = $("#memberServiceLargessDiv input.largess-input.telephone-input").val();
+      if(telephone&&telephone.trim()){
+        if(isTelephone(telephone)){
+          var merchantId = $("#memberServiceLargessDiv input.params.merchantId").val();
+          var FromUserName = $("#memberServiceLargessDiv input.params.FromUserName").val();
+          var userId = $("#memberServiceLargessDiv input.params.userId").val();
+          var memberServiceId = $("#memberServiceLargessDiv .memberServiceId").val();
+          var memberServiceType = $("#memberServiceLargessDiv .memberServiceType").val();
+          var webRoot_weixinapp = $("#webRoot_weixinapp").val();
+          var params = {merchantId:merchantId,FromUserName:FromUserName,userId:userId,memberServiceId:memberServiceId,type:memberServiceType,telephone:telephone};
+          $.getJSON(webRoot_weixinapp + '/sendLargessSubmit',params,function(data,status){
+            if(data&&data.status===200){
+              alert("转赠成功.");
+              window.location.href = [webRoot_weixinapp , '/openMyMemberServiceList?merchantId=',merchantId,'&FromUserName=',FromUserName,'&userId=',userId].join('');
+            }else{
+              if(data&&data.error){
+                alert(data.error);
+              }
+            }
+          });
+        }else{
+          alert("电话号码输入有误.");
+          $("#memberServiceLargessDiv input.largess-input.telephone-input").val('');
+        }
+      }else{
+        alert("电话号码必须输入.");
+      }
+    });

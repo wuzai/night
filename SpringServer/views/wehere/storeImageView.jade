@@ -1,0 +1,102 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 门店图片展示
+          h5
+            | 编辑门店de展示图片
+        ul.inline.pull-right.sparkline-box
+          li
+            a.btn.btn-default(href= webRoot_wehere +'/merchant/storeEdit?storeId='+ store._id, title='返回') 返 回
+
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  门店列表
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  图片展示
+          span.breadcrumb-arrow
+            span
+  #storeImageView.container-fluid.padded
+    .row-fluid
+      .span2
+      .span8
+        .box
+          .box-header
+            span.title= store.storeName
+            ul.box-toolbar
+              li
+                a(href="#uploadImageViewDialog",data-toggle="modal")
+                  span.label.label-blue 上传展示图片
+          .box-content.padded
+            - if(store.imageView&&store.imageView.length > 0)
+              #myCarousel.carousel.slide
+                ol.carousel-indicators
+                  each row, i in store.imageView
+                    - if (i==0)
+                      li.active(data-target='#myCarousel', data-slide-to='#{i}')
+                    - else
+                      li(data-target='#myCarousel', data-slide-to='#{i}')
+                .carousel-inner
+                  each row, i in store.imageView
+                    - if (i==0)
+                      .item.active
+                        img(src= imageRoot + row.url, style='width:800px;height:500px',alt='')
+                        .carousel-caption
+                          p= row.txt
+                    - else
+                      .item
+                        img(src= imageRoot + row.url, style='width:800px;height:500px',alt='')
+                        .carousel-caption
+                          p= row.txt
+                a.left.carousel-control(href='#myCarousel', data-slide='prev') ‹
+                a.right.carousel-control(href='#myCarousel', data-slide='next') ›
+            - else
+              .alert.fade.in
+                strong 暂时没有门店图片展示.
+                  a(href="#uploadImageViewDialog",data-toggle="modal") 现在上传图片
+
+
+  #uploadImageViewDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 750px; margin-left: -375px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 上传展示图片
+    .modal-body
+      .box-content.padded
+        form.separate-sections(method="post", action= webRoot_wehere +'/merchant/uploadImageView',enctype='multipart/form-data')
+          input(type='hidden',name='storeId', value= store._id)
+          .control-group
+            label.control-label 选择上传图片：
+            .controls
+              input(type='file',name='imageViewUrl', style='width:50%;')
+              span 为了图片显示效果最佳,建议选择图片尺寸为320*200
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-sitemap
+            input(type='text',name='imageViewTxt', placeholder='图片说明或描述信息')
+
+    .modal-footer
+      button.btn(style='color: #333333',aria-hidden='true',data-dismiss='modal') 关 闭
+      button.btn.btn-primary(onclick="$('#uploadImageViewDialog form.separate-sections').submit()") 保存
+
+block scripts
+  script
+

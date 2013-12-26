@@ -1,0 +1,44 @@
+extends ../partials/default
+
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 工作面板
+          h5
+            | 常用的工作任务安排汇总列表
+  .container-fluid.padded
+    .action-nav-normal
+      .row-fluid
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/merchant/merchantControlList", title='商户管理')
+            i.icon-leaf
+            span 商户管理
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/newsInfo/hotNewsList", title='热点新闻发布')
+            i.icon-fire
+            span 热点新闻发布
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/newsInfo/fashionNewsList", title='时尚新闻发布')
+            i.icon-globe
+            span 时尚新闻发布
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/message/commentControlList", title='评论管理')
+            i.icon-comments-alt
+            span 评论管理
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/message/bulletinList", title='帖子管理')
+            i.icon-tags
+            span 帖子管理
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/club/clubProductTypeList", title='产品类型管理')
+            i.icon-tasks
+            span 产品类型管理
+
+
+block scripts
+  script
+

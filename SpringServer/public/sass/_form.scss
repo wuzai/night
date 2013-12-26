@@ -1,0 +1,384 @@
+form.fill-up {
+  @include box-sizing(border-box);
+  width: 100%;
+  margin-bottom: 0;
+  * {
+    @include box-sizing(border-box);
+  }
+  input, textarea, select {
+    width: 100%
+  }
+  .padded .control-group:last-child {
+    margin-bottom: 0
+  }
+  form-horizontal .form-actions {
+    padding-left: 20px
+  }
+  .radio, .checkbox {
+    padding-left: 0
+  }
+}
+
+.form-actions {
+  margin-bottom: 0
+}
+
+.box form {
+  padding: 0
+}
+
+form {
+  margin-bottom: 0
+}
+
+.input-append, .input-prepend {
+  height: 36px;
+  line-height: 36px;
+  @include box-sizing(border-box);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  .add-on i {
+    line-height: 26px
+  }
+  * {
+    @include box-sizing(border-box);
+  }
+  a.add-on, span.add-on {
+    min-width: 36px;
+    color: #5a6573;
+    position: absolute;
+    height: 100%;
+    z-index: 2;
+    @include box-shadow(white 0 1px 2px inset);
+    border: 1px solid #ccc;
+    background: #eaeaea;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #fdfdfd, #eaeaea));
+    padding-left: 10px;
+    padding-right: 10px;
+    &:active {
+      background: #eee
+    }
+  }
+  ul.add-on {
+    list-style: none;
+    position: absolute;
+    z-index: 2;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    top: 1px;
+    right: 2px;
+    li {
+      float: left;
+      margin-left: 10px;
+      line-height: 32px;
+      height: 32px;
+      a, button {
+        vertical-align: middle
+      }
+      a.btn, button.btn {
+        @include border-radius(3px);
+      }
+      .btn {
+        padding: 0;
+        line-height: 25px;
+        height: 25px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-right: 5px
+      }
+    }
+  }
+  input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    @include border-radius(4px);
+  }
+}
+
+.box {
+  .input-append, .input-prepend {
+    margin-bottom: 0
+  }
+}
+
+.input-append {
+  .add-on {
+    right: 0
+  }
+  input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+    padding-right: 35px
+  }
+}
+
+.input-prepend {
+  .add-on {
+    left: 0
+  }
+  input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+    padding-left: 45px
+  }
+}
+
+div.uploader {
+  width: 100%;
+  @include box-shadow(none);
+  border: 1px solid #ccc;
+  height: 28px;
+  background: #fff;
+  span.filename {
+    border-right: none;
+    width: 120px;
+    height: 24px;
+    margin: 2px 0 2px 2px;
+    line-height: 24px
+  }
+  span.action {
+    height: 24px;
+    line-height: 24px;
+    float: right;
+    width: 22px;
+    text-align: center;
+    height: 22px;
+    margin-top: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    @include border-radius(2px);
+    background: #549fc4;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #7ab4d1, #549fc4));
+    background-size: 100%;
+    color: white;
+    text-shadow: none;
+    font-size: 16px;
+    line-height: 20px
+  }
+}
+
+div.uploader.hover span.action {
+  background: #8dbfd8
+}
+
+div.uploader.active span.action {
+  background: #4194bd
+}
+
+div.selector {
+  position: relative;
+  padding-left: 5px;
+  overflow: hidden;
+  width: 100%;
+  font-size: 12px;
+  @include border-radius(0);
+  background: whitesmoke;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #ffffff, #f5f5f5));
+  background-size: 100%;
+  @include box-shadow(rgba(255, 255, 255, 0.5) 0 1px 0);
+  border: 1px solid #ccc;
+  font-size: 12px;
+  height: 28px;
+  line-height: 28px;
+  color: #666;
+  &:after {
+    content: "\f0dd";
+    top: 2px;
+    right: 2px;
+    font-family: FontAwesome;
+    font-weight: 400;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    text-align: center;
+    line-height: 18px;
+    font-size: 14px;
+    color: #888
+  }
+  span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 25px 0 2px;
+    cursor: pointer;
+    color: #666;
+    text-shadow: 0 1px 0 #fff;
+    height: 26px;
+    line-height: 26px;
+    background: transparent
+  }
+  select {
+    position: absolute;
+    opacity: 0;
+    height: 25px;
+    border: none;
+    background: none;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+    border: solid 1px #fff
+  }
+}
+
+div.selector.disabled span {
+  color: #bbb
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  @include box-shadow(none);
+  @include border-radius(0);
+  font-size: 12px;
+  color: #858585;
+  padding: 0 0 0 5px;
+  border: 1px solid #d7d7d7;
+  display: inline-block;
+  background: #fdfdfd;
+  height: 26px;
+  &:focus {
+    @include box-shadow(none);
+    border: 1px solid #68A6CE
+  }
+}
+
+textarea {
+  height: auto
+}
+
+label {
+  font-size: 12px;
+  color: #5F5F5F
+}
+
+.search-dropdown {
+  position: relative;
+  background: #fbfbfb;
+  border: 1px solid #cccccc;
+  margin-top: 15px;
+  @include box-sizing(content-box);
+  &:after, &:before {
+    bottom: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none
+  }
+  :after {
+    border-bottom-color: #fbfbfb;
+    border-width: 7px;
+    left: 50%;
+    margin-left: -7px
+  }
+  :before {
+    border-bottom-color: #cccccc;
+    border-width: 8px;
+    left: 50%;
+    margin-left: -8px
+  }
+  .box-section:first-child {
+    border-top: none;
+    @include border-top-left-radius(3px);
+    @include border-top-right-radius(3px);
+  }
+}
+
+.input-with-submit {
+  position: relative;
+  button {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 2px;
+    top: 7px
+  }
+  i {
+    color: #909090
+  }
+}
+
+.tagsinput {
+  border: 1px solid #ddd;
+  background: #fdfdfd;
+  padding: 5px;
+  width: 100%;
+  overflow-y: auto;
+  input {
+    font-size: 11px;
+    line-height: normal;
+    width: auto !important
+  }
+  span.tag {
+    display: block;
+    float: left;
+    padding: 0 8px;
+    margin: 5px 5px 5px 5px;
+    line-height: 23px;
+    font-size: 11px;
+    border: 1px solid #d2d2d2;
+    background: #f2f2f2;
+    background-size: 100%;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #fcfcfc, #f2f2f2));
+    @include border-radius(3px);
+    a {
+      font-weight: 600;
+      font-size: 11px;
+      float: right
+    }
+  }
+  input {
+    width: 60px;
+    border: none;
+    padding: 5px 8px 6px 8px;
+    background: transparent;
+    margin: 5px 5px 0 4px
+  }
+  div {
+    display: block;
+    float: left
+  }
+}
+
+.tags_clear {
+  clear: both;
+  width: 100%;
+  height: 0
+}
+
+.not_valid {
+  background: #FBD8DB !important;
+  color: #90111A !important;
+  @include border-radius(3px);
+}
+
+.secondary-sidebar {
+  .tagsinput {
+    background: none;
+    border: none;
+    padding: 0 8px;
+    margin: -3px 0;
+    span.tag {
+      margin: 3px;
+      color: #5f5f5f;
+      background: #f2f2f2;
+      background-size: 100%;
+      background-image: inline-image("box-bg.svg");
+      @include background-image(linear-gradient(top, #fcfcfc, #f2f2f2));
+      border: 1px solid #D2D2D2;
+      @include border-radius(3px);
+      a {
+        color: #aaa
+      }
+    }
+  }
+}

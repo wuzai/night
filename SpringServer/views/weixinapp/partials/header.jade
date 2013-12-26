@@ -1,0 +1,26 @@
+
+//.navbar.navbar-top.navbar-inverse
+  .navbar-inner
+    .container-fluid
+      div
+        - var session_merchant = request?(request.session?request.session.merchant:null):null
+        if(session_merchant)
+          a.brand.text-center.merchantName(href= webRoot_weixinapp + '/merchant/info',style="float: center")= session_merchant.merchantName
+        else
+          a.brand.text-center(href= webRoot_weixinapp) 贝客汇商户平台
+
+      ul.nav.pull-right
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown')
+            | 更 多
+            b.caret
+          ul.dropdown-menu
+            li
+              a(href= webRoot_weixinapp + '/openCommentList') 商户评论
+            li
+              a(href= webRoot_weixinapp + '/openMyPointPage') 我的积分
+            li
+              a(href='#') 用户资料
+            li
+              a(href='#') 关于我们
+

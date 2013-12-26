@@ -1,0 +1,22 @@
+
+
+/** gtao add by 2013-08-09 */
+#breadcrumbs .breadcrumb-button {
+    margin-right: -17px;
+}
+
+ol, ul {
+    list-style: none
+}
+
+.select2-container {
+    width: 100%;
+}
+/** gtao add by 2013-08-12 */
+@media (max-width:767px) {
+    .mainBody {
+        padding-left: 20px;
+        padding-right: 20px
+    }
+}
+

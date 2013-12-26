@@ -1,0 +1,39 @@
+!!! 5
+html(lang="zh-cn")
+  title 资源供需
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container.mainbody.padded5
+      .row-fluid
+        - var len = supplyDemands.length;
+        - if(len < 1)
+          .alert.alert-block
+            h4 暂时没有相关资源供需信息
+        - for (var i = 0; i < len; i++)
+          - var supplyDemand = supplyDemands[i];
+          if(supplyDemand)
+            .row-fluid
+              .span12
+                .box
+                  .box-header
+                    div.title.text-center(style="float:none")
+                      span= supplyDemand.title
+                      - if(supplyDemand.type == '供应')
+                        span.label.label-green(style="float:right")= supplyDemand.type + "信息"
+                      - else
+                        span.label.label-important(style="float:right")= supplyDemand.type + "信息"
+                  .box-content.padded!= supplyDemand.description
+                  - if(supplyDemand.fromDate&&supplyDemand.toDate)
+                    .box-footer.padded
+                      span.pull-right= '有效期：' + supplyDemand.fromDate + ' --- ' + supplyDemand.toDate
+                  - else if(supplyDemand.fromDate)
+                    .box-footer.padded
+                      span.pull-right= '有效期开始于：' + supplyDemand.fromDate
+                  - else if(supplyDemand.toDate)
+                    .box-footer.padded
+                      span.pull-right= '有效期至：' + supplyDemand.toDate
+
+
+  include partials/footer
+  include partials/foot

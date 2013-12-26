@@ -1,0 +1,6 @@
+@CHARSET "UTF-8";
+img {
+    max-width: 400px;
+    width: expression(this.width>400?"400px":this.width+"px");
+    overflow: hidden;
+}

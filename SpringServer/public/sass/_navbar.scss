@@ -1,0 +1,210 @@
+.navbar {
+  .brand {
+    line-height: 27px;
+    color: #bbb;
+    text-shadow: 0 1px 0 black
+  }
+  .btn, .btn-group {
+    margin-top: 9px
+  }
+
+}
+
+.navbar-inverse {
+  .navbar-inner {
+    border-bottom: 1px solid rgba(10, 13, 14, 0.8);
+    background: #11161a;
+    background-size: 100%;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #1b2329, #11161a));
+    border-left: 0;
+    border-right: 0
+  }
+  .navbar-search {
+    .search-query {
+      background: rgba(35, 43, 48, 0.83);
+      &:focus, .focused {
+        padding: 2px 10px;
+        border: 1px solid transparent
+      }
+    }
+  }
+  .nav {
+    margin-top: 10px;
+    > li > a {
+      background: rgba(0, 0, 0, 0.5);
+      @include border-radius(4px);
+      @include box-shadow(rgba(0, 0, 0, 0.1) 0 1px 2px inset, rgba(255, 255, 255, 0.15) 0 1px 0);
+      height: 20px;
+      line-height: 20px;
+      padding: 3px 10px;
+      margin-right: 10px;
+      &:hover {
+        background: rgba(0, 0, 0, 0.8)
+      }
+    }
+    > li.active > a {
+      @include box-shadow(rgba(0, 0, 0, 0.1) 0 1px 2px inset, rgba(255, 255, 255, 0.15) 0 1px 0);
+    }
+  }
+}
+
+.navbar.navbar-top {
+  margin-bottom: 0;
+  .navbar-inner {
+    @include border-radius(0);
+  }
+}
+
+.navbar-search {
+  margin-top: 10px;
+  .search-query {
+    height: 20px;
+    padding: 2px 10px
+  }
+  .search-query.animated {
+    width: 100px;
+    @include transition(width .3s);
+    &:focus, .focused {
+      width: 200px
+    }
+  }
+  i {
+    position: absolute;
+    right: 10px;
+    top: 5px
+  }
+}
+
+.menu-avatar {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px
+}
+
+.sidebar-background {
+  position: fixed;
+  z-index: -1;
+  width: 200px;
+  background: #eaeaea;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-right: 1px solid #ccc;
+  .primary-sidebar-background {
+    width: 200px;
+    background: #11161A;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute
+  }
+}
+
+.primary-sidebar {
+  width: 200px;
+  float: left;
+  position: absolute;
+  .nav {
+    margin-bottom: 20px;
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      height: 1px;
+      width: 100%;
+      left: 0;
+      background-size: 100%;
+      background-image: inline-image("box-bg.svg");
+      @include background-image(linear-gradient(left, transparent 0, rgba(32, 41, 47, 0.8) 35%, #20292f 50%, rgba(32, 41, 47, 0.8) 65%, transparent 100%));
+    }
+    > li {
+      position: relative;
+      border-bottom: 1px solid transparent;
+      a:after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        height: 1px;
+        width: 100%;
+        left: 0;
+        background-size: 100%;
+        background-image: inline-image("box-bg.svg");
+        @include background-image(linear-gradient(left, transparent 0, rgba(10, 13, 14, 0.8) 30%, #0a0d0e 50%, rgba(10, 13, 14, 0.8) 70%, transparent 100%));
+      }
+      a:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        height: 1px;
+        width: 100%;
+        left: 0;
+        background-size: 100%;
+        background-image: inline-image("box-bg.svg");
+        @include background-image(linear-gradient(left, transparent 0, rgba(32, 41, 47, 0.8) 35%, #20292f 50%, rgba(32, 41, 47, 0.8) 65%, transparent 100%));
+        background: -webkit-linear-gradient(left, transparent 0, rgba(32, 41, 47, 0.8) 35%, #20292f 50%, rgba(32, 41, 47, 0.8) 65%, transparent 100%);
+        background: -moz-linear-gradient(left, transparent 0, rgba(32, 41, 47, 0.8) 35%, #20292f 50%, rgba(32, 41, 47, 0.8) 65%, transparent 100%);
+        background: -o-linear-gradient(left, transparent 0, rgba(32, 41, 47, 0.8) 35%, #20292f 50%, rgba(32, 41, 47, 0.8) 65%, transparent 100%);
+        background: linear-gradient(left, transparent 0, rgba(32, 41, 47, 0.8) 35%, #20292f 50%, rgba(32, 41, 47, 0.8) 65%, transparent 100%)
+      }
+      .glow {
+        position: absolute;
+        height: 100%;
+        width: 5px;
+        @include transition(box-shadow .3s);
+        background: #1F2B42;
+        @include box-shadow(0 0 2px 1px #434d59 inset);
+      }
+      &:hover {
+        .glow {
+          background: #4291A6;
+          @include box-shadow(0 0 2px 1px #7bc8d7 inset);
+        }
+        > a {
+          color: #939ea4
+        }
+      }
+      > a {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 25px;
+        @include transition(color .3s);
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        color: #6B787F;
+        &:hover, &:focus {
+          background: #11161A
+        }
+        span {
+          font-size: 12px;
+          vertical-align: middle
+        }
+        i {
+          vertical-align: middle
+        }
+        i + span {
+          padding-left: 10px
+        }
+      }
+    }
+    > li.active {
+      .glow {
+        background: #4291A6;
+        @include box-shadow(0 0 2px 1px #7bc8d7 inset);
+        &:after {
+          content: "";
+          border-radius: 50%;
+          position: absolute;
+          top: 20px;
+          width: 0;
+          height: 0;
+          left: 8px;
+          @include box-shadow(-10px 0 15px 23px rgba(122, 171, 216, 0.15));
+        }
+      }
+      > a {
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        color: #939ea4
+      }
+    }
+  }
+}

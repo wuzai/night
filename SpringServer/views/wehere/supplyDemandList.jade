@@ -1,0 +1,148 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-shopping-cart
+            | 资源供需
+          h5
+            | 商户的资源供需列表信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-shopping-cart
+            |  资源供需列表
+          span.breadcrumb-arrow
+            span
+  #supplyDemandListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 资源供需信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 标题
+                  th
+                    div 类型
+                  th
+                    div 有效期
+                  th
+                    div 创建时间
+                  th
+                    div 操作
+              tbody
+                each row, i in supplyDemands
+                  tr
+                    td
+                      div= i+1
+                    td
+                      div= row.title
+                    td
+                      div= row.type + "信息"
+                    td(style="text-align:center")
+                      - var fromDateValue = row.fromDate?row.fromDate:'';
+                      - var andValue = " --- ";
+                      - var toDateValue = row.toDate?row.toDate:'';
+                      div= fromDateValue + andValue + toDateValue
+                    td
+                      div= row.createdAt
+                    td
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="编辑", href= webRoot_wehere +'/merchant/supplyDemandEdit?supplyDemandId='+row._id)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/merchant/supplyDemandDelete?supplyDemandId='+row._id)
+                            i.icon-trash
+
+          .box-footer.padded
+            span.pull-right
+              button.btn.btn-blue.btn-small(href="#addSupplyDemandDialog",data-toggle="modal")
+                | 新增资源供需
+
+  #addSupplyDemandDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 750px; margin-left: -375px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 填写资源供需信息
+    .modal-body
+      .box-content.padded
+        form.separate-sections(method="post", action= webRoot_wehere +'/merchant/addSupplyDemand',enctype='multipart/form-data')
+          input(type='hidden',name='merchantId', value= merchantId)
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-sitemap
+            input(type='text',name='title', placeholder='产品标题,即资源供需标题')
+          .control-group
+            label.control-label 描述信息：
+            textarea#editorSupplyDemand_id(name='description', style='width:700px;height:300px;',placeholder='资源供需描述信息')
+          .controls
+            div(style='font-size:14px; display:inline-block;')
+              span 资源类型：
+              select.input-xlarge(name="type")
+                option(value="供应") 供应信息
+                option(value="需求") 需求信息
+
+          .control-group
+            ul.inline
+              li
+                div(style='font-size:14px; display:inline-block;')
+                  span 开始日期
+                  input.datepicker(type='text', data-date-format='yyyy-mm-dd',name='fromDate', placeholder='供求信息有效开始日期')
+              li
+                div(style='font-size:14px; display:inline-block;')
+                  span 结束日期
+                  input.datepicker(type='text', data-date-format='yyyy-mm-dd',,name='toDate', placeholder='供求信息有效结束日期')
+
+
+
+
+    .modal-footer
+      button.btn.btn-primary 保存
+      button.btn(style='color: #333333',aria-hidden='true',data-dismiss='modal') 关 闭
+
+block scripts
+  script
+    KindEditor.ready(function(K) {
+      var webRoot_href = $("#webRoot_href").val();
+      window.editor = K.create('#editor_content',{
+          cssPath: webRoot_href + '/kindeditor/css/kindeditor-iframe.css',
+          uploadJson : webRoot_href + '/kindEditor/nodeJs/upload_json.js?dir=image'
+        }
+      );
+      K('#addSupplyDemandDialog .modal-footer button.btn-primary').click(function(e) {
+        editor.sync();
+        var title = $("#addSupplyDemandDialog form.separate-sections input[name='title']").val();
+        if(!title.trim()){
+          alert("资源供需标题不能为空.");
+          return false;
+        }
+        var fromDate = $("#addSupplyDemandDialog .control-group input[name='fromDate']").val();
+        var toDate = $("#addSupplyDemandDialog .control-group input[name='toDate']").val();
+        if(fromDate && toDate && new Date(fromDate) > new Date(toDate)){
+          alert("开始日期不能小于结束日期.");
+          return false;
+        }
+        $("#addSupplyDemandDialog form.separate-sections").submit();
+      });
+    });
+    $('#supplyDemandListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除该条记录?')) {
+        window.location.href = this.href;
+      }
+    });

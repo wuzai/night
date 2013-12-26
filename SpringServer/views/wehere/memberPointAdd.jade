@@ -1,0 +1,69 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 会员充值服务
+          h5
+            | 商户给会员充值
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  会员充值
+          span.breadcrumb-arrow
+            span
+    #memberPointAddDiv.container
+      .span6.offset2
+        .padded
+          .login.box
+            .box-header
+              span.title 会员充值服务
+            .box-content.padded
+              !=messages()
+              form.separate-sections(method="post", action= webRoot_wehere +'/point/memberPointAddSave')
+                input(type='hidden',name='merchantId',value= merchantId)
+                .input-prepend
+                  span.add-on(href='#')
+                    i.icon-puzzle-piece
+                  input(type='text',name='userName', placeholder='请输入用户名称(联系方式)')
+                .input-prepend
+                  span.add-on(href='#')
+                    i.icon-money
+                  input(type='number',min='0', name='point', placeholder='请输入充值数额(会员积分数)')
+                div
+                  a.btn.btn-blue.btn-block(href='javascript:void(0);')
+                    | 确认
+                    i.icon-arrow-right
+
+block scripts
+  script
+    $('#memberPointAddDiv a.btn-blue.btn-block').click(function(){
+      var merchantId = $('#memberPointAddDiv form.separate-sections input[name="merchantId"]').val();
+      var userName = $('#memberPointAddDiv form.separate-sections input[name="userName"]').val();
+      var point = $('#memberPointAddDiv form.separate-sections input[name="point"]').val();
+      var webRoot = $("#webRoot_wehere").val();
+      $.getJSON(webRoot + '/point/memberPointAddCheck',{merchantId:merchantId,userName:userName,point:point},function(data,status){
+        if(data.status===200){
+          $("#memberPointAddDiv form.separate-sections").submit()
+        }else if(data.status===401){
+          if(confirm('该用户不是商户的会员,确定要创建会员吗?')){
+            $("#memberPointAddDiv form.separate-sections").submit()
+          }
+        }else{
+          alert(data.error);
+        }
+      });
+    });

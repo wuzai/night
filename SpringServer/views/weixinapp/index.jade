@@ -1,0 +1,28 @@
+!!! 5
+html(lang="zh-cn")
+  include partials/head
+  body(style="background:none")
+    div(style='padding-top: 80px;')
+      .container.mainBody
+        div.form-weixininuser
+          br
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openMyMemberServiceList?merchantId='+merchantId+'&FromUserName='+FromUserName) 我的包包
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openAdvertisementList?merchantId='+merchantId+'&FromUserName='+FromUserName) 商户活动
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openMyMessageSendRecordList?merchantId='+merchantId+'&FromUserName='+FromUserName) 我的信息
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openMyPointPage?merchantId='+merchantId+'&FromUserName='+FromUserName) 我的积分
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openCommentList?merchantId='+merchantId+'&FromUserName='+FromUserName) 商户评论
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openServiceItemList?merchantId='+merchantId+'&FromUserName='+FromUserName) 商户服务
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openStoreList?merchantId='+merchantId+'&FromUserName='+FromUserName) 商户门店
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openMerchantInfoPage?merchantId='+merchantId+'&FromUserName='+FromUserName) 商户详情
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openSignUpPage?merchantId='+merchantId+'&FromUserName=') 微信注册
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openCreateWeiXinInUserPage?merchantId='+merchantId+'&FromUserName=') 微信绑定
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openMerchantUnionList?merchantId='+merchantId+'&FromUserName=') 推荐商户
+          a.btn.btn-block.btn-large.btn-primary(href= webRoot_weixinapp + '/openToLoadHtmlPage?merchantId='+merchantId+'&FromUserName=') 加载HTML
+          a.btn.btn-block.btn-large.btn-success(href= webRoot_weixinapp + '/openSupplyDemandList?merchantId='+merchantId+'&FromUserName=') 资源供需
+
+
+  include partials/footer
+  include partials/foot
+  script
+    $(document).ready(function(){
+    });

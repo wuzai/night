@@ -1,0 +1,122 @@
+extends ../partials/default
+
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i(class= entity.iconCode)
+            span= entity.title
+          h5
+            span= entity.subTitle
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        each bc in breadcrumbs
+          .breadcrumb-button
+            span.breadcrumb-label
+              i(class= bc.iconCode)
+              //a(href="#{bc.url}")
+              span= bc.title
+            span.breadcrumb-arrow
+              span
+  .container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title= entity.title
+          .box-content
+            table.dTable.responsive(id= entity.tableId)
+              thead
+                tr
+                  th #
+                  each col in entity.heading_columns
+                    th
+                      div #{entity.schemaFields[col].display}
+                  th
+                    div 操作
+              tbody
+                each row, i in entity.records
+                  tr
+                    td= i+1
+                    each v in row.col_values
+                      td
+                        case entity.schemaFields[v.field].editorType
+                          when 'switch'
+                            - if (v.content)
+                              i.icon-check
+                            - else
+                              i.icon-check-empty
+                          when 'image'
+                            img(src= v.content,width='80px',height='50px')
+                          default
+                            - if (v.refId)
+                              a(href= v.linkUrl)= v.content
+                            - else
+                              div= v.content
+                    td
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="编辑", href= row.action_edit_url)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= row.action_delete_url)
+                            i.icon-trash
+          .box-footer.padded
+            span.pull-right
+              button.btn.btn-blue.btn-small(data-toggle="modal", href="#modalNewRecord") 新增#{entity.title}
+    #modalNewRecord.modal.hide.fade
+      form.form-horizontal(method="post", action= entity.action_post_url,enctype="multipart/form-data")
+        .modal-header
+          button.close(type="button", data-dismiss="modal")
+          h6 新增#{entity.title}
+        .modal-body
+          each fieldset in entity.editor.fieldsets
+            fieldset
+              each field in fieldset.fields
+                .control-group
+                  label.control-label(for="f_#{field}")= entity.schemaFields[field].display
+                  .controls
+                    //TODO:根据editorType显示不同的编辑控件
+                    case entity.schemaFields[field].editorType
+                      when 'date'
+                        input.input-xlarge.datepicker(type="text", data-date-format="yyyy-mm-dd", id="f_#{field}", name="NewRecord[#{field}]")
+                      when 'switch'
+                        .switch(data-on="danger", data-off="warning")
+                          input.input-xlarge(type="checkbox", id="f_#{field}", name="NewRecord[#{field}]")
+                      when 'wysiwyg'
+                        textarea.input-xlarge(id="f_#{field}", placeholder=entity.schemaFields[field].placeholder, name="NewRecord[#{field}]")
+                      when 'refModel'
+                        select.input-xlarge(id="f_#{field}", name="NewRecord[#{field}]")
+                          option(value) --请选择--
+                          each choice in entity.vv[field]
+                            option(value=choice[entity.choices[field].key])=choice[entity.choices[field].display]
+                      when 'selector'
+                        select.input-xlarge(id="f_#{field}", name="NewRecord[#{field}]")
+                          each choice in entity.vv[field]
+                            option(value=choice['value'])=choice['value']
+                      when 'image'
+                        input(type="file",id="f_#{field}", name="#{field}")
+                      default
+                        input.input-xlarge(type="text", placeholder=entity.schemaFields[field].placeholder, id="f_#{field}", name="NewRecord[#{field}]")
+          each extendField in entity.extendAttrs
+            fieldset
+              .control-group
+                label.control-label(for="f_#{extendField.attributeName}")= extendField.description
+                .controls
+                  input.input-xlarge(type="text", id="f_#{extendField.attributeName}", name="ProfileRecord[#{extendField._id}]")
+        .modal-footer
+          button.btn.btn-default(data-dismiss="modal") 关 闭
+          button.btn.btn-blue(type="submit") 保存
+
+block scripts
+  script(type="text/javascript")
+    $('#modalNewRecord').modal({show: false});

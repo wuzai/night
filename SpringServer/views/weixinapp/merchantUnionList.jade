@@ -1,0 +1,29 @@
+!!! 5
+html(lang="zh-cn")
+  title 推荐商户
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container
+      .container-fluid(style="padding:15px")
+        div.merchantUnionDiv
+          - var len = merchants.length;
+          - if(len < 1)
+            .alert.alert-block
+              h4 暂时没有相关商务会所信息
+          - for (var i = 0; i < len; i++)
+            - var merchantUnion = merchants[i];
+            if(merchantUnion)
+              .row-fluid(style="padding-bottom:15px")
+                .span12
+                  a(href= webRoot_weixinapp + '/openMerchantUnionInfo?merchantId='+merchantId+ '&FromUserName='+ FromUserName+'&merchantUnionId='+merchantUnion._id)
+                    .thumbnail
+                      - var image = merchantUnion.logoImage?merchantUnion.logoImage.imageUrl:'';
+                      img.img-rounded.shhd-pic(src= imageRoot + image)
+                      .caption.text-center
+                        strong= merchantUnion.merchantName
+
+
+  include partials/footer
+  include partials/foot
+  script

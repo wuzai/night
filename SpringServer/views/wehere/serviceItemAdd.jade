@@ -1,0 +1,252 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 服务信息新增
+          h5
+            | 新增服务项目,并填写的服务项目信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  服务列表
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  新增服务
+          span.breadcrumb-arrow
+            span
+  #serviceItemAdd.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-content
+            .padded
+              form.separate-sections(method="post", action= webRoot_wehere +'/service/addServiceItem',enctype='multipart/form-data')
+                input(type='hidden',name='merchantId', value= merchantId)
+                .control-group
+                  label.control-label 服务名称
+                  .input-prepend
+                    span.add-on(href='#')
+                      i.icon-sitemap
+                    input(type='text',name='serviceItemName', placeholder='服务名称')
+                .control-group
+                .control-group
+                  label.control-label 服务详情
+                  textarea(name='description',placeholder='服务详情信息描述', rows='3',style='width: 100%;')
+                .control-group
+                  label.control-label 提示信息
+                  .input-prepend
+                    span.add-on(href='#')
+                      i.icon-magic
+                    input(type='text',name='promptIntro', placeholder='服务提示信息')
+                div
+                  div(style='font-size:14px; display:inline-block;')
+                    span 服务类型
+                    select.input-xlarge(name="serviceItemType")
+                      each row in serviceItemTypes
+                        option(value= row.key)= row.value
+                .control-group
+                  label.control-label 使用说明
+                  textarea(name='ruleText',placeholder='服务使用规则或说明', rows='3',style='width: 100%;')
+                .control-group
+                  ul.inline
+                    li
+                      div(style='font-size:14px; display:inline-block;')
+                        span 开始日期
+                        input.input-xlarge.datepicker(type='text', data-date-format='yyyy-mm-dd',name='fromDate', placeholder='服务开始日期')
+                    li
+                      div(style='font-size:14px; display:inline-block;')
+                        span 结束日期
+                        input.input-xlarge.datepicker(type='text', data-date-format='yyyy-mm-dd',name='toDate', placeholder='服务结束日期')
+                .control-group
+                  label.control-label 申领说明
+                  textarea(name='applyExplain',placeholder='服务申领规则或说明', rows='3',style='width: 100%;')
+                .control-group.serviceItemType.meteringCard(style='display:none')
+                  label.control-label 计次卡次数
+                  .input-prepend
+                    span.add-on(href='#')
+                      i.icon-magic
+                    input(type='number',min='0',step='1',value='1',name='remainCount', placeholder='计次卡次数')
+                .control-group.serviceItemType.storeCard(style='display:none')
+                  label.control-label 储蓄卡金额
+                  .input-prepend
+                    span.add-on(href='#')
+                      i.icon-magic
+                    input(type='number',min='0',step='1',value='50',name='serviceItemNumber', placeholder='储蓄卡金额')
+                div.serviceItemType.coupon.meteringCard.groupOn.storeCard.voucher(style='display:none')
+                  div.changePoint
+                    div(style='font-size:14px; display:inline-block;')
+                      .switch(data-on="danger", data-off="warning" ,data-on-label="申领时使用积分",data-off-label="使用时使用积分")
+                        input(type="checkbox",checked,name="isChangePoint")
+                  .control-group.apply
+                    label.control-label 申领所需积分
+                    .input-prepend
+                      span.add-on(href='#')
+                        i.icon-globe
+                      input(type='number',min='0',step='1',value='0',name='pointApply', placeholder='申领所需要积分')
+                  .control-group.used(style='display:none;')
+                    label.control-label 使用所需积分
+                    .input-prepend
+                      span.add-on(href='#')
+                        i.icon-globe
+                      input(type='number',min='0',step='1',value='0',name='pointUsed', placeholder='使用所需要积分')
+
+                div.serviceItemType.coupon.meteringCard.groupOn.storeCard.voucher(style='display:none')
+                  div(style='font-size:14px; display:inline-block;')
+                    span 是否可以使用平台积分
+                    .switch(data-on="danger", data-off="warning")
+                      input(type="checkbox", name="isUseUserPoint")
+                div.serviceItemType.coupon.voucher(style='display:none')
+                  div.isRepeatApply(style='font-size:14px; display:inline-block;')
+                    span 是否可重复申领
+                    .switch(data-on="danger", data-off="warning")
+                      input(type="checkbox", name="isRepeatApply")
+                  .control-group.applyNumber(style='display:none')
+                    label.control-label 服务最多可申领次数
+                    .input-prepend
+                      span.add-on(href='#')
+                        i.icon-globe
+                      input(type='number',min='0',step='1',value='0',name='allowApplyNumber', placeholder='服务最多可申领次数')
+                div
+                  div(style='font-size:14px; display:inline-block;')
+                    span 申领是否需要审核
+                    .switch(data-on="danger", data-off="warning")
+                      input(type="checkbox", name="isRequireAudit")
+                div
+                  div(style='font-size:14px; display:inline-block;')
+                    span 是否允许转赠
+                    .switch(data-on="danger", data-off="warning")
+                      input(type="checkbox", name="allowLargess")
+                div
+                  div(style='font-size:14px; display:inline-block;')
+                    span 是否允许分享
+                    .switch(data-on="danger", data-off="warning")
+                      input(type="checkbox", name="allowShare")
+                - if(config_merchantId.XSJ == merchantId)
+                  div
+                    div(style='font-size:14px; display:inline-block;')
+                      span 积分超过#{config_constantConf.XSJ.minMemberPoint}参与
+                      .switch(data-on="danger", data-off="warning")
+                        input(type="checkbox", checked,name="isMinMemberPoint")
+                      span(style='padding-left: 100px;') (只有会员积分超过#{config_constantConf.XSJ.minMemberPoint}才可以参与)
+                div
+                  span 海报图片
+                  input(type='file',name='postImage', style='padding-left: 45px;width:50%')
+                  span 为了图片显示效果最佳,建议选择图片尺寸为290*145
+                .controls
+                  label.control-label 选择服务可用门店
+                  each row,i in stores
+                    .row-fluid
+                      .span6
+                        div
+                          label.checkbox
+                            input(type='checkbox', name='usableStores', checked='true', value= row._id)
+                            span= row.storeName
+            .form-actions
+              button.btn.btn-blue(type='submit') 提交
+              button.btn.btn-default(type='button') 返回
+
+block scripts
+  script
+    $(document).ready(function(){
+      $(".has-switch label").css({"z-index":"10"});
+      $("#serviceItemAdd .form-actions button.btn-blue").click(function(){
+        var serviceItemName = $("#serviceItemAdd .input-prepend input[name='serviceItemName']").val();
+        if(!serviceItemName.trim()){
+          alert("服务名称不能为空.");
+          return false;
+        }
+        var fromDate = $("#serviceItemAdd form.separate-sections input[name='fromDate']").val();
+        var toDate = $("#serviceItemAdd form.separate-sections input[name='toDate']").val();
+        if(fromDate && toDate && new Date(fromDate) > new Date(toDate)){
+          alert("服务开始日期不能小于结束日期.");
+          return false;
+        }
+        var remainCount = $("#serviceItemAdd form.separate-sections input[name='remainCount']").val();
+        if(remainCount && !isInteger(remainCount)){
+          alert("计次卡数量必须输入整数.");
+          return false;
+        }
+        var serviceItemNumber = $("#serviceItemAdd form.separate-sections input[name='serviceItemNumber']").val();
+        if(serviceItemNumber && !isInteger(serviceItemNumber)){
+          alert("储蓄卡金额必须输入整数.");
+          return false;
+        }
+        var pointApply = $("#serviceItemAdd form.separate-sections input[name='pointApply']").val();
+        if(pointApply && !isInteger(pointApply)){
+          alert("申领所需要的积分必须输入整数.");
+          return false;
+        }
+        var pointUsed = $("#serviceItemAdd form.separate-sections input[name='pointUsed']").val();
+        if(pointUsed && !isInteger(pointUsed)){
+          alert("使用所需要的积分必须输入整数.");
+          return false;
+        }
+        var allowApplyNumber = $("#serviceItemAdd form.separate-sections input[name='allowApplyNumber']").val();
+        if(allowApplyNumber && !isInteger(allowApplyNumber)){
+          alert("服务允许申领的次数必须输入整数.");
+          return false;
+        }
+        $("#serviceItemAdd form.separate-sections").submit();
+      });
+      var webRoot = $("#webRoot_wehere").val();
+      $("#serviceItemAdd .form-actions button.btn-default").click(function(){
+        window.location.href = webRoot +'/service/serviceItemList';
+      });
+    });
+    $('#serviceItemAdd .changePoint').on('switch-change', function (e, data) {
+        var value = data.value;
+        if(value){
+          $("#serviceItemAdd .control-group.apply").show();
+          $("#serviceItemAdd .control-group.used").hide();
+        }else{
+          $("#serviceItemAdd .control-group.apply").hide();
+          $("#serviceItemAdd .control-group.used").show();
+        }
+    });
+    $('#serviceItemAdd .isRepeatApply').on('switch-change', function (e, data) {
+        var value = data.value;
+        if(value){
+          $("#serviceItemAdd .control-group.applyNumber").show();
+        }else{
+          $("#serviceItemAdd .control-group.applyNumber").hide();
+        }
+    });
+    $("#serviceItemAdd select.input-xlarge[name='serviceItemType']").change(function(){
+      var type = $(this).val();
+      $("#serviceItemAdd div.serviceItemType").hide();
+      $('#serviceItemAdd .changePoint').show();
+      if(type === 'MemberCard'){
+        $("#serviceItemAdd div.serviceItemType.memberCard").show();
+      }else if(type === 'Coupon'){
+        $("#serviceItemAdd div.serviceItemType.coupon").show();
+      }else if(type === 'MeteringCard'){
+        $("#serviceItemAdd div.serviceItemType.meteringCard").show();
+      }else if(type === 'GroupOn'){
+        $("#serviceItemAdd div.serviceItemType.groupOn").show();
+      }else if(type === 'StoreCard'){
+        $('#serviceItemAdd .changePoint').hide();
+        $("#serviceItemAdd .control-group.used").hide();
+        $("#serviceItemAdd div.serviceItemType.storeCard").show();
+      }else if(type === 'Voucher'){
+         $("#serviceItemAdd div.serviceItemType.voucher").show();
+      }else{
+        alert("服务类型错误,请联系管理员.");
+      }
+    });

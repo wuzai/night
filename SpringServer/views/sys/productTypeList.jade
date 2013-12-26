@@ -1,0 +1,106 @@
+extends ../partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 会所产品类型管理
+          h5
+            | 查看会所产品类型
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  会所产品类型
+          span.breadcrumb-arrow
+            span
+  #productTypeListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 会所产品类型信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 产品类型名称
+                  th
+                    div 产品类型描述
+                  th
+                    div 操作
+              tbody
+                each row, i in productTypes
+                  tr
+                    td(width="15%",align="center")
+                      = i+1
+                    td(width="40%",align="center")
+                      = row.title
+                    td(width="30%")
+                      = row.intro
+                    td(width="15%",align="center")
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="编辑", href= webRoot_wehere +'/club/editProductType?productTypeId='+row._id)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/club/productTypeDelete?productTypeId='+row._id)
+                            i.icon-trash
+          .box-footer.padded
+            span.pull-right
+              button.btn.btn-blue.btn-small(href="#addProductTypeDialog",data-toggle="modal")
+                | 新增产品类型介绍
+
+  #addProductTypeDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 750px; margin-left: -375px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 填写产品类型信息
+    .modal-body
+      .box-content.padded
+        form.separate-sections(method="post", action= webRoot_wehere +'/club/addProductTypeSave')
+          input(type='hidden',name='merchantId', value= merchantId)
+          .control-group
+            label.control-label 产品类型名称
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='title', placeholder='产品类型名称')
+          .control-group
+            label.control-label 产品类型描述
+              .input-prepend
+                span.add-on(href='#')
+                  i.icon-magic
+                input(type='text',name='intro', placeholder='产品类型描述')
+    .modal-footer
+      button.btn.btn-primary 保存
+      button.btn(style='color: #333333',aria-hidden='true',data-dismiss='modal')
+        | 关闭
+
+block scripts
+  script
+    $('#productTypeListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除?')) {
+        window.location.href = this.href;
+      }
+    });
+    $('#addProductTypeDialog .modal-footer button.btn-primary').click(function(e) {
+      var title = $("#addProductTypeDialog .control-group input[name='title']").val();
+      if(!title.trim()){
+        alert("产品类型名称不能为空.");
+        return false;
+      }
+      $("#addProductTypeDialog form.separate-sections").submit();
+    });

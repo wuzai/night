@@ -1,0 +1,71 @@
+!!! 5
+html(lang="zh-cn")
+  title 我的服务
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container.mainbody
+      .row-fluid
+        !=messages()
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          .box-content
+            .row-fluid
+              - var image = memberService.iconImage
+              img.bagx-pic(src= imageRoot + image)
+          .box.padded10(style='margin-top:20px;')
+            .box.padded5(style='margin-bottom:20px;')
+              .row-fluid
+                .bagx-title.text-center(style='color:#AE000D;')
+                  strong= memberService.memberServiceName
+            .box.padded5(style='margin-bottom:20px;')
+              .row-fluid
+                .shfux-title.pull-left(style='line-height:200%;')
+                  .text-center
+                    | 类型：
+                    each row in serviceItemTypes
+                      - if(memberService.memberServiceType === row.key)
+                        strong(style='color:#F60;')= row.value
+                  .text-center(style='display:none')
+                    | 次数：
+                    strong(style='color:#F60;') 500
+            - if(memberService.validFromDate||memberService.validToDate)
+              .box.padded5(style='margin-bottom:20px;')
+                .row-fluid
+                  .shfux-title.pull-left.text-center
+                    - if(memberService.validFromDate)
+                      span.pull-left.width49
+                        | 开始日期：
+                        strong(style='color:#36C;')= memberService.validFromDate
+                    - if(memberService.validToDate)
+                      span.pull-right.width49
+                        | 结束日期：
+                        strong(style='color:#666;')= memberService.validToDate
+            .bagx-content
+              h5
+                i.icon-sort
+                | 温馨提示
+              .bagx-content2= memberService.promptIntro?memberService.promptIntro:'暂无温馨提示信息'
+            .bagx-content
+              h5
+                i.icon-sort
+                | 服务说明
+              .bagx-content2= memberService.description?memberService.description:'暂无服务说明信息'
+            .bagx-content
+              h5
+                i.icon-sort
+                | 使用规则
+              .bagx-content2= memberService.ruleText?memberService.ruleText:'暂无使用规则信息'
+          p.muted 【提示】卡、券若被删除,不可恢复,相应的服务也将取消,请慎重选择。
+          a.destroyDelete.btn.btn-large.btn-block.btn-danger(href= webRoot_weixinapp + '/deleteMemberServiceSubmit?merchantId='+merchantId+'&FromUserName='+FromUserName+'&memberServiceId='+memberService._id+'&type='+memberService.memberServiceType)
+            i.icon-trash.font-size20
+              strong  删 除
+
+  include partials/footer
+  include partials/foot
+  script
+    $('.destroyDelete').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('你确定要删除该条记录么?')) {
+        window.location.href = this.href;
+      }
+    });

@@ -1,0 +1,211 @@
+#breadcrumbs {
+  display: inline-block;
+  padding-right: 20px;
+  @include box-sizing(border-box);
+  @include border-radius(3px);
+  @include box-shadow(0 0 0 1px #cccccc inset, 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 0 1px rgba(255, 255, 255, 0.6) inset);
+  background: #ececec;
+  background-size: 100%;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #fafafa, #ececec));
+  width: 100%;
+  .breadcrumb-button {
+    text-shadow: 0 1px 1px #fafafa, 0 -1px 1px #ececec;
+    background: #ececec;
+    background-size: 100%;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #fafafa, #ececec));
+    display: inline-block;
+    cursor: pointer;
+    margin-right: -17px;
+    .breadcrumb-label {
+      @include box-shadow(0 1px 0 rgba(255, 255, 255, 0.5) inset);
+      @include border-top-left-radius(3px);
+      @include border-bottom-left-radius(3px);
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #ccc;
+      color: #888888;
+      padding: 8px;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      display: inline-block;
+      padding-left: 25px;
+      &:hover {
+        color: #35acc5;
+      }
+    }
+    .breadcrumb-arrow {
+      width: 17px;
+      height: 34px;
+      display: inline-block;
+      vertical-align: top;
+      overflow: hidden;
+      margin-left: -5px;
+      span {
+        @include box-shadow(1px -1px 0 #ccc, 1px -1px 1px #ccc);
+        background-color: #ececec;
+        @include background(linear-gradient(135deg, #fafafa, #ececec));
+        @include border-radius(4px);
+        width: 26px;
+        height: 30px;
+        display: inline-block;
+        @include rotate(45deg);
+        margin-left: -16px;
+        margin-top: 3px
+      }
+    }
+    &:hover {
+      background-image: inline-image("box-bg.svg");
+      @include background(linear-gradient(bottom, #ececec, #fafafa));
+      .breadcrumb-arrow {
+        span {
+          background-color: #ececec;
+          @include background(linear-gradient(135deg, #fafafa, #ececec));
+        }
+      }
+    }
+    &:first-child {
+      @include border-radius(3px 0 0 3px);
+      .breadcrumb-label {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        padding-left: 15px;
+      }
+    }
+    &:last-child {
+      @include border-radius(0 3px 3px 0);
+      .breadcrumb-arrow {
+        display: none
+      }
+    }
+
+  }
+  .breadcrumb-button.yellow {
+    text-shadow: 0 1px 1px #ffd972, 0 -1px 1px #ffba49;
+    background: #ffba49;
+    background-size: 100%;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #ffd972, #ffba49));
+    .breadcrumb-label {
+      color: #5c481d;
+      @include box-shadow(0 1px 0 rgba(255, 255, 255, 0.5) inset);
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-bottom: 1px solid #C99337;
+      border-left: 1px solid #D79D3B;
+      border-top: 1px solid #F5B244
+    }
+    .breadcrumb-arrow span {
+      background-color: #ffd972;
+      @include background(linear-gradient(135deg, #ffba49, #ffd972));
+      @include box-shadow(1px -1px 0 #E29B1E, 1px -1px 1px #F09900);
+    }
+    &:hover {
+      background-image: inline-image("box-bg.svg");
+      @include background-image(linear-gradient(bottom, #ffba49, #ffd972));
+      .breadcrumb-arrow span {
+        background-color: #ffba49;
+        @include background(linear-gradient(135deg, #ffba49, #ffd972));
+      }
+
+    }
+  }
+  .breadcrumb-button.blue {
+    text-shadow: 0 1px 1px #92cff5, 0 -1px 1px #68a6ce;
+    background: #68a6ce;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #92cff5, #68a6ce));
+    background-size: 100%;
+    .breadcrumb-label {
+      color: white;
+      font-weight: 600;
+      @include box-shadow(0 1px 0 rgba(255, 255, 255, 0.5) inset);
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-bottom: 1px solid #3e89b9;
+      border-left: 1px solid #60a1ca;
+      border-top: 1px solid #73acd0;
+
+    }
+    .breadcrumb-arrow span {
+      //background-color: #92cff5;
+      //@include background(linear-gradient(135deg, #68a6ce, #92cff5));
+      @include box-shadow(1px -1px 0 #7599AF, 1px -1px 1px #45A8E7);
+      background-color: #68a6ce;
+      @include background(linear-gradient(135deg, #92cff5, #68a6ce));
+    }
+    &:hover {
+      background-image: inline-image("box-bg.svg");
+      @include background-image(linear-gradient(bottom, #68a6ce, #92cff5));
+      .breadcrumb-arrow span {
+        background-color: #68a6ce;
+        @include background(linear-gradient(135deg, #92cff5, #68a6ce));
+      }
+    }
+  }
+}
+
+.breadcrumb-line {
+  color: #666;
+  height: 28px;
+  @include box-shadow(0 1px 0 white, 0 1px 0 white inset);
+  background: #e3e3e3;
+  background-size: 100%;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #f4f4f4, #e3e3e3));
+  background-size: 100%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  font-size: 11px;
+  .breadcrumbs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      float: left;
+      line-height: 28px;
+      margin-left: 10px;
+      &:after {
+        content: ">";
+        margin-left: 10px
+      }
+      &:last-child:after {
+        content: ""
+      }
+      &:first-child {
+        margin-left: 20px
+      }
+    }
+    li.current {
+      color: #888
+    }
+  }
+  .nav.pull-right {
+    margin-right: 20px;
+    border-right: 1px solid #ccc;
+    .badge {
+      margin-left: 4px
+    }
+  }
+  .nav {
+    .dropdown-toggle {
+      .caret {
+        margin-top: 12px
+      }
+    }
+    > li > a {
+      text-shadow: none;
+      line-height: 28px;
+      height: 28px;
+      margin: 0;
+      padding: 0 15px;
+      border-left: 1px solid #ccc;
+      @include border-radius(0);
+      color: #666;
+      strong {
+        color: #B35D5D;
+        margin-left: 4px
+      }
+    }
+  }
+}

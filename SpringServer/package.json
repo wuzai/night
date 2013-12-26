@@ -1,0 +1,26 @@
+{
+  "name"        :"AbaloneWebServer",
+  "version"     :"0.0.1",
+  "readme"      :"README.md",
+  "private"     :true,
+  "scripts"     :{
+    "start":"node app.js"
+  },
+  "dependencies":{
+    "express"               :"3.1.1",
+    "jade"                  :"0.26.3",
+    "less-middleware"       :"*",
+    "mongoose"              :"3.6.x",
+    "moment"                :"2.0.x",
+    "bunyan"                :"0.21.x",
+    "grunt"                 :"~0.4.1",
+    "grunt-contrib-jshint"  :"~0.1.1",
+    "grunt-contrib-nodeunit":"~0.1.2",
+    "underscore"            :"1.4.x",
+    "request"               :"2.16.x",
+    "commander"             :"1.1.x",
+    "mongoose-schema-extend":"0.1.x",
+    "imageinfo"             :"1.0.4",
+    "node-xml"              :"*"
+  }
+}

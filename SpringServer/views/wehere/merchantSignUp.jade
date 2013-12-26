@@ -1,0 +1,101 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 申请商户
+          h5
+            | 填写商户的详细信息
+
+
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  申请商户
+          span.breadcrumb-arrow
+            span
+  .container
+    .span8.offset2
+      .padded
+        #merchantSignUp.login.box
+          .box-header
+            span.title 申请商户(请认真填写商户信息)
+          .box-content.padded
+            !=messages()
+            form.separate-sections(method="post", action= webRoot_wehere +'/merchant/signUp',enctype='multipart/form-data')
+              div.margin-bottom-zero
+                input(type='hidden',name='userId',value= userId)
+                .input-group
+                  label 商户名称：
+                  input(type='text',name='merchantName', placeholder='商户名称')
+                .input-group
+                  label 商户类型：
+                  select(name='merchantType',style='width:50%')
+                    each type in merchantTypeList
+                      option(value= type)= type
+                .input-group
+                  label 描述信息或标语：
+                  input(type='text',name='description', placeholder='描述信息或标语')
+                .control-group.customerPhone
+                  label 客服电话(可以添加多个)：
+                  input(type='text',name='customerPhone', placeholder='客服电话')
+                .input-group
+                  label 商户网站：
+                  input(type='text',name='webSite', placeholder='商户网站')
+                .control-group
+                  label.control-label 上传商户logo：
+                  .controls
+                    input(type='file',name='logoImage', style='width:50%')
+                    span 为了图片显示效果最佳,建议选择图片尺寸为320*200
+                .control-group
+                  span 商户展示图
+                  .controls
+                    input(type='file',name='postImage', style='width:50%')
+                    span 为了图片显示效果最佳,建议选择图片尺寸为320*330
+                div
+                  label.control-label 商户简介：
+                  textarea#editor_intro.box-sizing(name='intro', style='width:100%;height:300px;',placeholder='商户简介')
+                div
+                  a.btn.btn-blue.btn-block(href='javascript:void(0);')
+                    | 加入
+                    i.icon-ok
+
+block scripts
+  script
+    $('#merchantSignUp .customerPhone input').tagsInput({
+      width: '100%',
+      height: 'auto',
+      defaultText:'输入电话号码',
+      onAddTag:function(tag){
+        if(!isPhone(tag)){
+          alert('电话号码格式不正确.');
+          $(this).removeTag(tag);
+        }
+      }
+    });
+    $('#merchantSignUp form.separate-sections a.btn-blue.btn-block').click(function(e) {
+      var merchantName = $('#merchantSignUp form.separate-sections input[name="merchantName"]').val();
+      if(!merchantName.trim()){
+        alert("商户名称不能为空.");
+        return false;
+      }
+      var webSite = $('#merchantSignUp form.separate-sections input[name="webSite"]').val();
+      if(webSite.trim()&&!isUrl(webSite.trim())){
+        alert("网站地址输入错误,请重新输入.");
+        return false;
+      }
+      $("#merchantSignUp form.separate-sections").submit();
+    });

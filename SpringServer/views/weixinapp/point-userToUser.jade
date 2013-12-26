@@ -1,0 +1,87 @@
+!!! 5
+html(lang="zh-cn")
+  title 转赠贝客积分
+  include partials/head
+  body
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #point-userToUserDiv.container.mainbody
+      input.param.merchantId(type='hidden',value= merchantId)
+      input.param.FromUserName(type='hidden',value= FromUserName)
+      input.param.userId(type='hidden',value= userId)
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          .box-content
+            .row-fluid
+              img.bkjfzz-pic(src= imageRoot + param.imageUrl)
+          .submit-point.box(style='border:none; background:none;box-shadow:none;')
+            input.userPoint(type='hidden',value= param.userPoint)
+            .row-fluid
+              .box-content.padded5(style='margin-bottom:20px; ')
+                .row-fluid
+                  h5(style='color:#336')
+                    i.icon-sort
+                    | 贝客积分转赠说明
+                  .bkjfzz-title.bordertb= param.pointLargessExplain?param.pointLargessExplain:"暂无转赠说明"
+              .box.padded5
+                .row-fluid
+                  .bkjfzz-title.pull-left
+                    span.pull-left.text-center.bkjfzz 我的贝客积分
+                    span.pull-left.text-center.bkjfzz2
+                      strong= param.userPoint
+              .box.padded10
+                .row-fluid
+                  .bkjfzz-title.pull-left
+                    span.pull-left.text-center.bkjfzz
+                      .input-prepend(style=' margin-bottom:20px;')
+                        input.telephone-input(type='text', placeholder='请输入对方手机号码')
+                      .input-prepend(style=' margin-bottom:20px;')
+                        input.point-input(type='number',min="0", placeholder='请输入转赠对方积分数量')
+                    .pull-left.bkjfzz-title2
+                      button.largess.btn.btn-large.btn-block.btn-primary.btn-blue(type='button', style='margin-bottom:0;')
+                        i.icon-hand-right.font-size24
+                          strong 转 赠
+
+  include partials/footer
+  include partials/foot
+  script
+    var merchantId = $("#point-userToUserDiv input.param.merchantId").val();
+    var FromUserName = $("#point-userToUserDiv input.param.FromUserName").val();
+    var userId = $("#point-userToUserDiv input.param.userId").val();
+    $("#point-userToUserDiv div.submit-point button.largess").click(function(){
+      var telephone = $("#point-userToUserDiv div.submit-point input.telephone-input").val();
+      var point = $("#point-userToUserDiv div.submit-point input.point-input").val();
+      var userPoint = $("#point-userToUserDiv div.submit-point input.userPoint").val();
+      if(telephone&&telephone.trim()){
+        if(isTelephone(telephone)){
+          if(isInteger(point) && Number(point) >= 0){
+            if(Number(point)<=Number(userPoint)){
+              var webRoot_weixinapp = $("#webRoot_weixinapp").val();
+              var params = {fromUserId:userId,point:point,toUserName:telephone};
+              $.getJSON(webRoot_weixinapp + '/userPointToUser',params,function(data,status){
+                if(data&&data.status===200){
+                  alert("贝客积分转赠成功.");
+                  window.location.href = webRoot_weixinapp + '/openMyPointPage?merchantId='+merchantId+'&FromUserName='+FromUserName + '&userId='+userId;
+                }else{
+                  if(data&&data.error){
+                    alert(data.error);
+                    return false;
+                  }
+                }
+              });
+            }else{
+              alert('您输入的积分数不足.');
+              return false;
+            }
+          }else{
+            alert('输入积分不是整数，或积分小于0.');
+            return false;
+          }
+        }else{
+          alert("电话号码输入有误.");
+          return false;
+        }
+      }else{
+        alert("电话号码必须输入.");
+        return false;
+      }
+    });

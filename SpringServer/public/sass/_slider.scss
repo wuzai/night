@@ -1,0 +1,192 @@
+.ui-slider {
+  position: relative;
+  text-align: left;
+  .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 16px;
+    height: 16px;
+    cursor: default;
+    border: none;
+    cursor: pointer;
+    @include border-radius(50%);
+    background: #f9fbfa;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #c7ced6, #f9fbfa));
+    background-size: 100%;
+    width: 22px;
+    height: 22px;
+    @include box-shadow(0 2px 3px -1px rgba(0, 0, 0, 0.6), 0 -1px 0 1px rgba(0, 0, 0, 0.15) inset, 0 1px 0 1px rgba(255, 255, 255, 0.9) inset);
+    @include transition(box-shadow .3s);
+    &:active {
+      @include box-shadow(0 1px 2px -1px rgba(0, 0, 0, 0.6), 0 -1px 0 1px rgba(0, 0, 0, 0.15) inset, 0 1px 0 1px rgba(255, 255, 255, 0.9) inset);
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      @include border-radius(50%);
+      top: 50%;
+      margin-top: -4px;
+      left: 50%;
+      margin-left: -4px;
+      background: #30a2d2;
+      @include box-shadow(0 1px 1px 1px rgba(22, 73, 163, 0.7) inset, 0 1px 0 0 white);
+    }
+  }
+  .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    height: 6px;
+    font-size: .7em;
+    display: block;
+    border: 1px solid #5ba8e1;
+    @include box-shadow(0 1px 0 #aad6f6 inset);
+    @include border-radius(6px);
+    background: #81b8f3;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #a0d4f5, #81b8f3));
+    background-size: 100%;
+  }
+}
+
+.ui-slider-horizontal {
+  height: 4px;
+  background: #d7d7d7;
+  border: 1px solid #bababa;
+  @include box-shadow(0 1px 0 #fff, 0 1px 0 #cfcfcf inset);
+  @include border-radius(6px);
+  clear: both;
+  margin: 8px 0;
+  .ui-slider-handle {
+    top: -10px;
+    margin-left: -0.6em
+  }
+  .ui-slider-range {
+    top: -1px;
+    height: 100%
+  }
+  .ui-slider-range-min {
+    left: 0
+  }
+  .ui-slider-range-max {
+    right: 0
+  }
+
+}
+
+.ui-slider-vertical {
+  height: 100px;
+  width: 6px;
+  background: #d7d7d7;
+  @include box-shadow(0 1px 0 white, 0 1px 0 #cfcfcf inset);
+  @include border-radius(6px);
+  .ui-slider-handle {
+    left: -8px;
+    margin-left: 0;
+    margin-bottom: -0.6em;
+  }
+  .ui-slider-range {
+    left: 0;
+    width: 4px;
+    background: #81b8f3;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #a0d4f5, #81b8f3));
+    background-size: 100%;
+  }
+  .ui-slider-range-min {
+    bottom: 0
+  }
+  .ui-slider-range-max {
+    top: 0
+  }
+}
+
+.ranged-slider-ui {
+  label {
+    color: #858585
+  }
+  input {
+    background: none;
+    border: none;
+    @include box-shadow(none);
+    margin: 0;
+    &:focus {
+      background: none;
+      border: none;
+      @include box-shadow(none);
+    }
+  }
+}
+
+.ranged-slider-ui.vertical-bars {
+  span {
+    height: 120px;
+    float: left;
+    margin-right: 30px;
+    display: block
+  }
+}
+
+.icheckbox_flat-aero, .iradio_flat-aero {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  background: url('../images/blue.png') no-repeat;
+  border: none;
+  cursor: pointer;
+
++
+label {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+  left: 5px
+}
+
+  }
+
+.icheckbox_flat-aero {
+  background-position: 0 0
+}
+
+.icheckbox_flat-aero.checked {
+  background-position: -22px 0
+}
+
+.icheckbox_flat-aero.disabled {
+  background-position: -44px 0;
+  cursor: default
+}
+
+.icheckbox_flat-aero.checked.disabled {
+  background-position: -66px 0
+}
+
+.iradio_flat-aero {
+  background-position: -88px 0
+}
+
+.iradio_flat-aero.checked {
+  background-position: -110px 0
+}
+
+.iradio_flat-aero.disabled {
+  background-position: -132px 0;
+  cursor: default
+}
+
+.iradio_flat-aero.checked.disabled {
+  background-position: -154px 0
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3 / 2), only screen and (min-device-pixel-ratio: 1.5) {
+  .icheckbox_flat-aero, .iradio_flat-aero {
+    background-image: url('../images/blue@2x.png');
+    -webkit-background-size: 176px 22px;
+    background-size: 176px 22px
+  }
+}

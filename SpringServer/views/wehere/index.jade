@@ -1,0 +1,144 @@
+extends partials/default
+
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 工作面板
+          h5
+            | 常用的工作任务安排汇总列表
+        ul.inline.pull-right.sparkline-box
+          li.sparkline-row
+            h4.blue= countServiceItem
+              span 服务指南
+            a(href= webRoot_wehere + "/club/clubProductList")
+              .sparkline.big
+                span.peity_bar_good 17,24,19,18,7,28,16,2,23
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            | 工作面板
+          span.breadcrumb-arrow
+            span
+  .container-fluid.padded
+    .action-nav-normal
+      .row-fluid
+        .span2
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/merchant/info", title='商户信息')
+            i.icon-book
+            span 商户信息
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/advertisement", title='活动发布')
+            i.icon-bullhorn
+            span 活动发布
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/club/clubProductList", title='服务指南')
+            i.icon-tags
+            span 服务指南
+        .span2.action-nav-button
+          a(href=webRoot_wehere + "/message/commentList", title='用户评论')
+            i.icon-comments-alt
+            span 用户评论
+
+
+  #checkConsumeRecordIndex.modal.hide.wizard-modal.in(style='margin-top: -200px; width: 500px; margin-left: -275px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type="button", data-dismiss="modal")
+      h6 使用服务验证
+    .modal-body
+      form.separate-sections(method="post", action= webRoot_wehere +"/serviceAudit/serviceItemUsedCheck")
+        input(type="hidden",name="pageNum",value='index')
+        input.cellphone(type="hidden",name="cellphone")
+        input.consumeRecordId(type="hidden",name="consumeRecordId")
+        .input-prepend
+          span.add-on(href='#')
+            i.icon-key
+          input.input-xlarge(type='text',name='captcha', placeholder='请输入验证码')
+        .input-prepend.memberServiceNumber(style='display:none')
+          span.add-on(href='#')
+            i.icon-money
+          input.input-xlarge(type='number',min='0',name='serviceNumber', placeholder='请输入消费金额或积分')
+    .modal-footer
+      button.btn.btn-default(data-dismiss="modal") 关 闭
+      button.btn.btn-blue(type="button",onclick="$('#checkConsumeRecordIndex form.separate-sections').submit()") 保 存
+
+  #serviceItemAuditNoPassTxtDialog.modal.hide.wizard-modal.in(style='margin-top: -200px; width: 500px; margin-left: -275px; display: none;', aria-hidden='false')
+    form(method="get", action= webRoot_wehere +"/serviceAudit/serviceItemAuditNoPass")
+      .modal-header
+        button.close(type='button', data-dismiss='modal',aria-hidden='true') ×
+        h3 审核不通过理由
+      .modal-body.messageAlert
+        input.sellRecordId(type="hidden",name='sellRecordId')
+        input(type="hidden",name='pageNum',value='index')
+        textarea(name='noPassTxt', style='width:100%;height:100%;',placeholder='请输入审核不通过理由')
+      .modal-footer
+        button.btn.btn-default(data-dismiss="modal") 关 闭
+        button.btn.btn-blue(type="submit") 保存
+
+block scripts
+  script
+    function openIndexDialog(cellphone,consumeRecordId,serviceType){
+      $("#checkConsumeRecordIndex .memberServiceNumber").hide();
+      $("#checkConsumeRecordIndex input.cellphone").val(cellphone);
+      $("#checkConsumeRecordIndex input.consumeRecordId").val(consumeRecordId);
+      if(serviceType === 'StoreCard'){
+        $("#checkConsumeRecordIndex .memberServiceNumber").show();
+      }
+    }
+    function openItemAuditNoPassTxtDialog(sellRecordId){
+      $("#serviceItemAuditNoPassTxtDialog input.sellRecordId").val(sellRecordId);
+    }
+
+  script(type="text/javascript", src= webRoot_href + '/javascripts/excanvas.js')
+  script(type="text/javascript", src= webRoot_href + '/javascripts/jquery.ui.custom.js')
+  script(type="text/javascript", src= webRoot_href + '/javascripts/jquery.peity.js')
+  script(type="text/javascript")
+    $.fn.peity.defaults.pie = {
+      colours: ["#ff9900", "#fff4dd", "#ffd592"],
+      delimiter: null,
+      diameter: 16,
+      height: null,
+      width: null
+    }
+
+    $.fn.peity.defaults.line = {
+      colour: "#c6d9fd",
+      strokeColour: "#4d89f9",
+      strokeWidth: 1,
+      delimiter: ",",
+      height: 30,
+      max: null,
+      min: 0,
+      width: 82
+    }
+
+    $.fn.peity.defaults.bar = {
+      colours: ["#4d89f9"],
+      delimiter: ",",
+      height: 30,
+      max: null,
+      min: 0,
+      spacing: devicePixelRatio || 1,
+      width: 82
+    }
+
+    $(document).ready(function(){
+      $(".peity_bar_good").peity("bar", {colours:["#459D1C"]});
+      $(".peity_bar_bad").peity("bar", {colours:["#BA1E20"]});
+      $(".peity_bar_neutral").peity("bar", {colours:["#757575"]});
+    });
+

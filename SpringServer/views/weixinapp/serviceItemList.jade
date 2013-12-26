@@ -1,0 +1,33 @@
+!!! 5
+html(lang="zh-cn")
+  title 商户服务
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container.mainbody.padded5
+      .row-fluid
+        - var len = serviceItems.length;
+        - if(len < 1)
+          .alert.alert-block
+            h4 暂时没有相关服务信息
+        - for (var i = 0; i < len; i++)
+          - var item = serviceItems[i];
+          if(item)
+            .box.padded5
+              .box-content
+                .box-content(style='border-bottom:1px dotted #ccc; padding:5px 0; margin-bottom:5px;')
+                  .row-fluid
+                    .shengluehao.shfu-title.pull-left
+                      strong= item.serviceItemName
+                .box-content
+                  .row-fluid
+                    a(href= webRoot_weixinapp + '/openServiceItemInfo?merchantId='+merchantId+ '&FromUserName='+ FromUserName+'&serviceItemId='+item._id)
+                      - var image = item.postImage?item.postImage.imageUrl:'';
+                      img.shfu-pic(src= imageRoot + image)
+                  each row in serviceItemTypes
+                    - if(item.serviceItemType === row.key)
+                      .shfu-content.shengluehao= row.value
+
+  include partials/footer
+  include partials/foot
+  script

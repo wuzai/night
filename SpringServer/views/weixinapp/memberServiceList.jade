@@ -1,0 +1,102 @@
+!!! 5
+html(lang="zh-cn")
+  title 我的服务
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #memberServicesDiv.container.mainBody(style='padding-top: 15px;')
+      input.param.merchantId(type='hidden',value= merchantId)
+      input.param.FromUserName(type='hidden',value= FromUserName)
+      input.param.userId(type='hidden',value= userId)
+      .row-fluid
+        !=messages()
+        - var len = memberServices.length;
+        - if(len < 1)
+          .alert.alert-block
+            h4 暂时没有相关会员服务信息
+        - for (var i = 0; i < len; i++)
+          - var ms = memberServices[i];
+          if(ms)
+            .memberServiceBox.box.padded5(style='border:none; background:none;box-shadow:none;')
+              input.memberServiceId(type='hidden',value= ms._id)
+              input.memberServiceType(type='hidden',value= ms.memberServiceType)
+              .box-content
+                .row-fluid
+                  .box-content(style='border-bottom:1px solid #ccc; margin-bottom:9px;')
+                    .row-fluid
+                      .pull-left.bag-title
+                        strong= ms.memberServiceName
+                      each row in serviceItemTypes
+                        - if(ms.memberServiceType === row.key)
+                          abbr(title= row.value)
+                            .badge.badge-success.pull-right= row.value
+                  .row-fluid
+                    a(href= webRoot_weixinapp + '/openMyMemberServiceInfo?merchantId='+merchantId+'&FromUserName='+FromUserName+'&memberServiceId='+ms._id+'&type='+ms.memberServiceType)
+                      img.bag-pic(src= imageRoot + ms.iconImage)
+                .box-content
+                  .row-fluid(style='display:none')
+                    .hr
+                      a.btn.btn-block.btn-large.btn-warning(href= webRoot_weixinapp + '/openMyMemberServiceInfo?merchantId='+merchantId+'&FromUserName='+FromUserName+'&memberServiceId='+ms._id+'&type='+ms.memberServiceType)
+                        i.icon-file-alt  详 情
+                  - if(ms.submitState)
+                    .row-fluid.margin-top
+                      .box-content
+                        span.pull-left(style='width:49%;')
+                          button.accept.btn.btn-block.btn-large.btn-warning(type='button')
+                            i.icon-ok  接 受
+                        span.pull-right(style='width:49%;')
+                          button.refuse.btn.btn-block.btn-large.btn-inverse(type='button')
+                            i.icon-remove  拒 绝
+                  - else
+                    .row-fluid.margin-top
+                      .box-content
+                        - if(ms.allowLargess)
+                          span.pull-left(style='width:49%;')
+                            button.btn.btn-block.btn-info.btn-large(class="disabled")
+                              i.icon-user.i  转 赠
+                        - else
+                          span.pull-left(style='width:49%;')
+                            a.largess.btn.btn-block.btn-info.btn-large(href= webRoot_weixinapp + '/openLargessOfMemberService?merchantId='+merchantId+'&FromUserName='+FromUserName+'&userId=' +userId+'&memberServiceId='+ms._id+'&type='+ms.memberServiceType)
+                              i.icon-exchange  转 赠
+                        span.pull-right(style='width:49%;')
+                          a.used.btn.btn-block.btn-success.btn-large(href= webRoot_weixinapp + '/openUsedOfMemberService?merchantId='+merchantId+'&FromUserName='+FromUserName+'&memberServiceId='+ms._id+'&type='+ms.memberServiceType)
+                            i.icon-ok  使 用
+
+  include partials/footer
+  include partials/foot
+  script
+    var webRoot_weixinapp = $("#webRoot_weixinapp").val();
+    var merchantId = $("#memberServicesDiv input.param.merchantId").val();
+    var FromUserName = $("#memberServicesDiv input.param.FromUserName").val();
+    var userId = $("#memberServicesDiv input.param.userId").val();
+    $("#memberServicesDiv .memberServiceBox").each(function(){
+      var memberServiceDiv = $(this);
+      var memberServiceId = memberServiceDiv.find(".memberServiceId").val();
+      var type = memberServiceDiv.find(".memberServiceType").val();
+      memberServiceDiv.find("button.accept").click(function(){
+        var params = {merchantId:merchantId,FromUserName:FromUserName,memberServiceId:memberServiceId,type:type};
+        $.getJSON(webRoot_weixinapp + '/acceptLargessSubmit',params,function(data,status){
+          if(data&&data.status===200){
+            alert("您已经成功接收该服务.");
+            window.location.href = [webRoot_weixinapp , '/openMyMemberServiceList?merchantId=',merchantId,'&FromUserName=',FromUserName,'&userId=',userId].join('');
+          }else{
+            if(data&&data.error){
+              alert(data.error);
+            }
+          }
+        });
+      });
+      memberServiceDiv.find("button.refuse").click(function(){
+        var params = {merchantId:merchantId,FromUserName:FromUserName,memberServiceId:memberServiceId,type:type};
+        $.getJSON(webRoot_weixinapp + '/refuseLargessSubmit',params,function(data,status){
+          if(data&&data.status===200){
+            alert("您已经拒绝接收该服务.");
+            window.location.href = [webRoot_weixinapp , '/openMyMemberServiceList?merchantId=',merchantId,'&FromUserName=',FromUserName,'&userId=',userId].join('');
+          }else{
+            if(data&&data.error){
+              alert(data.error);
+            }
+          }
+        });
+      });
+    });

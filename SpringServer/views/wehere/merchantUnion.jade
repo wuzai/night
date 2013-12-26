@@ -1,0 +1,103 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-sitemap
+            | 商务会所
+          h5
+            | 建立商户与商户之间的联盟
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-sitemap
+            |  商务会所
+          span.breadcrumb-arrow
+            span
+  #merchantUnionDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          form(method="post", action= webRoot_wehere +'/merchant/merchantUnionSave')
+            input(type='hidden',name='merchantId', value= merchantId)
+            .box-header
+              span.title
+                i.icon-th-list
+                |  添加商户到商务会所
+              ul.box-toolbar
+                li
+                  button.addMerchantUnion.btn.btn-small.btn-blue(type='button') 保存
+            .row-fluid
+              .span12
+                .box-content.padded
+                  select#selectMerchant.populate(multiple='multiple', name='merchantIds')
+                    each row,i in disMerchants
+                      option(value= row._id)= row.merchantName
+            div(style="display:none")
+              .row-fluid
+                .span12
+                  .box-content.padded(style='padding-bottom:0px')
+                    span.label.label-success
+                      strong 请求理由：
+              .row-fluid
+                .span12
+                  .box-content.padded(style='padding-top:10px')
+                    .chat-message-box(style='margin-bottom:15px;')
+                      textarea(name='content', rows='3', placeholder='输入邀请商户加入商务会所理由',style='height:auto')
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title
+              i.icon-fullscreen
+              |  已加入商务会所的商户
+          .row-fluid
+            .span12(style="padding:15px")
+              - if(merchants.length<1)
+                .alert.alert-block
+                  h4 商务会所中暂时没有商户
+              - else
+                each row2,i in merchants
+                  .media
+                    a.pull-left(href='#')
+                      - var image = row2.logoImage?row2.logoImage.imageUrl:''
+                      img.img-rounded(src= imageRoot + image,style="width:160px;height:100px;")
+                    .media-body
+                      h4.media-heading
+                        span= row2.merchantName
+                        a.destroy.pull-right.btn.btn-small.btn-danger(href= webRoot_wehere +'/merchant/merchantUnionDelete?merchantId=' + row2._id) 解除联盟
+                      .media= row2.description
+
+block scripts
+  script
+    $(document).ready(function() {
+      $("#selectMerchant").select2({
+        placeholder: "请选择需要加入商务会所的商户"
+      });
+      $("#merchantUnionDiv .addMerchantUnion").click(function(){
+        var merchantIds = $("#selectMerchant").select2("val");
+        if(merchantIds.length==0){
+          alert("请选择需要加入商务会所的商户");
+          return false
+        }
+        $("#merchantUnionDiv form").submit();
+      });
+      $('#merchantUnionDiv .destroy').on('click', function (e) {
+        e.preventDefault();
+        if (confirm('确定要把该商户从商务会所中解除吗?')) {
+          window.location.href = this.href;
+        }
+      });
+    });
+

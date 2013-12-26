@@ -1,0 +1,92 @@
+extends ../partials/default
+
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i(class= entity.iconCode)
+            span= entity.title
+          h5
+            span= entity.subTitle
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        each bc in breadcrumbs
+          .breadcrumb-button
+            span.breadcrumb-label
+              i(class= bc.iconCode)
+              //a(href="#{bc.url}")
+              span= bc.title
+            span.breadcrumb-arrow
+              span
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      .span12
+        form.form-horizontal.fill-up.validatable(method="post", action= entity.action_put_url,enctype="multipart/form-data")
+          .box
+            .box-header
+              span.title=entity.title
+              ul.box-toolbar
+                li
+                  a.btn.btn-info.btn-small(title="返回", href= entity.action_list_url,style="color:white") 返 回
+            .box-content.padded
+              each fieldset in entity.editor.fieldsets
+                fieldset
+                  each field in fieldset.fields
+                    .control-group
+                      label.control-label(for="f_#{field}")= entity.schemaFields[field].display
+                      .controls
+                        case entity.schemaFields[field].editorType
+                          when 'date'
+                            if (entity.record)
+                              input.input-xlarge.datepicker(type="text", data-date-format="yyyy-mm-dd", id="f_#{field}", value= entity.record[field], name="CurrentRecord[#{field}]")
+                            else
+                              input.input-xlarge.datepicker(type="text", data-date-format="yyyy-mm-dd", id="f_#{field}", name="CurrentRecord[#{field}]")
+                          when 'switch'
+                            .switch(data-on="danger", data-off="warning")
+                              if (entity.record&&entity.record[field])
+                                input.input-xlarge(type="checkbox",checked,id="f_#{field}", value="true", name="CurrentRecord[#{field}]")
+                              else
+                                input.input-xlarge(type="checkbox", id="f_#{field}", value="false", name="CurrentRecord[#{field}]")
+                          when 'wysiwyg'
+                            if (entity.record)
+                              textarea.input-xlarge(id="f_#{field}", row="5", placeholder=entity.schemaFields[field].placeholder, name="CurrentRecord[#{field}]")= entity.record[field]
+                            else
+                              textarea.input-xlarge(id="f_#{field}", row="5", placeholder=entity.schemaFields[field].placeholder, name="CurrentRecord[#{field}]")
+                          when 'refModel'
+                            select.input-xlarge(id="f_#{field}", name="CurrentRecord[#{field}]")
+                              option(value) --请选择--
+                              each choice in entity.vv[field]
+                                if  entity.record && entity.record[field]&&escape(choice[entity.choices[field].key])==escape(entity.record[field][entity.choices[field].key])
+                                  option(selected, value=choice[entity.choices[field].key])= choice[entity.choices[field].display]
+                                else
+                                  option(value=choice[entity.choices[field].key])=choice[entity.choices[field].display]
+                          when 'selector'
+                            select.input-xlarge(id="f_#{field}", name="CurrentRecord[#{field}]")
+                              each choice in entity.vv[field]
+                                if  entity.record && entity.record[field]&&choice['value']==entity.record[field]
+                                  option(selected, value=choice['value'])= choice['value']
+                                else
+                                  option(value=choice['value'])=choice['value']
+                          when 'image'
+                            input(type="file",id="f_#{field}", name="#{field}")
+                          default
+                            if (entity.record)
+                              input.input-xlarge(type="text", placeholder= entity.schemaFields[field].placeholder, id="f_#{field}", value= entity.record[field], name="CurrentRecord[#{field}]")
+                            else
+                              input.input-xlarge(type="text", placeholder= entity.schemaFields[field].placeholder, id="f_#{field}", name="CurrentRecord[#{field}]")
+              input(type="hidden", name="_method", value="put")
+          .box-footer.padded.form-actions
+            span.pull-right
+              button.btn.btn-blue.btn-small(type="submit") 保 存
+

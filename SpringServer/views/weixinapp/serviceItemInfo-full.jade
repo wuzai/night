@@ -1,0 +1,97 @@
+!!! 5
+html(lang="zh-cn")
+  title 服务详情
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    div#serviceItemInfoFullBox.container.mainbody
+      input.param.merchantId(type='hidden',value= merchantId)
+      input.param.FromUserName(type='hidden',value= FromUserName)
+      div.serviceItemInfoFullDiv
+        input.serviceItemId(type='hidden',value= serviceItem._id)
+        .row-fluid
+          .box.padded10(style='border:none; background:none;box-shadow:none;')
+            .box-content
+              .row-fluid
+                - var image = serviceItem.postImage?serviceItem.postImage.imageUrl:'';
+                img.shfux-pic(src= imageRoot + image)
+            .box(style='border:none; background:none;box-shadow:none;')
+              .row-fluid
+                .box.padded5(style='margin-bottom:20px;')
+                  .row-fluid
+                    .shfux-title.text-center(style='color:#AE000D;')
+                      strong= serviceItem.serviceItemName
+                .box.padded5(style='margin-bottom:20px;')
+                  .row-fluid
+                    .shfux-title.pull-left
+                      span.pull-left.width49.text-center
+                        | 类型：
+                        each row in serviceItemTypes
+                          - if(serviceItem.serviceItemType === row.key)
+                            strong(style='color:#F60;')= row.value
+                      span.pull-right.width49.text-center(style='display:none')
+                        | 次数：
+                        strong(style='color:#F60;') 500
+                .box(style='margin-bottom:20px;border:none; background:none;box-shadow:none;')
+                  - if(serviceItem.fromDate || serviceItem.toDate)
+                    .box.padded5(style='margin-bottom:20px;')
+                      .row-fluid
+                        .shfux-title.pull-left.text-center
+                          - if(serviceItem.fromDate)
+                            span.pull-left.width49
+                              | 开始日期：
+                              strong(style='color:#36C;')= serviceItem.fromDate
+                          - if(serviceItem.toDate)
+                            span.pull-right.width49
+                              | 结束日期：
+                              strong(style='color:#666;')= serviceItem.toDate
+                  - if(config_merchantId.XSJ == merchantId && joinFlag.isMinMemberPoint)
+                    p.muted 【提示】会员积分超过#{config_constantConf.XSJ.minMemberPoint}积分的才可以参与该活动。
+                      span.text-warning= joinFlag.error
+                  - if(joinFlag.flag)
+                    button.apply.btn.btn-block.btn-warning.btn-large(type='button')
+                      i.icon-hand-right  申领
+                  - else
+                    button.disabled.btn.btn-block.btn-warning.btn-large(type='button')
+                      i.icon-hand-right  申领
+                  i.icon-sort(style='margin-bottom:5px; display:block; margin-top:20px;') 申领说明:
+                  .box.padded5(style='margin-bottom:20px;')= serviceItem.applyExplain?serviceItem.applyExplain:'暂无信息'
+                  i.icon-sort(style='margin-bottom:5px; display:block; margin-top:20px;') 服务详情:
+                  .box.padded5(style='margin-bottom:20px;')= serviceItem.description?serviceItem.description:'暂无信息'
+                  i.icon-sort(style='margin-bottom:5px; display:block; margin-top:20px;') 使用说明:
+                  .box.padded5(style='margin-bottom:20px;')= serviceItem.ruleText?serviceItem.ruleText:'暂无信息'
+
+  include partials/footer
+  include partials/foot
+  script
+    $(".serviceItemInfoFullDiv button.apply").click(function(){
+      var merchantId = $("#serviceItemInfoFullBox input.param.merchantId").val();
+      var FromUserName = $("#serviceItemInfoFullBox input.param.FromUserName").val();
+      var serviceItemDiv = $(".serviceItemInfoFullDiv");
+      var itemId = serviceItemDiv.find(".serviceItemId").val();
+      var webRoot_weixinapp = $("#webRoot_weixinapp").val();
+      var params = {merchantId:merchantId,FromUserName:FromUserName,serviceItemId:itemId};
+      if(FromUserName){
+        $.getJSON(webRoot_weixinapp + '/applicableServiceItem',params,function(data,status){
+          if(data&&data.status===200){
+            alert("申领成功.");
+            window.location.href = webRoot_weixinapp + '/openServiceItemInfo?pageNum=full&merchantId='+merchantId+ '&FromUserName='+ FromUserName+'&serviceItemId='+itemId
+          }else if(data&&data.status===203){
+            if(data&&data.error){
+              alert(data.error);
+            }
+          }else if(data&&data.status===444){
+            if(data&&data.error){
+              alert(data.error);
+              window.location.href = webRoot_weixinapp + '/openMyPointPage?merchantId='+merchantId+ '&FromUserName='+ FromUserName
+            }
+          }else{
+            if(data&&data.error){
+              alert(data.error);
+            }
+          }
+        });
+      }else{
+        alert("用户数据无法获取,可能用户未注册或与微信绑定.");
+      }
+    });

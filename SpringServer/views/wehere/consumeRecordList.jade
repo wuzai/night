@@ -1,0 +1,73 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 会员消费记录
+          h5
+            | 会员的消费记录列表信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  消费列表
+          span.breadcrumb-arrow
+            span
+  #storeListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 消费信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 消费Id
+                  th
+                    div 会员名称
+                  th
+                    div 相关服务
+                  th
+                    div 服务类型
+                  th
+                    div 消费状态
+                  th
+                    div 消费时间
+              tbody
+                each row, i in consumeRecords
+                  tr
+                    td
+                      div= i+1
+                    td
+                      div= row._id
+                    td
+                      div= row.member.user?row.member.user.userName:''
+                    td
+                      div= row.memberService?row.memberService.memberServiceName:''
+                    td
+                      - var type = row.memberService?row.memberService.memberServiceType:'';
+                      each row in serviceItemTypes
+                        - if(type === row.key)
+                          div= row.value
+                    td
+                      div= row.process
+                    td
+                      div= row.createdAt
+
+block scripts
+  script

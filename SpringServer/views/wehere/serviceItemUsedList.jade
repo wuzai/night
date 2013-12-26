@@ -1,0 +1,154 @@
+extends partials/default
+
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-legal
+            span 用户使用服务验证列表
+          h5
+            span 商户对用户的使用服务进行验证(通过用户提供的验证码验证)
+        ul.inline.pull-right.sparkline-box
+          li.sparkline-row
+            button.btn.btn-large.btn-info(type='button',data-toggle="modal", href="#memberServiceUsedInMerchantDialog") 到店使用
+
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-legal
+            span 服务项目
+          span.breadcrumb-arrow
+            span
+  .container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 用户使用服务列表
+            ul.box-toolbar
+              li
+                a.btn.btn-warning.btn-small(title="刷新", href= webRoot_wehere +"/serviceAudit/serviceItemUsed",style="color:white")
+                  i.icon-refresh
+                  |  刷 新
+          .box-content
+            table#serviceItemApply.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 用户名称
+                  th
+                    div 服务名称
+                  th
+                    div 服务类型
+                  th
+                    div 交易状态
+                  th
+                    div 交易时间
+                  th
+                    div 审核
+              tbody
+                each row, i in consumeRecords
+                  tr
+                    td= i+1
+                    td= row.member.user?row.member.user.userName:''
+                    td= row.memberService.memberServiceName
+                    td
+                      - var type = row.memberService?row.memberService.memberServiceType:'';
+                      each row in serviceItemTypes
+                        - if(type === row.key)
+                          div= row.value
+                    td= row.process
+                    td= row.createdAt
+                    td
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="确认", data-toggle="modal", href="#checkConsumeRecord",onclick="openDialog('#{row.member.user?row.member.user.userName:""}','#{row._id}','#{row.memberService.memberServiceType}')") 确认
+                          a.btn.btn-default(title="取消", href= webRoot_wehere +"/serviceAudit/serviceItemUsedCancel?consumeRecordId=#{row._id}") 取消
+
+  #checkConsumeRecord.modal.hide.wizard-modal.in(style='margin-top: -200px; width: 500px; margin-left: -275px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type="button", data-dismiss="modal")
+      h6 使用服务验证
+    .modal-body
+      form.separate-sections(method="post", action= webRoot_wehere +"/serviceAudit/serviceItemUsedCheck")
+        input.cellphone(type="hidden",name="cellphone")
+        input.consumeRecordId(type="hidden",name="consumeRecordId")
+        .input-prepend
+          span.add-on(href='#')
+            i.icon-key
+          input.input-xlarge(type='text',name='captcha', placeholder='请输入验证码')
+        .input-prepend.memberServiceNumber(style='display:none')
+          span.add-on(href='#')
+            i.icon-money
+          input.input-xlarge(type='number',min='0',name='serviceNumber', placeholder='请输入消费金额或积分')
+    .modal-footer
+      button.btn.btn-default(data-dismiss="modal") 关 闭
+      button.btn.btn-blue(type="button",onclick="$('#checkConsumeRecord .separate-sections').submit()") 保 存
+
+  #memberServiceUsedInMerchantDialog.modal.hide.wizard-modal.in(style='margin-top: -200px; width: 500px; margin-left: -275px; display: none;', aria-hidden='false')
+    form
+      .modal-header
+        button.close(type='button', data-dismiss='modal',aria-hidden='true') ×
+        h3 输入会员手机号
+      .modal-body.messageAlert
+        .input-prepend
+          span.add-on(href='#')
+            i.icon-phone
+          input.input-xlarge(type='text',name='telephone', placeholder='输入会员手机号')
+      .modal-footer
+        button.btn.btn-default(data-dismiss="modal") 关 闭
+        button.btn.btn-blue(type="button") 保存
+
+
+block scripts
+  script
+
+    function openDialog(cellphone,consumeRecordId,serviceType){
+      $("#checkConsumeRecord .memberServiceNumber").hide();
+      $("#checkConsumeRecord input.cellphone").val(cellphone);
+      $("#checkConsumeRecord input.consumeRecordId").val(consumeRecordId);
+      if(serviceType === 'StoreCard'){
+        $("#checkConsumeRecord .memberServiceNumber").show();
+      }
+    }
+
+    $("#memberServiceUsedInMerchantDialog .modal-footer .btn-blue").click(function(){
+      var telephone = $("#memberServiceUsedInMerchantDialog input[name='telephone']").val();
+      if(telephone&&telephone.trim()){
+        $(".messageErrorDiv").remove();
+        var params = $("#memberServiceUsedInMerchantDialog form").serialize();
+        var webRoot = $("#webRoot_wehere").val();
+        $.getJSON(webRoot + '/memberService/gotoMemberInfoPage',params,function(data,status){
+          if(data.status === 200){
+            var memberId = data.memberId;
+            window.location.href = [webRoot ,'/merchant/memberInfo?memberId=',memberId].join('');;
+          }else{
+            var errorText = data.error;
+            var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-error messageErrorDiv");
+            messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+            messageDiv.append($("<p/>").append($("<strong/>").text("错误!")));
+            messageDiv.append($("<ul/>").append($("<li/>").text(errorText)));
+            $("#memberServiceUsedInMerchantDialog .messageAlert").prepend(messageDiv);
+          }
+        });
+      }else{
+        var errorText = '请输入用户手机号码.';
+        var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-error messageErrorDiv");
+        messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+        messageDiv.append($("<p/>").append($("<strong/>").text("错误!")));
+        messageDiv.append($("<ul/>").append($("<li/>").text(errorText)));
+        $("#memberServiceUsedInMerchantDialog .messageAlert").prepend(messageDiv);
+      }
+    });

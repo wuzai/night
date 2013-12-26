@@ -1,0 +1,227 @@
+.news {
+  min-height: 85px;
+  .avatar {
+    float: left;
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+    text-align: center;
+    @include box-shadow(0 1px 0 rgba(255, 255, 255, 0.4) inset);
+    @include border-radius(50%);
+    i {
+      color: white;
+      line-height: 36px
+    }
+  }
+  .avatar.blue {
+    background: #7fb3d4;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #a5cae1, #7fb3d4));
+    background-size: 100%;
+    border: 1px solid #60a1ca
+  }
+  .avatar.green {
+    background: #8cc079;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #aad09c, #8cc079));
+    background-size: 100%;
+    border: 1px solid #74b35d
+  }
+  .avatar.cyan {
+    background: #81babd;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #a2cccf, #81babd));
+    background-size: 100%;
+    border: 1px solid #66abaf
+  }
+  .avatar.purple {
+    background: #aea7cf;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #ccc8e1, #aea7cf));
+    background-size: 100%;
+    border: 1px solid #968dc1
+  }
+}
+
+.news.with-icons {
+  .news-content {
+    margin-left: 55px
+  }
+}
+
+.news-content {
+  margin-left: 50px;
+  margin-right: 50px
+}
+
+.news-title {
+  color: #636364;
+  font-weight: 600;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+  font-size: 16px
+}
+
+.news-time {
+  float: right;
+  color: #bbb;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  text-align: center;
+  span {
+    display: block;
+    font-size: 24px;
+    font-weight: 600
+  }
+}
+
+.badge-blue, .badge-gray, .badge-green, .badge-red, .badge-dark-red, .badge-black, .badge-cyan, .badge-purple {
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 10px;
+  height: 14px;
+  min-width: 14px;
+  line-height: 14px;
+  @include box-sizing(border-box);
+  text-align: center;
+  font-weight: 600;
+  font-size: 10px;
+  @include box-shadow(0 0 0 1px rgba(0, 0, 0, 0.6));
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+  color: #fff
+}
+
+.label, .badge {
+  font-weight: 600
+}
+
+.label-blue {
+  background: #599cc7;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #7fb3d4, #599cc7));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #70aacf);
+}
+
+.label-gray {
+  background: #5d5d5d;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #767676, #5d5d5d));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #6c6c6c);
+}
+
+.label-green {
+  background: #6eb056;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #8cc079, #6eb056));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #80b96b);
+}
+
+.label-red {
+  background: #964747;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #b35d5d, #964747));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #ab5050);
+}
+
+.label-dark-red {
+  background: #8f3831;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #b5473e, #8f3831));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #a64139);
+}
+
+.label-black {
+  background: #4d4d4d;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #666666, #4d4d4d));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #5c5c5c);
+}
+
+.label-cyan {
+  background: #60a8ab;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #81babd, #60a8ab));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #74b3b6);
+}
+
+.label-purple {
+  background: #9086bd;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #aea7cf, #9086bd));
+  background-size: 100%;
+  @include box-shadow(0 1px 0 #f7f7f7, inset 0 1px 1px #a29ac8);
+}
+
+.badge-blue {
+  background: #6ca8ce;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #7fb3d4, #6ca8ce));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #3c84b1);
+}
+
+.badge-gray {
+  background: dimgrey;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #767676, #696969));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #434343);
+}
+
+.badge-green {
+  background: #7db868;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #8cc079, #7db868));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #589043);
+}
+
+.badge-red {
+  background: #a84f4f;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #b35d5d, #a84f4f));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #743636);
+}
+
+.badge-dark-red {
+  background: #a24037;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #b5473e, #a24037));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #692924);
+}
+
+.badge-black {
+  background: #595959;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #666666, #595959));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #333333);
+}
+
+.badge-cyan {
+  background: #70b1b4;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #81babd, #70b1b4));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #4a8a8e);
+}
+
+.badge-purple {
+  background: #9f97c6;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #aea7cf, #9f97c6));
+  background-size: 100%;
+  @include box-shadow(0 0 0 1px #7165ab);
+}
+
+.badge-flat {
+  text-shadow: none
+}

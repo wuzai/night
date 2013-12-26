@@ -1,0 +1,192 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 会员详情
+          h5
+            | 会员的的详细信息
+
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  会员详情
+          span.breadcrumb-arrow
+            span
+  #memberInfoPage.container-fluid.padded
+    input.hiddenData.memberId(type="hidden",value= member._id)
+    input.hiddenData.userId(type="hidden",value= member.user?member.user._id:'')
+    .row-fluid
+      .span8
+        .box
+          .box-header
+            span.title
+              i.icon-th-list
+              |  会员信息详情
+          .box-content.padded
+            dl.dl-horizontal
+              dt 会员号
+              dd= member._id
+              dt 会员电话
+              dd= member.user?member.user.userName:'.'
+              dt 会员剩余积分
+              dd= member.memberPoint
+              dt 会员等级
+              dd= member.memberRank?member.memberRank.memberRankName:'.'
+              dt 会员加入时间
+              dd= member.createdAt
+      .span4
+        .box
+          .box-header
+            span.title
+              i.icon-th-list
+              |  用户头像
+          .box-content.padded
+            - var userFace = member.user&&member.user.faceIcon?member.user.faceIcon:'';
+            img.img-polaroid.img-rounded(src= imageRoot + userFace , width='320px', height='200px')
+    .row-fluid
+      .span12.messageAlert
+        .box
+          .box-header
+            span.title
+              i.icon-th-list
+              |  会员已申领的服务
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 服务名称
+                  th
+                    div 服务类型
+                  th
+                    div 剩余数量
+                  th
+                    div 有效开始日期
+                  th
+                    div 有效结束日期
+                  th
+                    div 申领时间
+                  th
+                    div 操作
+              tbody
+                each row, i in memberServices
+                  tr
+                    td
+                      div= i+1
+                    td
+                      div= row.memberServiceName
+                    td
+                      - var type = row.memberServiceType;
+                        each row in serviceItemTypes
+                          - if(type === row.key)
+                            div= row.value
+                    td
+                      - if(row.memberServiceType === 'StoreCard')
+                        div= row.memberServiceNumber
+                      - else if(row.memberServiceType === 'MeteringCard')
+                        div= row.memberServiceNumber
+                      - else
+                        div ---
+                    td
+                      div= row.validFromDate
+                    td
+                      div= row.validToDate
+                    td
+                      div= row.createdAt
+                    td
+                      .btn-group
+                        a.btn.btn-default.btn-mini(title="到店使用",href="###",onclick="memberServiceUsedByMerchant('#{row._id}','#{row.memberServiceType}')")
+                          | 使用
+
+  #memberServiceUsedByMerchantDialog.modal.hide.wizard-modal.in(style='margin-top: -200px; width: 500px; margin-left: -275px; display: none;', aria-hidden='false')
+    form
+      .modal-header
+        button.close(type='button', data-dismiss='modal',aria-hidden='true') ×
+        h3 输入验证码
+      .modal-body.messageAlert
+        input(type="hidden",name="memberId",value= member._id)
+        input(type="hidden",name="userId",value= member.user?member.user._id:'')
+        input.memberServiceId(type="hidden",name="memberServiceId")
+        input.memberServiceType(type="hidden",name="memberServiceType")
+        .input-prepend
+          span.add-on(href='#')
+            i.icon-key
+          input.input-xlarge(type='text',name='captcha', placeholder='请输入验证码')
+      .modal-footer
+        button.btn.btn-default(data-dismiss="modal") 关 闭
+        button.btn.btn-blue(type="button") 保存
+
+block scripts
+  script
+    function memberServiceUsedByMerchant(memberServiceId,memberServiceType){
+      if(confirm('你确定发送验证并使用该服务吗?')){
+        var webRoot = $("#webRoot_wehere").val();
+        var userId = $("#memberInfoPage input.hiddenData.userId").val();
+        $.getJSON(webRoot + '/memberService/sendCaptchaOfUsedByMerchant',{userId:userId},function(data,status){
+          $(".messageErrorDiv").remove();
+          if(data.status === 200){
+            $("#memberServiceUsedByMerchantDialog .modal-body .memberServiceId").val(memberServiceId);
+            $("#memberServiceUsedByMerchantDialog .modal-body .memberServiceType").val(memberServiceType);
+            $("#memberServiceUsedByMerchantDialog input[name='captcha']").val('');
+            $('#memberServiceUsedByMerchantDialog').modal();
+          }else{
+            var errorText = data.error;
+            var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-error messageErrorDiv");
+            messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+            messageDiv.append($("<p/>").append($("<strong/>").text("错误!")));
+            messageDiv.append($("<ul/>").append($("<li/>").text(errorText)));
+            $("#memberInfoPage .messageAlert").prepend(messageDiv);
+          }
+        });
+      }
+    }
+
+    $("#memberServiceUsedByMerchantDialog .modal-footer .btn-blue").click(function(){
+      var captcha = $("#memberServiceUsedByMerchantDialog input[name='captcha']").val();
+      if(captcha&&captcha.trim()){
+        $(".messageErrorDiv").remove();
+        var params = $("#memberServiceUsedByMerchantDialog form").serialize();
+        var webRoot = $("#webRoot_wehere").val();
+        $.getJSON(webRoot + '/memberService/memberServiceUsed',params,function(data,status){
+          if(data.status === 200){
+            var errorText = '已经成功使用.';
+            var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-success messageErrorDiv");
+            messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+            messageDiv.append($("<div/>").text(errorText));
+            $("#memberInfoPage .messageAlert").prepend(messageDiv);
+            $('#memberServiceUsedByMerchantDialog').modal('hide');
+          }else{
+            var errorText = data.error;
+            var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-error messageErrorDiv");
+            messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+            messageDiv.append($("<p/>").append($("<strong/>").text("错误!")));
+            messageDiv.append($("<ul/>").append($("<li/>").text(errorText)));
+            $("#memberServiceUsedByMerchantDialog .messageAlert").prepend(messageDiv);
+          }
+        });
+      }else{
+        var errorText = '请输入验证码.';
+        var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-error messageErrorDiv");
+        messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+        messageDiv.append($("<p/>").append($("<strong/>").text("错误!")));
+        messageDiv.append($("<ul/>").append($("<li/>").text(errorText)));
+        $("#memberServiceUsedByMerchantDialog .messageAlert").prepend(messageDiv);
+      }
+    });
+
+

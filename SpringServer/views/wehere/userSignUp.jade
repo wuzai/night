@@ -1,0 +1,47 @@
+!!! 5
+html(lang="zh-cn")
+  include ../partials/head
+  body
+    input(type='hidden',id='webRoot_wehere',value= webRoot_wehere)
+    .navbar.navbar-top.navbar-inverse
+      .navbar-inner
+        .container-fluid
+          a.brand(href='/')夜店指南平台系统
+          // the new toggle buttons
+          ul.nav.pull-right
+            li.toggle-primary-sidebar.hidden-desktop(data-toggle='collapse', data-target='.nav-collapse-primary')
+              button.btn.btn-navbar(type='button')
+                i.icon-th-list
+            li.hidden-desktop(data-toggle='collapse', data-target='.nav-collapse-top')
+              button.btn.btn-navbar(type='button')
+                i.icon-align-justify
+    .container
+      .span4.offset4
+        .padded
+          .login.box(style='margin-top: 80px;')
+            .box-header
+              span.title 用户注册
+            .box-content.padded
+              !=messages()
+              form.separate-sections(method="post", action= webRoot_wehere + '/userSignUp')
+                .input-prepend
+                  span.add-on(href='#')
+                    i.icon-user
+                  input(type='text',name='userName', placeholder='用户名(必须使用手机号码注册)')
+                .input-prepend
+                  span.add-on(href='#')
+                    i.icon-key
+                  input(type='password',name='password', placeholder='密码')
+                .input-prepend
+                  span.add-on(href='#')
+                    i.icon-key
+                  input(type='password',name='confirmPassword', placeholder='确认密码')
+                div
+                  a.btn.btn-blue.btn-block(href='javascript:void(0);',onclick='$("form.separate-sections").submit()')
+                    | 注册
+                    i.icon-ok
+              div
+                a(href= webRoot_wehere + '/userSignIn')
+                  | 已经有一个帐户吗?
+                  strong 登录
+    include ../partials/foot

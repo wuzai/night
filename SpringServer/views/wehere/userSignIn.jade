@@ -1,0 +1,114 @@
+!!! 5
+html(lang="zh-cn")
+  include ../partials/head
+  body
+    input(type='hidden',id='webRoot_wehere',value= webRoot_wehere)
+    .navbar.navbar-top.navbar-inverse
+      .navbar-inner
+        .container-fluid
+          a.brand(href='/') 夜店指南平台系统
+          // the new toggle buttons
+          ul.nav.pull-right
+            li.toggle-primary-sidebar.hidden-desktop(data-toggle='collapse', data-target='.nav-collapse-primary')
+              button.btn.btn-navbar(type='button')
+                i.icon-th-list
+            li.hidden-desktop(data-toggle='collapse', data-target='.nav-collapse-top')
+              button.btn.btn-navbar(type='button')
+                i.icon-align-justify
+    .container
+      .span4.offset4
+        .padded
+          .login.box(style='margin-top: 80px;')
+            .box-header
+              span.title 用户登录
+            .box-content.padded
+              !=messages()
+              - var session_user = request?(request.session?request.session.user:null):null
+                if(session_user)
+                  p
+                    a.btn.btn-blue.btn-block(href= webRoot_wehere + '/dashboard',style='color:white')
+                      | 快速登录
+                      i.icon-signin
+                  p
+                    a.btn.btn-danger.btn-block(href= webRoot_wehere + '/userSignOut',style='color:white')
+                      | 安全退出
+                      i.icon-off
+                else
+                  form.separate-sections(method="post", action= webRoot_wehere + '/userSignIn')
+                    .input-prepend
+                      span.add-on(href='#')
+                        i.icon-user
+                      input(type='text',name='userName', placeholder='用户名')
+                    .input-prepend
+                      span.add-on(href='#')
+                        i.icon-key
+                      input(type='password',name='password', placeholder='密码')
+                    div
+                      a.btn.btn-blue.btn-block(href='javascript:void(0);',onclick='$("form.separate-sections").submit()')
+                        | 登录
+                        i.icon-signin
+              div
+                a(href= webRoot_wehere + '/userSignUp')
+                  | 没有一个帐户吗?
+                  strong 注册
+          .root.row-fluid
+            .span6
+              a.btn.btn-facebook.btn-block(href='/',style='color:white')
+                i.icon-facebook-sign
+                |   首页
+            .span6
+              a.btn.btn-twitter.btn-block(data-toggle="modal", href="#ForgetPasswordDialog",style='color:white')
+                i.icon-lock
+                |   找回密码
+
+    #ForgetPasswordDialog.modal.hide.fade(style='top:20%;width:500px')
+      form.form-horizontal(method="post", action='/')
+        .modal-header
+          button.close(type="button", data-dismiss="modal") x
+          h6 找回密码
+        .padded
+          #errorMessages(style='display:none')
+            .fade.in.alert.alert-block.alert-error
+              a.close ×
+              p
+                strong 错误!
+              ul
+                li 数据获取错误.
+
+          .box-content.padded
+            form.separate-sections
+              .input-prepend(style='margin-bottom: 15px !important;')
+                span.add-on(href='#')
+                  i.icon-user
+                input(type='text',name='userName', placeholder='请输入注册时使用的用户名或电话号码')
+              div(align="center")
+                a.btn.btn-blue.btn-block(href='#',style='width:60%;color:white;align:center')
+                  | 找回
+                  i.icon-signin
+
+    include ../partials/foot
+    script
+      $("body").keydown(function(event){
+        if(event.which == 13){
+          $("form.separate-sections").submit();
+        }
+      });
+      $('#errorMessages a.close').click(function(){
+        $('#errorMessages').hide();
+      });
+      $('#ForgetPasswordDialog a.btn.btn-blue').click(function(){
+        var params ={
+            userName: $("#ForgetPasswordDialog input").val()
+        };
+        var webRoot_wehere = $("#webRoot_wehere").val();
+        $.getJSON(webRoot_wehere + '/forgetPassword',params,function(data,status){
+          if(data&&data.status===200){
+            window.location.href = webRoot_wehere + '/resetPassword?userId='+data.user._id;
+          }else{
+            if(data&&data.error){
+              $('#errorMessages ul li').text(data.error);
+            }
+            $('#errorMessages').show();
+          }
+        });
+      });

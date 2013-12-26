@@ -1,0 +1,137 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 会员积分使用
+          h5
+            | 会员到店使用积分
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  会员积分使用
+          span.breadcrumb-arrow
+            span
+    #memberPointUsedDiv.container
+      .span6.offset2
+        .padded
+          .login.box
+            .box-header
+              span.title 会员积分使用
+              ul.box-toolbar
+                li
+                  a.btn.btn-small.btn-warning(href= webRoot_wehere + '/point/memberPointUsed') 刷 新
+            .box-content.padded
+              !=messages()
+              form.separate-sections(method="post", action= webRoot_wehere +'/point/memberPointUsedSave')
+                input(type='hidden',name='merchantId',value= merchantId)
+                input(type='hidden',name='captchaRecordId')
+                select#selectReceiver.populate(name='userId')
+                  option
+                  each row,i in members
+                    if(row.user&&row.user._id)
+                      option(value= row.user._id,userid= row.user._id)= row.memberCode?row.memberCode:row.user.userName
+                .input-prepend
+                  span.add-on(href='#')
+                    i.icon-arrow-down
+                  input(type='number',min='0', name='point', placeholder='请输入使用积分数')
+                div.noCaptcha
+                  a.btn.btn-blue.btn-block(href='javascript:void(0);')
+                    | 发送验证码
+                    i.icon-arrow-right
+                div.hasCaptcha(style='display:none')
+                  .input-prepend(style='margin-bottom: 10px;')
+                    span.add-on(href='#')
+                      i.icon-key
+                    input(type='text',name='captcha', placeholder='请输入验证码')
+                  a.btn.btn-info.btn-block(href='javascript:void(0);')
+                    | 确 认
+                    i.icon-arrow-right
+              span 【提示】选择使用积分的用户,发送验证码到用户的消息列表,需要用户提供验证码,才可以使用会员积分。
+
+block scripts
+  script
+    $(document).ready(function() {
+        $("#selectReceiver").select2({
+          placeholder: "请选择使用积分的用户",
+          allowClear: true
+        });
+    });
+
+    $('#memberPointUsedDiv .hasCaptcha a.btn-info.btn-block').click(function(){
+      var merchantId = $('#memberPointUsedDiv form.separate-sections input[name="merchantId"]').val();
+      var userId = $('#memberPointUsedDiv form.separate-sections select[name="userId"]').val();
+      var point = $('#memberPointUsedDiv form.separate-sections input[name="point"]').val();
+      var captcha = $('#memberPointUsedDiv form.separate-sections input[name="captcha"]').val();
+      var captchaRecordId = $('#memberPointUsedDiv form.separate-sections input[name="captchaRecordId"]').val();
+      var webRoot = $("#webRoot_wehere").val();
+      if(merchantId&&userId&&point&&captchaRecordId){
+        if(captcha){
+          $.getJSON( webRoot + '/point/memberPointUsedSave',{merchantId:merchantId,point:point,captcha:captcha,userId:userId,captchaRecordId:captchaRecordId},function(data,status){
+            if(data&&data.status===200){
+              window.location.href = webRoot + '/point/memberPointUsed';
+            }else{
+              $('#memberPointUsedDiv form.separate-sections input[name="captcha"]').val('');
+              if(data.error){
+                alert(data.error);
+              }else{
+                alert('验证码输入错误');
+              }
+            }
+          });
+        }else{
+          alert('请输入验证码');
+        }
+      }else{
+        alert('参数异常,请刷新页面重新请求.');
+      }
+    });
+
+    $('#memberPointUsedDiv .noCaptcha a.btn-blue.btn-block').click(function(){
+      var merchantId = $('#memberPointUsedDiv form.separate-sections input[name="merchantId"]').val();
+      var userId = $('#memberPointUsedDiv form.separate-sections select[name="userId"]').val();
+      var point = $('#memberPointUsedDiv form.separate-sections input[name="point"]').val();
+      var webRoot = $("#webRoot_wehere").val();
+      if(userId){
+        if(point&&Number(point)&&isInteger(Number(point))){
+          $.getJSON( webRoot + '/point/getCaptchaByPointUsed',{userId:userId,merchantId:merchantId,point:point},function(data,status){
+            if(data&&data.status===200){
+              var captchaRecordId = data.captchaRecordId;
+              if(captchaRecordId){
+                $('#memberPointUsedDiv form.separate-sections input[name="captchaRecordId"]').val(captchaRecordId);
+                $('#memberPointUsedDiv .noCaptcha').hide();
+                $("#selectReceiver").select2("enable", false);
+                $('#memberPointUsedDiv form.separate-sections input[name="point"]').attr('disabled',true);
+                $('#memberPointUsedDiv .hasCaptcha').show();
+              }else{
+                alert('验证码获取失败.');
+              }
+            }else{
+              if(data.error){
+                alert(data.error);
+              }else{
+                alert('验证码获取失败');
+              }
+            }
+          });
+        }else{
+          alert('输入积分必须是大于0的整数.');
+        }
+      }else{
+        alert('请选择用户');
+      }
+      return false;
+    });

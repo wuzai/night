@@ -1,0 +1,116 @@
+extends ../partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            = newsInfo.newsType=='hotNews'?'热点新闻修改':'时尚新闻修改'
+          h5
+            = newsInfo.newsType=='hotNews'?'修改热点新闻内容':'修改时尚新闻内容'
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            = newsInfo.newsType=='hotNews'?'热点新闻列表':'时尚新闻列表'
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            = newsInfo.newsType=='hotNews'?'修改热点新闻内容':'修改时尚新闻内容'
+          span.breadcrumb-arrow
+            span
+  #newsInfoEdit.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-content
+            form.form-horizontal.fill-up(method="post", action= webRoot_wehere +'/newsInfo/editNewsInfoSave',enctype='multipart/form-data')
+              input(type='hidden',name='newsInfoId', value= newsInfo._id)
+              input(type='hidden',name='newsType',id="newsType", value= newsInfo.newsType)
+              .padded
+                .control-group
+                  label.control-label 标题
+                  .controls
+                    input(type='text',name='title', placeholder='标题',value= newsInfo.title)
+                .control-group
+                  label.control-label 副标题
+                  .controls
+                    input(type='text',name='subhead', placeholder='副标题',value= newsInfo.subhead)
+                .control-group
+                  label.control-label 来源
+                  .controls
+                    input(type='text',name='source', placeholder='来源',value= newsInfo.source)
+                .control-group
+                  label.control-label 新闻内容
+                  .controls
+                    textarea#editor_content(name='content', style='width:700px;height:300px;',placeholder='请输入新闻内容')= newsInfo.content
+                .control-group.postImage
+                  .controls
+                    - if(newsInfo.postImage&&newsInfo.postImage.length > 0)
+                      .span6
+                        #myCarousel.carousel.slide
+                          ol.carousel-indicators
+                            each row, i in newsInfo.postImage
+                              - if (i==0)
+                                li.active(data-target='#myCarousel', data-slide-to='#{i}')
+                              - else
+                                li(data-target='#myCarousel', data-slide-to='#{i}')
+                          .carousel-inner
+                            each row, i in newsInfo.postImage
+                              - if(row)
+                                - var c = i==0?'active':''
+                                .item(class= c)
+                                  img(src= imageRoot + row.url, style='width:600px;height:350px',alt='')
+                                  a.deleteRedButtomImage.pull-right(href=webRoot_wehere +'/newsInfo/newsInfoDeleteImage?postImageId='+row._id+'&newsInfoId='+newsInfo._id,style="display:none;background:white;border:1px solid #000;margin-top: -16px;position:relative;")
+                                    i.icon-remove-sign(title='删除此图片',style="color:red")
+                          a.left.carousel-control(href='#myCarousel', data-slide='prev') ‹
+                          a.right.carousel-control(href='#myCarousel', data-slide='next') ›
+                .control-group
+                  label.control-label 展示图片
+                  .controls
+                    input(type='file',name='postImage', style='padding-left: 45px;width:300px')
+                    span 为了图片显示效果最佳,建议选择图片尺寸为320*330
+              .form-actions
+                button.btn.btn-blue(type='button') 提交
+                button.btn.btn-default(type='button') 返回
+
+block scripts
+  script
+    var webRoot_wehere = $("#webRoot_wehere").val();
+    $("#newsInfoEdit .form-actions button.btn-default").click(function(){
+      var newsType = $("#newsType").val();
+      if(newsType=='hotNews'){
+        window.location.href = webRoot_wehere +'/newsInfo/hotNewsList';
+      }else{
+        window.location.href = webRoot_wehere +'/newsInfo/fashionNewsList';
+      }
+    });
+    KindEditor.ready(function(K) {
+      var webRoot_href = $("#webRoot_href").val();
+      window.editor = K.create('#editor_content',{
+          cssPath: webRoot_href + '/kindeditor/css/kindeditor-iframe.css',
+          uploadJson : webRoot_href + '/kindEditor/nodeJs/upload_json.js?dir=image'
+        }
+      );
+      K('#newsInfoEdit .form-actions button.btn-blue').click(function(e) {
+        editor.sync();
+        var title = $("#newsInfoEdit .control-group input[name='title']").val();
+        if(!title.trim()){
+          alert("文章标题不能为空.");
+          return false;
+        }
+        $("#newsInfoEdit form.form-horizontal").submit();
+      });
+    });

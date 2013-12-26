@@ -1,0 +1,95 @@
+!!! 5
+html(lang="zh-cn")
+  title 商户评论
+  include partials/head
+  body(style="background:none;padding-top: 10px;")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #commentListDiv.container-fluid.padded
+      .row-fluid
+        .span12
+          !=messages()
+          - if(comments.length<1)
+            .span12
+              div(style="margin:20px")
+                .alert.alert-info
+                  strong 还没有人发表评论  来坐第一个沙发
+          - else
+            ul.chat-box.timeline
+              each row, i in comments
+                li.arrow-box-left.gray
+                  .avatar
+                    - var faceIcon = row.user&&row.user.faceIcon? row.user.faceIcon : '';
+                    img.avatar-small(src= imageRoot +  faceIcon)
+                  .info
+                    span.name
+                      - if(row.commentType==='评价')
+                        span.label.label-green= row.commentType
+                      - else if(row.commentType==='咨询')
+                        span.label.label-blue= row.commentType
+                      - else
+                        span.label.label-purple= row.commentType
+                      strong.indent= row.user&&row.user.userName?row.user.userName:'游客'
+                      | 评论星级:
+                      strong= row.rating&&row.rating>0?row.rating:'未评'
+                    span.time.hidden-phone
+                      i.icon-time
+                      span= row.createdAt
+                    span.time.visible-phone
+                      i.icon-time
+                      span= row.simpleDate
+                  - var bt = row.content?"border-top:1px solid #ccc;":"border-top:0px solid #ccc;"
+                  .content(style= bt)
+                    blockquote= row.content
+
+          .box.closable-chat-box
+            .box-content.padded
+              .fields
+                .avatar
+                  img.avatar-small(src='/images/default-face.png')
+                ul
+                  li
+                    b 添加评论
+                  li.note(style="color:#3a87ad;font-weight: bold;") 您的评价是我们^_^o~ 努力的动力！
+              form.fill-up(method="post",action= webRoot_weixinapp + '/addCommentSubmit')
+                input.merchantId(type='hidden',name='merchantId',value= merchantId)
+                input.FromUserName(type='hidden',name='FromUserName',value= FromUserName)
+                .chat-message-box(style='margin-bottom:15px')
+                  textarea.content(name='content', rows='5', placeholder='添加一条评论 (点击发送!)',style='height:auto')
+                div
+                  span#rating-star
+                    input.star-value(type='hidden',name='rating')
+                    div.starbox(style="z-index:0;position:relative")
+                      ul.star_ul.fl
+                        li
+                          a.one-star(title='很差',value='1', href='###')
+                        li
+                          a.two-star(title='差',value='2', href='###')
+                        li
+                          a.three-star(title='还行',value='3', href='###')
+                        li
+                          a.four-star(title='好',value='4', href='###')
+                        li
+                          a.five-star(title='很好',value='5', href='###')
+                    span.s_result 请打分
+                  .pull-right.faded-toolbar
+                    button.btn.btn-blue.btn-mini.sendSubmit(type='button') 发送
+
+  include partials/footer
+  include partials/foot
+  script
+    $("#commentListDiv form.fill-up button.sendSubmit").click(function(){
+      var merchantId = $("#commentListDiv form.fill-up input.merchantId").val();
+      var FromUserName = $("#commentListDiv form.fill-up input.FromUserName").val();
+      var content = $("#commentListDiv form.fill-up textarea.content").val();
+      var rating = $("#commentListDiv form.fill-up input.star-value").val();
+      if(merchantId && FromUserName){
+        if(content.trim()||rating){
+          $("#commentListDiv form.fill-up").submit();
+        }else{
+          alert("评论内容不能为空或未选择星级评价.");
+        }
+      }else{
+        alert("参数错误或微信用户没有绑定系统.");
+      }
+    });
+

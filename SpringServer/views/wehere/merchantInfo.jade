@@ -1,0 +1,209 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户详情
+          h5
+            | 商户的详细信息
+        ul.inline.pull-right.sparkline-box
+          li
+            a.btn.btn-large.btn-green(href="#merchantImageViewDialog",data-toggle="modal" ,title='查看商户展示图',style='color:white') 查看商户展示图
+          li
+            a.btn.btn-large.btn-green(href= webRoot_wehere +'/merchant/edit?merchantId='+ merchant._id, title='完善商户资料信息',style='color:white') 完善商户资料
+
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  商户详情
+          span.breadcrumb-arrow
+            span
+  .container-fluid.padded
+    .row-fluid
+      div#merchantInfoBox.span8
+        .box
+          .box-header
+            span.title
+              i.icon-th-list
+              |  商户信息详情
+            ul.box-toolbar
+              li
+                span.label.badge-important
+                  abbr(title='商户ID可用于与微信公共账号的绑定')= merchant._id
+              li
+                span.btn.btn-primary.btn-mini.weiXinInMerchant
+                  - if(weiXinObject)
+                    | 重新绑定微信
+                  - else
+                    | 绑定微信
+          .box-content.padded
+            dl.dl-horizontal
+              dt 商户ID
+              dd= merchant._id
+                - if(weiXinObject)
+                  span.text-success  (已绑定微信公众帐号
+                  span.text-error= weiXinObject
+                  span.text-success   )
+                - else
+                  span.text-warning  (商户ID可用于与微信公共账号的绑定)
+              dt 商户名称
+              dd= merchant.merchantName
+              - if(merchant.merchantType)
+                dt 商户类型
+                dd= merchant.merchantType
+              - if(merchant.description)
+                dt 描述信息
+                dd= merchant.description
+              - if(merchant.customerPhone&&merchant.customerPhone.length > 0)
+                dt 客服电话
+                dd
+                  each tel, i in merchant.customerPhone
+                    span= tel + ',\t\t'
+              - if(merchant.telPrincipal&&merchant.telPrincipal.value)
+                dt 负责人电话
+                - var t = merchant.telPrincipal.isPublic?'(公开)':'(未公开)';
+                dd= merchant.telPrincipal.value + t
+              - if(merchant.webSite)
+                dt 商户网站
+                dd= merchant.webSite
+              - if(merchant.address)
+                dt 商户地址
+                dd= merchant.address + (merchant.location&&merchant.location.relevantText? '('+merchant.location.relevantText+ ')':'')
+              - if(merchant.location&&merchant.location.longitude&&merchant.location.latitude)
+                dt 商户坐标
+                dd='经度:'+merchant.location.longitude+' 纬度 : '+merchant.location.latitude
+              - if(merchant.intro)
+                dt 商户简介
+                dd
+                  p!= merchant.intro
+              dt 商户加盟时间
+                dd= merchant.createdAt
+      .span4
+        .box
+          .box-header
+            span.title
+              i.icon-th-list
+              |  商户logo
+          .box-content.padded
+            img.img-polaroid.img-rounded(src= imageRoot + merchant.logoImage, width='320px', height='200px')
+
+  #weiXinInMerchantDialog.modal.hide.wizard-modal.in(style='margin-top: -300px; width: 500px; margin-left: -275px; display: none;', aria-hidden='false')
+    form
+      .modal-header
+        button.close(type='button', data-dismiss='modal',aria-hidden='true') ×
+        h3 微信公共帐号绑定
+      .modal-body.messageAlert
+        input(type='hidden',name='merchantId',value= merchant._id)
+        input(type='hidden',name='type',value='save')
+        - if(weiXinObject)
+          span.text-warning  该商户已与微信公众帐号
+          span.text-error= weiXinObject
+          span.text-warning  绑定(可输入新的微信帐号进行更改)
+        .input-prepend
+          span.add-on(href='#')
+            i.icon-comments
+          input.input-xlarge(type='text',name='weiXinObject', placeholder='请输入微信公共帐号原始Id')
+        p
+          a.openHelp 如何获取 微信公共帐号原始Id ？
+        div.getWeiXinIdHelp(style="display:none")
+          p
+            | 1、登录微信公众平台
+            a(href='https://mp.weixin.qq.com', target='_blank', style='color:blue;text-decoration: underline') https://mp.weixin.qq.com
+            | ，点设置，查看帐号信息
+          img.img-rounded(src= webRoot_href + '/images/wx-help001.gif')
+          p
+            | 2、点击二维码图片保存到电脑桌面，查看图片的名称gh_开头的就是原始公众号，如：gh_3e468dea019b
+            | 提别提示：不是gh_3e468dea019b_430,是gh_3e468dea019b，
+            span(style='color:red;') 一定要把_430去掉，gh_3e468dea019b才是正确的。
+          img.img-rounded(src= webRoot_href + '/images/wx-help002.gif')
+
+      .modal-footer
+        button.btn.btn-default(data-dismiss="modal") 关 闭
+        button.btn.btn-blue(type="button") 保存
+
+  #merchantImageViewDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 600px; margin-left: -300px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 查看商户展示图
+    .modal-body
+      .box-content.padded
+        - if(merchant.postImage&&merchant.postImage.length > 0)
+          #myCarousel.carousel.slide
+            ol.carousel-indicators
+              each row, i in merchant.postImage
+                - if (i==0)
+                  li.active(data-target='#myCarousel', data-slide-to='#{i}')
+                - else
+                  li(data-target='#myCarousel', data-slide-to='#{i}')
+            .carousel-inner
+              each row, i in merchant.postImage
+                - if(row)
+                  - var c = i==0?'active':''
+                  .item(class= c)
+                    img(src= imageRoot + row.url, style='width:600px;height:350px',alt='')
+            a.left.carousel-control(href='#myCarousel', data-slide='prev') ‹
+            a.right.carousel-control(href='#myCarousel', data-slide='next') ›
+        - else
+          div(align="center")
+            strong 暂无商户展示图
+    .modal-footer
+      button.btn(style='color: #333333',aria-hidden='true',data-dismiss='modal')
+        | 关闭
+block scripts
+  script
+    $("#merchantInfoBox ul.box-toolbar li span.weiXinInMerchant").click(function(){
+      $("#weiXinInMerchantDialog input[name='weiXinObject']").val("");
+      $('#weiXinInMerchantDialog').modal('show');
+    });
+    $("#weiXinInMerchantDialog .modal-body a.openHelp").click(function(){
+      var helpDiv = $('#weiXinInMerchantDialog .getWeiXinIdHelp');
+      if(helpDiv.hasClass('open')){
+        helpDiv.removeClass('open');
+        helpDiv.hide();
+      }else{
+        helpDiv.addClass('open');
+        helpDiv.show();
+      }
+    });
+    $("#weiXinInMerchantDialog .modal-footer .btn-blue").click(function(){
+      var weiXinObject = $("#weiXinInMerchantDialog input[name='weiXinObject']").val();
+      if(weiXinObject&&weiXinObject.trim()){
+        $(".messageErrorDiv").remove();
+        var params = $("#weiXinInMerchantDialog form").serialize();
+        var webRoot = $("#webRoot_wehere").val();
+        $.getJSON(webRoot + '/weiXinInMerchant',params,function(data,status){
+          if(data.status === 200){
+            alert("微信公共帐号绑定成功.");
+            //$('#weiXinInMerchantDialog').modal('hide');
+            window.location.href = webRoot +'/merchant/info';
+          }else{
+            var errorText = data.error;
+            var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-error messageErrorDiv");
+            messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+            messageDiv.append($("<p/>").append($("<strong/>").text("错误!")));
+            messageDiv.append($("<ul/>").append($("<li/>").text(errorText)));
+            $("#weiXinInMerchantDialog .messageAlert").prepend(messageDiv);
+          }
+        });
+      }else{
+        var errorText = '请输入微信公共帐号原始Id.';
+        var messageDiv = $("<div/>").addClass("fade in alert alert-block alert-error messageErrorDiv");
+        messageDiv.append($("<a href='javascript:void(0)'/>").addClass("close").attr("data-dismiss","alert").text("×"));
+        messageDiv.append($("<p/>").append($("<strong/>").text("错误!")));
+        messageDiv.append($("<ul/>").append($("<li/>").text(errorText)));
+        $("#weiXinInMerchantDialog .messageAlert").prepend(messageDiv);
+      }
+    });

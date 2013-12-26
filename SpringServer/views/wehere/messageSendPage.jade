@@ -1,0 +1,106 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 发布消息
+          h5
+            | 商户向会员发布消息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  消息发布
+          span.breadcrumb-arrow
+            span
+  #messageSendDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          form(method="post", action= webRoot_wehere +'/message/messageSendSave')
+            input(type='hidden',name='merchantId', value= merchantId)
+            .box-header
+              span.title
+                i.icon-th-list
+                |  发送消息
+              ul.box-toolbar
+                li
+                  button.btn.btn-small.btn-blue(type='button',onclick='onclickSubmitMessageSend()') 发送
+            .row-fluid
+              .span12
+                .box-content.padded
+                  .span2
+                    .alert.alert-info(style='margin-bottom:0px')
+                      strong 收信人：
+            .row-fluid
+              .span12
+                .box-content.padded
+                  select#selectReceiver.populate(multiple='multiple', name='members')
+                    each row,i in members
+                      if(row.user&&row.user._id)
+                        option(value= row.user._id)= row.memberCode?row.memberCode:row.user.userName
+            .row-fluid
+              .span12
+                .box-content.padded
+                  .span2
+                    .alert.alert-success(style='margin-bottom:0px')
+                      strong 信息标题：
+                  .span10
+                    .input-prepend
+                      input(type='text',name='title',style='padding-left:5px;', placeholder='请输入信息标题')
+            .row-fluid
+              .span12
+                .box-content.padded
+                  .span2
+                    .alert.alert-success(style='margin-bottom:0px')
+                      strong 信息内容：
+            .row-fluid
+              .span12
+                .box-content.padded
+                  .chat-message-box(style='margin-bottom:15px')
+                    textarea(name='content', rows='5', placeholder='编辑信息内容',style='height:auto')
+            .form-actions
+              button.btn.btn-blue(type='button',onclick='onclickSubmitMessageSend()') 发送
+
+block scripts
+  script
+    $(document).ready(function() {
+        $("#selectReceiver").select2({
+          placeholder: "请选择收信人.(可选择多个收件人)"
+        });
+    });
+    function onclickSubmitMessageSend(){
+      var members_value =[];
+      $("#messageSendDiv .box-content.padded input[name='members']:checked").each(function(){
+         members_value.push($(this).val());
+      });
+
+      var members = $("#selectReceiver").select2("val");
+      var title = $("#messageSendDiv .input-prepend input[name='title']").val();
+      var content = $("#messageSendDiv .chat-message-box textarea[name='content']").val();
+      if(members.length==0){
+        alert("请选择收件人");
+        return false
+      }
+      if(title.trim()&&content.trim()){
+        $("#messageSendDiv form").submit();
+      }else{
+        if(confirm("信息标题或内容为空,是否确认发送.")){
+          $("#messageSendDiv form").submit();
+        }else{
+          return false
+        }
+      }
+    }

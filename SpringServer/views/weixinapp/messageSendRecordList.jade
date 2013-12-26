@@ -1,0 +1,46 @@
+!!! 5
+html(lang="zh-cn")
+  title 消息中心
+  include partials/head
+  body(style="background:none;padding-top: 10px;")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #messageSendRecord.container.mainBody
+      - var len = messageSendRecords.length;
+      - if(len < 1)
+        .alert.alert-block
+          h4 暂时没有相关消息记录信息
+      each row in messageSendRecords
+        .box-section.news.with-icons.messageSend
+          .messageImage
+            img.avatar-large.img-rounded.img-polaroid(src= imageRoot + row.iconImage)
+          .news-time.hidden-phone= row.sentTime
+          .news-time.visible-phone= row.sentSimpleDate
+          .news-content
+            .news-title
+              abbr(title= row.title)
+                div.title-overflow= row.title
+            .news-text.message-content.simple
+              p
+            .news-text.message-content.full(style="display: none;")
+              p= row.content
+
+  include partials/footer
+  include partials/foot
+  script
+    $(document).ready(function () {
+      $("#messageSendRecord .messageSend").each(function(){
+        var contentDiv_simple = $(this).find(".news-text.message-content.simple");
+        var contentDiv_full = $(this).find(".news-text.message-content.full");
+        var content = contentDiv_full.find("p:first").text();
+        var text = overflowContent(content,100);
+        contentDiv_simple.find("p:first").text(text);
+        contentDiv_simple.click(function(){
+          contentDiv_simple.hide();
+          contentDiv_full.show();
+        });
+        contentDiv_full.click(function(){
+          contentDiv_full.hide();
+          contentDiv_simple.show();
+        });
+      });
+    });

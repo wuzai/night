@@ -1,0 +1,95 @@
+!!! 5
+html(lang="zh-cn")
+  title 门店详情
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    div#storeInfo.container.mainbody
+      input.storeId(type='hidden',value= store._id)
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          - if(store.imageView&&store.imageView.length > 0)
+            .row-fluid
+              .span2
+              .span8
+                #myCarousel.carousel.slide
+                  ol.carousel-indicators
+                    each row, i in store.imageView
+                      - if (i==0)
+                        li.active(data-target='#myCarousel', data-slide-to='#{i}')
+                      - else
+                        li(data-target='#myCarousel', data-slide-to='#{i}')
+                  .carousel-inner
+                    each row, i in store.imageView
+                      - if (i==0)
+                        .item.active
+                          img.hidden-phone(src= imageRoot + row.url,style='width:100%;height:500px', alt= row.txt)
+                          img.visible-phone(src= imageRoot + row.url,style='width:100%;height:200px', alt= row.txt)
+                          - if(row.txt)
+                            .carousel-caption
+                              p= row.txt
+                      - else
+                        .item
+                          img.hidden-phone(src= imageRoot + row.url,style='width:100%;height:500px', alt= row.txt)
+                          img.visible-phone(src= imageRoot + row.url,style='width:100%;height:200px', alt= row.txt)
+                          - if(row.txt)
+                            .carousel-caption
+                              p= row.txt
+                  a.left.carousel-control(href='#myCarousel', data-slide='prev') ‹
+                  a.right.carousel-control(href='#myCarousel', data-slide='next') ›
+              .span2
+          - else
+            .box-content
+              .row-fluid
+                img.mendianlx-pic(src= imageRoot + store.vipImage)
+            - if(store.slogan)
+              .mendianlx
+                strong= store.slogan
+          .box.padded5(style=' background:none; border:0; box-shadow:none;')
+            .mendianlx-title.text-center= store.storeName
+            .row-fluid
+              .mendianlx-content2
+                - if(store.isPublicTel&&store.telephone)
+                  - var tel = "tel:" + store.telephone;
+                  a(href= tel)
+                    .mendianlx-tel
+                      i.icon-phone-sign
+                      span= store.telephone
+                - if(store.address)
+                  a(href="http://api.map.baidu.com/geocoder?location="+store.location.latitude+","+store.location.longitude+"&coord_type=bd09ll&output=html&src=yourAppName")
+                    .mendianlx-addr
+                      i.icon-spin.icon-spinner(style='color:#ff0000')
+                      span= store.address
+                - if(store.description)
+                  .mendianlx-title2
+                    i.icon-flag
+                    | 门店描述
+                  .mendianlx-content= store.description
+
+            div#serviceItemOfItemDiv
+              - var len = serviceItems.length;
+              if(len > 0)
+                .mendianlx-title2(style='margin-bottom: 5px;')
+                  i.icon-flag
+                  | 门店服务
+              - for (var i = 0; i < len; i++)
+                - var item = serviceItems[i];
+                if(item)
+                  .box.padded5
+                    .box-content
+                      .box-content(style='border-bottom:1px dotted #ccc; padding:5px 0; margin-bottom:5px;')
+                        .row-fluid
+                          .shengluehao.shfu-title.pull-left
+                            strong= item.serviceItemName
+                      .box-content
+                        .row-fluid
+                          a(href= webRoot_weixinapp + '/openServiceItemInfo?pageNum=full&merchantId='+merchantId+ '&FromUserName='+ FromUserName+'&serviceItemId='+item._id)
+                            - var image = item.postImage?item.postImage.imageUrl:'';
+                            img.shfu-pic(src= imageRoot + image)
+                        each row in serviceItemTypes
+                          - if(item.serviceItemType === row.key)
+                            .shfu-content.shengluehao= row.value
+
+  include partials/footer
+  include partials/foot
+  script

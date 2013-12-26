@@ -1,0 +1,40 @@
+!!! 5
+html(lang="zh-cn")
+  title 商户活动
+  include partials/head
+  body
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container.mainbody.padded5
+      .row-fluid
+        - var len = advertisements.length;
+        - if(len < 1)
+          .alert.alert-block
+            h4 暂时没有相关活动信息
+        - for (var i = 0; i < len; i++)
+          - var ad = advertisements[i];
+          - if(ad)
+            .box.padded5
+              .box-content
+                .box-content(style='border-bottom:1px dotted #ccc; padding:5px 0;')
+                  .row-fluid
+                    .pull-left.shengluehao.shhd-title
+                      strong= ad.title
+                    .mendian-date.text-right.pull-right.hidden-phone= ad.createdAt
+                    .dateFormat.mendian-date.text-right.pull-right.visible-phone= ad.createdAt
+                .box-content
+                  .row-fluid
+                    a(href= webRoot_weixinapp + '/openAdvertisementInfo?merchantId='+merchantId+ '&FromUserName='+ FromUserName+'&advertisementId='+ad._id)
+                      - var imagePic = ad.postImage && ad.postImage.imageUrl? (imageRoot + ad.postImage.imageUrl) :'/images/not_image.jpg';
+                      img.shhd-pic(src= imagePic)
+                  .shhd-content(style='display:none') 简介
+
+  include partials/footer
+  include partials/foot
+  script
+    $(document).ready(function () {
+      $(".dateFormat.visible-phone").each(function(){
+        var date = $(this).text();
+        var dateFormat = dateFormatter(date,'MM-dd');
+        $(this).text(dateFormat);
+      });
+    });

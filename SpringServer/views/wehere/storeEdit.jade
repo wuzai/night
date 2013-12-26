@@ -1,0 +1,134 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 门店信息修改
+          h5
+            | 修改门店的详细信息
+        ul.inline.pull-right.sparkline-box
+          li
+            a.btn.btn-large.btn-green(href= webRoot_wehere +'/merchant/storeImageView?storeId='+ store._id, title='门店图片展示') 门店图片展示
+
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  门店列表
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  修改信息
+          span.breadcrumb-arrow
+            span
+  #storeEdit.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title= store.storeName
+          .box-content
+            form.form-horizontal.fill-up(method="post", action= webRoot_wehere +'/merchant/storeEditSave',enctype='multipart/form-data')
+              input(type='hidden',name='storeId', value= store._id)
+              .padded
+                .control-group
+                  label.control-label 门店名称
+                  .controls
+                    input(type='text',name='storeName', placeholder='门店名称',value= store.storeName)
+                .control-group
+                  label.control-label 描述信息
+                  .controls
+                    textarea(name='description', rows='3',style='width: 100%;',placeholder='门店描述信息')= store.description
+                .control-group
+                  label.control-label 门店标语
+                  .controls
+                    input(type='text',name='slogan', placeholder='门店标语或宣传语',value= store.slogan)
+                .control-group
+                  label.control-label 负责人电话
+                  .controls
+                    input(type='text',name='telephone', placeholder='门店负责人电话',value= store.telephone)
+                .control-group
+                  div
+                    label.control-label(style="margin-right:15px") 是否公开负责人电话
+                  .switch(data-on="danger", data-off="warning",data-on-label="公开",data-off-label="不公开")
+                    - if(store.isPublicTel)
+                      input(type="checkbox", name="isPublicTel",checked)
+                    - else
+                      input(type="checkbox", name="isPublicTel")
+                .control-group
+                  label.control-label 门店地址
+                  .controls
+                    input(type='text',name='address', placeholder='门店地址',value= store.address)
+                .control-group
+                  label.control-label 经度
+                  .controls
+                    input(type='text',name='longitude', placeholder='经度(经度范围:-180.00000---180.00000)',value= store.location.longitude)
+                .control-group
+                  label.control-label 纬度
+                  .controls
+                    input(type='text',name='latitude', placeholder='纬度(纬度范围:-90.00000---90.00000)',value= store.location.latitude)
+                .control-group
+                  label.control-label 坐标描述
+                  .controls
+                    textarea(name='relevantText', rows='3',style='width: 100%;',placeholder='地理位置的相关描述信息')= store.location.relevantText
+                .control-group.vipImage
+                  .controls
+                    img.img-polaroid.img-rounded(src= imageRoot + store.vipImage,width='240px',height='150px')
+                .control-group
+                  label.control-label 门店图标
+                  .controls
+                    input(type='file',name='vipImage', style='padding-left: 45px;width:50%;')
+                    span 为了图片显示效果最佳,建议选择图片尺寸为320*200
+
+              .form-actions
+                button.btn.btn-blue(type='button') 提交
+                button.btn.btn-default(type='button') 返回
+
+block scripts
+  script
+    $("#storeEdit .control-group input[name='vipImage']").change(function(){
+      $("#storeEdit .control-group.vipImage").hide();
+    });
+    var webRoot = $("#webRoot_wehere").val();
+    $("#storeEdit .form-actions button.btn-default").click(function(){
+      window.location.href = webRoot +'/merchant/storeList';
+    });
+    $("#storeEdit .form-actions button.btn-blue").click(function(){
+      var storeName = $("#storeEdit form.form-horizontal input[name='storeName']").val();
+      if(!storeName.trim()){
+        alert("门店名称不能为空.");
+        return false;
+      }
+      var telephone = $("#storeEdit form.form-horizontal input[name='telephone']").val();
+      if(telephone.trim()&&!isPhone(telephone.trim())){
+        alert("门店电话输入错误,请重新输入.");
+        return false;
+      }
+      var longitude = $("#storeEdit form.form-horizontal input[name='longitude']").val();
+      var mp =Number(longitude);
+      if(isNaN(mp)|| mp<-180 || mp>180){
+        alert("经度输入错误,请重新输入.");
+        return false;
+      }
+      var latitude = $("#storeEdit form.form-horizontal input[name='latitude']").val();
+      var np =Number(latitude.trim());
+      if(isNaN(np) || np<-90 || np>90){
+        alert("纬度输入错误,请重新输入.");
+        return false;
+      }
+      $("#storeEdit form.form-horizontal").submit();
+    });

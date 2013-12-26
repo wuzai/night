@@ -1,0 +1,61 @@
+extends partials/default
+
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户注册
+          h5
+            | 选择商户加入的类型
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  商户注册
+          span.breadcrumb-arrow
+            span
+  #pricing-table.clear
+    mixin list(mb)
+      h3= mb.merchantRankName
+        - var price = '￥'+mb.price
+        span= price
+      - var url = webRoot_wehere + '/merchant/signUp?merchantRankId='+ mb._id
+      a.signup(href= url) 加入
+      ul
+        li
+          b= price
+        li
+          span= mb.merchantRankName
+        li
+          span= mb.description
+        li
+          b 欢迎
+          span 加入
+    - var count = 0
+    each mb in merchantRanks
+      if(mb.isRecommend&&count<1)
+        - count++
+        #most-popular.plan
+          mixin list(mb)
+      else
+        .plan
+          mixin list(mb)
+
+block scripts
+  script
+    $('#pricing-table div.plan').mousemove(function(){
+      $('#most-popular').removeAttr('id');
+      $(this).attr('id','most-popular');
+    });

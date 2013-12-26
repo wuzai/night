@@ -1,0 +1,138 @@
+
+
+/** gtao add by 2013-07-19 */
+.nav-icon {
+    display: inline-block;
+    width: 32px;
+}
+
+.nav-menu-icon {
+    display: inline-block;
+    width: 16px;
+}
+
+.dark-nav > ul li a span {
+    padding-left: 10px;
+}
+
+/** gtao add by 2013-08-09 */
+#breadcrumbs .breadcrumb-button {
+    margin-right: -17px;
+}
+
+ol, ul {
+    list-style: none
+}
+
+.select2-container {
+    width: 100%;
+}
+/** gtao add by 2013-08-12 */
+@media (max-width:767px) {
+    .mainBody {
+        padding-left: 20px;
+        padding-right: 20px
+    }
+}
+
+/** css自动截取 （带省略号） **/
+.title-overflow{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;display: block;}
+
+/** gtao add by 2013-08-14 **/
+.news .messageImage{
+    float: left;
+    width: 100px;
+    height: 50px;
+    line-height: 36px;
+    text-align: center;
+}
+.avatar-large {
+    max-width: 80px;
+    max-height: 50px
+}
+
+@media (min-width:767px) {
+    .news-title .title-overflow{
+        width: 80%
+    }
+}
+@media (max-width:767px) {
+    .box-section {
+        padding: 1px;
+    }
+    .news-title{
+        color: blue;
+        font-size: 14px;
+    }
+    .news-title .title-overflow{
+        width: 50%
+    }
+    .news.with-icons .news-content {
+        margin-left: 1px;
+    }
+    .news-content {
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+}
+
+/** gtao add by 2013-08-15 **/
+
+.largess-input.telephone-input {
+    width: 80%;
+    height: 30px;
+    padding: 2px 10px
+}
+
+.largess-input.telephone-input {
+    margin-bottom: 0;
+    padding: 4px 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 25px
+}
+
+/** gtao add by 2013-08-26 **/
+.form-weixininuser {
+    max-width: 300px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-weixininuser input[type="text"],
+.form-weixininuser input[type="password"] {
+    font-size: 14px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+
+/** gtao add by 2013-08-15 **/
+.input-help-box {
+    width:96%;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 2%;
+    border-radius: 5px;
+    border: 1px solid #699;
+    background: #FFF;
+    text-indent: 2em;
+    color: #bd362f;
+    line-height: 18px;
+}
+
+/**  gtao add by 2013-10-09  用于处理手机视屏显示的大小 **/
+div.jp-video-180p {
+    width:100%;
+}

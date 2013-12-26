@@ -1,0 +1,93 @@
+.chat-message-box {
+  position: relative;
+  background: white;
+  border: 1px solid #d8d8d8;
+  @include box-sizing(content-box);
+  @include border-radius(4px);
+  margin-bottom: 15px;
+  &:before, &:after {
+    bottom: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none
+  }
+  &:after {
+    border-bottom-color: white;
+    border-width: 7px;
+    left: 10px
+  }
+  &:before {
+    border-bottom-color: #d8d8d8;
+    border-width: 8px;
+    left: 9px
+  }
+  textarea {
+    border: none;
+    @include box-shadow(none);
+    margin: 5px;
+    width: 97% !important;
+    background: #fff;
+    &:focus {
+      border: none
+    }
+  }
+}
+
+.closable-chat-box {
+  .chat-message-box {
+    margin-bottom: 0;
+    textarea {
+      height: 20px
+    }
+  }
+  .actions {
+    display: none
+  }
+}
+
+.closable-chat-box.open {
+  .chat-message-box {
+    margin-bottom: 15px;
+    textarea {
+      height: auto
+    }
+  }
+  .actions {
+    display: block
+  }
+  .fields {
+    *zoom: 1;
+    ul {
+      float: left;
+      margin-left: 50px;
+      margin-bottom: 2px;
+      list-style: none;
+      padding: 0;
+      li {
+        line-height: 18px;
+        color: #949494
+      }
+    }
+    a {
+      color: #393939
+    }
+    .avatar {
+      position: absolute;
+      img {
+        max-width: 36px;
+        max-height: 36px
+      }
+    }
+  }
+  .fields:before, .fields:after {
+    display: table;
+    content: "";
+    line-height: 0
+  }
+  .fields:after {
+    clear: both
+  }
+}

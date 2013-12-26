@@ -1,0 +1,34 @@
+!!! 5
+html(lang="zh-cn")
+  title 积分记录
+  include partials/head
+  body(style="background:none;padding-top: 10px;")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #pointHistoryListDiv.container.mainBody
+      - var len = pointHistorys.length;
+      - if(len < 1)
+        .alert.alert-block
+          h4 暂时没有相关积分历史记录信息
+      each row in pointHistorys
+        .box-section.news.with-icons.messageSend(style="min-height:0px;")
+          .messageImage(style="width:auto")
+            - if(row.decPoint)
+              img.avatar-large(src= webRoot_href + "/images/point-outgo.png")
+            - else
+              img.avatar-large(src= webRoot_href + "/images/point-income.png")
+          .news-time= row.createdAt
+            span(style="margin-top:10px;")= row.surplusPoint
+          .news-content
+            .news-title
+              abbr(title= row.transactionType)
+                div= row.transactionTypeText
+            .news-text
+              h5 单项积分
+                - if(row.decPoint)
+                  span(style="color:chartreuse;")= "-" + row.decPoint
+                - else
+                  span(style="color:red;")= "+" + row.addPoint
+
+  include partials/footer
+  include partials/foot
+  script

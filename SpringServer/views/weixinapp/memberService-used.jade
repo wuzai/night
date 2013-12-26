@@ -1,0 +1,61 @@
+!!! 5
+html(lang="zh-cn")
+  title 我的服务
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #memberServiceUsedDiv.container.mainbody
+      input.memberServiceId(type='hidden',value= memberService._id)
+      input.memberServiceType(type='hidden',value= memberService.memberServiceType)
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none; margin-bottom:0;')
+          .box-content
+            .row-fluid
+              img.hy-pic(src= imageRoot + memberService.iconImage)
+          .hy-title.text-center(style='margin-top:-25px; position:relative;')
+            strong= memberService.memberServiceName
+        .box.padded10(style='border:none; background:none;box-shadow:none; padding-top:0;')
+          .row-fluid
+            - if(memberService.ruleText)
+              .box-content(style='margin-bottom:20px; ')
+                .row-fluid
+                  .hy-content
+                    h5(style='margin-top:0;')
+                      i.icon-sort
+                      | 使用说明
+                    .hy-content2= memberService.ruleText
+            .box.padded10
+              .row-fluid
+                .hy-title2.pull-left
+                  span.pull-left.text-center.hy
+                    .alert.code-log
+                      strong 请点击使用按钮,并讲获取的验证码告知商户
+                  .pull-left.hy-title3
+                    button.used.btn.btn-large.btn-block.btn-danger(type='button', style='margin-bottom:0; margin-top:20px;')
+                      i.icon-legal.font-size24
+                        strong 使 用
+
+  include partials/footer
+  include partials/foot
+  script
+    $("#memberServiceUsedDiv button.used").click(function(){
+      var btn = $(this);
+      if(btn.hasClass("disabled")){
+        return false;
+      }
+      var memberServiceId = $("#memberServiceUsedDiv .memberServiceId").val();
+      var memberServiceType = $("#memberServiceUsedDiv .memberServiceType").val();
+      var webRoot_weixinapp = $("#webRoot_weixinapp").val();
+      var params = {memberServiceId:memberServiceId,type:memberServiceType};
+      $.getJSON(webRoot_weixinapp + '/usedMemberServiceSubmit',params,function(data,status){
+        if(data&&data.status===200){
+          $("#memberServiceUsedDiv .code-log").addClass("alert-success");
+          $("#memberServiceUsedDiv .code-log strong").text(data.code);
+          btn.addClass("disabled");
+        }else{
+          if(data&&data.error){
+            alert(data.error);
+          }
+        }
+      });
+    });

@@ -1,0 +1,76 @@
+extends ../partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 评论管理
+          h5
+            | 查看用户评论
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  评论列表
+          span.breadcrumb-arrow
+            span
+  #commentListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 评论列表
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 评论内容
+                  th
+                    div 评论人
+                  th
+                    div 评论商户
+                  th
+                    div 评论类型
+                  th
+                    div 操作
+              tbody
+                each row, i in comments
+                  tr
+                    td(width="10%",align="center")
+                      = i+1
+                    td(width="35%")
+                      = row.content
+                    td(width="15%")
+                      = row.user?(row.user.userName?row.user.userName:'----'):'----'
+                    td(width="15%")
+                      = row.merchant?(row.merchant.merchantName?row.merchant.merchantName:'----'):'----'
+                    td(width="15%",align="center")
+                      = row.commentType
+                    td(width="10%",align="center")
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/message/commentDelete?commentId='+row._id)
+                            i.icon-trash
+
+
+block scripts
+  script
+    $('#commentListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除?')) {
+        window.location.href = this.href;
+      }
+    });

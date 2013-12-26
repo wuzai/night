@@ -1,0 +1,692 @@
+.triangle-button {
+  position: absolute;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  top: 0;
+  right: 0;
+  color: #fff;
+  overflow: hidden;
+  height: 32px;
+  width: 32px;
+  text-shadow: none;
+  i, .inner {
+    z-index: 1;
+    position: absolute;
+    right: 3px;
+    top: 2px
+  }
+  &:before {
+    content: '';
+    display: inline-block;
+    border-right: 32px solid;
+    border-bottom: 32px solid transparent;
+    position: absolute;
+    top: 0;
+    right: 0
+  }
+  &:hover, &:active {
+    color: #fff
+  }
+}
+
+.triangle-button.red {
+  &:before {
+    border-right-color: #aa433a
+  }
+  &:hover:before {
+    border-right-color: #b5473e
+  }
+  &:active:before {
+    border-right-color: #9f3f36
+  }
+}
+
+.triangle-button.green {
+  &:before {
+    border-right-color: #8fae53
+  }
+  &:hover:before {
+    border-right-color: #96b35d
+  }
+  &:active:before {
+    border-right-color: #87a44d
+  }
+}
+
+.triangle-button.blue {
+  &:before {
+    border-right-color: #7fb3d4
+  }
+  &:hover:before {
+    border-right-color: #8abad8
+  }
+  &:active:before {
+    border-right-color: #74acd0
+  }
+}
+
+.triangle-button.orange {
+  &:before {
+    border-right-color: #cf6e20
+  }
+  &:hover:before {
+    border-right-color: #dc7522
+  }
+  &:active:before {
+    border-right-color: #c2671e
+  }
+}
+
+.jqstooltip {
+  z-index: 10001;
+  border: 1px solid #333333 !important;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0.7);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)));
+  background-size: 100%;
+  @include border-radius(2px);
+  display: inline-block
+}
+
+.btn {
+  color: #fff;
+  @include border-radius(2px);
+  font-size: 11px;
+  font-weight: 600;
+  text-shadow: 0 -1px #6f6f6f;
+  &:hover, &:active, &:focus {
+    color: #fff
+  }
+  .caret {
+    border-top: 4px solid white
+  }
+  i {
+    vertical-align: middle
+  }
+}
+
+.btn.btn-full {
+  display: block
+}
+
+.btn.btn-default {
+  color: #686868;
+  text-shadow: none;
+  border: 1px solid #d4d4d4;
+  @include box-shadow(inset 0 1px 2px white);
+  background: #e9e9e9;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #fdfdfd, #e9e9e9));
+  background-size: 100%;
+  &:hover, &:active {
+    color: #505050
+  }
+  &:hover {
+    background: #e6e6e6;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #fdfdfd, #e6e6e6));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #f3f3f3;
+    border-color: #cfcfcf;
+    @include box-shadow(0 0 5px #f3f3f3 inset);
+  }
+  .caret {
+    border-top: 4px solid black
+  }
+}
+
+.btn.btn-large {
+  font-size: 12px
+}
+
+.btn.btn-red {
+  border: 1px solid #a54747;
+  @include box-shadow(inset 0 1px 2px #cd8b8b);
+  background: #b95d5d;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #c57979, #b95d5d));
+  background-size: 100%;
+  &:hover {
+    background: #b75959;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #c57979, #b75959));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #bf6b6b;
+    border-color: #9e4444;
+    @include box-shadow(0 0 5px #bf6b6b inset);
+  }
+}
+
+.btn.btn-green {
+  border: 1px solid #6d963b;
+  background: #82b346;
+  @include box-shadow(inset 0 1px 2px #a2c873);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #96c161, #82b346));
+  background-size: 100%;
+  &:hover {
+    background: #80af45;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #96c161, #80af45));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #8cbb52;
+    border-color: #688e38;
+    @include box-shadow(0 0 5px #8cbb52 inset);
+  }
+}
+
+.btn.btn-blue {
+  border: 1px solid #337ca1;
+  background: #3d94c0;
+  @include box-shadow(inset 0 1px 2px #6eb0d1);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #5ba5cb, #3d94c0));
+  background-size: 100%;
+  &:hover {
+    background: #3c91bc;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #5ba5cb, #3c91bc));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #4c9dc6;
+    border-color: #31769a;
+    @include box-shadow(0 0 5px #4c9dc6 inset);
+  }
+}
+
+.btn.btn-gray {
+  border: 1px solid #626e7f;
+  background: #758294;
+  @include box-shadow(inset 0 1px 2px #9aa4b1);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #8c97a6, #758294));
+  background-size: 100%;
+  &:hover {
+    background: #728092;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #8c97a6, #728092));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #818d9d;
+    border-color: #5d6979;
+    @include box-shadow(0 0 5px #818d9d inset);
+  }
+}
+
+.btn.btn-black {
+  border: 1px solid #5a5a5a;
+  background: #6f6f6f;
+  @include box-shadow(inset 0 1px 2px #909090);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #838383, #6f6f6f));
+  background-size: 100%;
+  &:hover {
+    background: #6c6c6c;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #838383, #6c6c6c));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #797979;
+    border-color: #555555;
+    @include box-shadow(0 0 5px #797979 inset);
+  }
+}
+
+.btn.btn-lightblue {
+  border: 1px solid #3692bb;
+  background: #4da5cc;
+  @include box-shadow(inset 0 1px 2px #81bfdb);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #6db5d5, #4da5cc));
+  background-size: 100%;
+  &:hover {
+    background: #49a3cb;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #6db5d5, #49a3cb));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #5dadd0;
+    border-color: #338cb3;
+    @include box-shadow(0 0 5px #5dadd0 inset);
+  }
+}
+
+.btn.btn-gold {
+  border: 1px solid #a87a27;
+  background: #c9922f;
+  @include box-shadow(inset 0 1px 2px #daaf61);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #d5a44c, #c9922f));
+  background-size: 100%;
+  &:hover {
+    background: #c58f2e;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #d5a44c, #c58f2e));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #d19c3b;
+    border-color: #a07425;
+    @include box-shadow(0 0 5px #d19c3b inset);
+  }
+}
+
+.btn.btn-sea {
+  border: 1px solid #39534f;
+  background: #496b67;
+  @include box-shadow(inset 0 1px 2px #64928d);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #5a837e, #496b67));
+  background-size: 100%;
+  &:hover {
+    background: #476864;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #5a837e, #476864));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #527772;
+    border-color: #354d4a;
+    @include box-shadow(0 0 5px #527772 inset);
+  }
+}
+
+.btn.btn-brown {
+  border: 1px solid #856733;
+  background: #a27e3f;
+  @include box-shadow(inset 0 1px 2px #c29e61);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #bb934f, #a27e3f));
+  background-size: 100%;
+  &:hover {
+    background: #9f7b3d;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #bb934f, #9f7b3d));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #b18944;
+    border-color: #7e6131;
+    @include box-shadow(0 0 5px #b18944 inset);
+  }
+}
+
+.btn.btn-twitter {
+  border: 1px solid #2189ff;
+  background: #4a9eff;
+  @include box-shadow(inset 0 1px 2px #8dc2ff);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #73b4ff, #4a9eff));
+  background-size: 100%;
+  &:hover {
+    background: #459cff;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #73b4ff, #459cff));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #5fa9ff;
+    border-color: #1783ff;
+    @include box-shadow(0 0 5px #5fa9ff inset);
+  }
+}
+
+.btn.btn-facebook {
+  border: 1px solid #2d4479;
+  background: #385496;
+  @include box-shadow(inset 0 1px 2px #5272bf);
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #4365b4, #385496));
+  background-size: 100%;
+  &:hover {
+    background: #365293;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #4365b4, #365293));
+    background-size: 100%;
+    @include transition(box-shadow .05s ease-in-out);
+  }
+  &:active {
+    background: #3d5ca5;
+    border-color: #2a3f71;
+    @include box-shadow(0 0 5px #3d5ca5 inset);
+  }
+}
+
+.btn-group.open {
+  .btn.btn-default.dropdown-toggle {
+    background-color: #fdfdfd
+  }
+  .btn.btn-red.dropdown-toggle {
+    background-color: #c57979
+  }
+  .btn.btn-green.dropdown-toggle {
+    background-color: #96c161
+  }
+  .btn.btn-blue.dropdown-toggle {
+    background-color: #5ba5cb
+  }
+  .btn.btn-gray.dropdown-toggle {
+    background-color: #8c97a6
+  }
+  .btn.btn-black.dropdown-toggle {
+    background-color: #838383
+  }
+  .btn.btn-lightblue.dropdown-toggle {
+    background-color: #6db5d5
+  }
+  .btn.btn-gold.dropdown-toggle {
+    background-color: #d5a44c
+  }
+  .btn.btn-sea.dropdown-toggle {
+    background-color: #5a837e
+  }
+  .btn.btn-brown.dropdown-toggle {
+    background-color: #bb934f
+  }
+  .btn.btn-twitter.dropdown-toggle {
+    background-color: #73b4ff
+  }
+  .btn.btn-facebook.dropdown-toggle {
+    background-color: #4365b4
+  }
+}
+
+.btn-group.btn.btn-large {
+  padding: 8px 10px
+}
+
+button.btn {
+  font-weight: 700
+}
+
+.btn-group > .btn, .btn-group > .dropdown-menu {
+  font-size: 12px
+}
+
+.caret {
+  @include opacity(.6);
+}
+
+.btn-mini .caret, .btn-small .caret, .btn-large .caret {
+  margin-top: 8px;
+  margin-left: 4px
+}
+
+.dropdown-menu .divider {
+  border-top: none !important
+}
+
+.btn-group {
+  > .btn:first-child, > .btn.large:first-child {
+    margin-left: 0;
+    @include border-top-left-radius(2px);
+    @include border-bottom-left-radius(2px);
+  }
+  > .btn:last-child, > .dropdown-toggle, > .btn.large:last-child, > .large.dropdown-toggle {
+    @include border-top-right-radius(2px);
+    @include border-bottom-right-radius(2px);
+  }
+}
+
+.action-nav-normal.rounded {
+  .action-nav-button {
+    margin-left: 10px;
+    margin-right: 10px
+  }
+  .action-nav-button a {
+    @include border-radius(50%);
+    padding: 16px;
+    min-width: auto;
+    i {
+      height: 40px;
+      line-height: 40px
+    }
+  }
+}
+
+.action-nav-normal {
+  text-align: center;
+  .action-nav-button {
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    a {
+      @include border-radius(4px);
+      background: #ececec;
+      background-image: inline-image("box-bg.svg");
+      @include background-image(linear-gradient(top, #fafafa, #ececec));
+      background-size: 100%;
+      border: 1px solid #d5d5d5;
+      @include box-shadow(0 0 0 1px #fafafa inset, 0 1px 1px 0 #dddddd);
+      padding: 10px 0;
+      display: block;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #626262;
+      @include box-sizing(border-box);
+      &:hover {
+        background: #f2f2f2;
+        background-image: inline-image("box-bg.svg");
+        @include background-image(linear-gradient(top, #f7f7f7, #f2f2f2));
+        background-size: 100%;
+      }
+      &:active {
+        @include box-shadow(none);
+        background: #f7f7f7;
+        background-image: inline-image("box-bg.svg");
+        @include background-image(linear-gradient(top, #f4f4f4, #f7f7f7));
+        background-size: 100%;
+      }
+      > span {
+        display: block;
+        padding-top: 4px;
+        font-weight: 600
+      }
+      > i {
+        font-size: 32px;
+        color: #808080
+      }
+    }
+  }
+  .action-nav-button.default a,
+  .action-nav-button.red a,
+  .action-nav-button.green a,
+  .action-nav-button.blue a,
+  .action-nav-button.gray a,
+  .action-nav-button.black a,
+  .action-nav-button.lightblue a,
+  .action-nav-button.gold a,
+  .action-nav-button.sea a,
+  .action-nav-button.brown a,
+  .action-nav-button.twitter a,
+  .action-nav-button.facebook a {
+    color: #fff;
+    text-shadow: 0 1px rgba(51, 51, 51, 0.5);
+    i {
+      color: #fff;
+      text-shadow: 0 1px rgba(51, 51, 51, 0.5)
+    }
+    &:hover {
+      @include opacity(0.95);
+      @include transition(opacity .2s ease-in-out);
+    }
+    &:active {
+      @include box-shadow(0 0 2px #707070 inset, 0 1px 0 white);
+    }
+  }
+  .action-nav-button.default a {
+    border: 1px solid #d9d9d9;
+    @include box-shadow(0 1px 2px 0 #f8f8f8 inset);
+    background: #d4d4d4;
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #f8f8f8, #d4d4d4));
+    background-size: 100%;
+    &:active {
+      background: #e4e4e4
+    }
+  }
+  .action-nav-button.red a {
+    border: 1px solid #ac4a4a;
+    background: #a54747;
+    @include box-shadow(0 1px 2px 0 #c27272 inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #c27272, #a54747));
+    background-size: 100%;
+    &:active {
+      background: #b65555
+    }
+  }
+  .action-nav-button.green a {
+    border: 1px solid #729d3e;
+    background: #6d963b;
+    @include box-shadow(0 1px 2px 0 #91be5a inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #91be5a, #6d963b));
+    background-size: 100%;
+    &:active {
+      background: #7dac43
+    }
+  }
+  .action-nav-button.blue a {
+    border: 1px solid #3682a9;
+    background: #337ca1;
+    @include box-shadow(0 1px 2px 0 #53a1c9 inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #53a1c9, #337ca1));
+    background-size: 100%;
+    &:active {
+      background: #3b8eb8
+    }
+  }
+  .action-nav-button.gray a {
+    border: 1px solid #667384;
+    background: #626e7f;
+    @include box-shadow(0 1px 2px 0 #8692a2 inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #8692a2, #626e7f));
+    background-size: 100%;
+    &:active {
+      background: #6f7d90
+    }
+  }
+  .action-nav-button.gray a {
+    border: 1px solid #5f5f5f;
+    background: #5a5a5a;
+    @include box-shadow(0 1px 2px 0 #7e7e7e inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #7e7e7e, #5a5a5a));
+    background-size: 100%;
+    &:active {
+      background: #6a6a6a
+    }
+  }
+  .action-nav-button.lightblue a {
+    border: 1px solid #3898c3;
+    background: #3692bb;
+    @include box-shadow(0 1px 2px 0 #65b1d3 inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #65b1d3, #3692bb));
+    background-size: 100%;
+    &:active {
+      background: #45a1ca
+    }
+  }
+  .action-nav-button.gold a {
+    border: 1px solid #b08029;
+    background: #a87a27;
+    @include box-shadow(0 1px 2px 0 #d3a044 inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #d3a044, #a87a27));
+    background-size: 100%;
+    &:active {
+      background: #c18c2d
+    }
+  }
+  .action-nav-button.sea a {
+    border: 1px solid #3d5955;
+    background: #39534f;
+    @include box-shadow(0 1px 2px 0 #567d78 inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #567d78, #39534f));
+    background-size: 100%;
+    &:active {
+      background: #456561
+    }
+  }
+  .action-nav-button.brown a {
+    border: 1px solid #8c6c36;
+    background: #856733;
+    @include box-shadow(0 1px 2px 0 #b88e48 inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #b88e48, #856733));
+    background-size: 100%;
+    &:active {
+      background: #9b783c
+    }
+  }
+  .action-nav-button.twitter a {
+    border: 1px solid #2c8eff;
+    background: #2189ff;
+    @include box-shadow(0 1px 2px 0 #69afff inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #69afff, #2189ff));
+    background-size: 100%;
+    &:active {
+      background: #4099ff
+    }
+  }
+  .action-nav-button.facebook a {
+    border: 1px solid #2f4880;
+    background: #2d4479;
+    @include box-shadow(0 1px 2px 0 #4061ad inset);
+    background-image: inline-image("box-bg.svg");
+    @include background-image(linear-gradient(top, #4061ad, #2d4479));
+    background-size: 100%;
+    &:active {
+      background: #35508f
+    }
+  }
+  .badge, .label {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    padding: 3px 5px;
+    display: block;
+    @include box-shadow(none);
+  }
+  .triangle-button {
+    border-top-right-radius: 3px;
+    pointer-events: none;
+    i {
+      right: 4px;
+      top: 3px
+    }
+  }
+}

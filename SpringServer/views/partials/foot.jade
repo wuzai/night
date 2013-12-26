@@ -1,0 +1,30 @@
+.ex-tooltip
+#galleryOverlay(style='display: none;')
+  #gallerySlider
+  a#prevArrow
+    i.icon-angle-left.icon-4x
+  a#nextArrow
+    i.icon-angle-right.icon-4x
+
+script(src= webRoot_href + "/javascripts/jquery.min.js")
+script(type="text/javascript")
+  var ENV = {'FORCE_JQUERY':true};
+  window.jQuery || document.write('<script src= webRoot_href + "/javascripts/jquery.min.js"><\/script>')
+
+script(src= webRoot_href + "/javascripts/bootstrap.min.js")
+script(src= webRoot_href + "/3rd/dataTables/jquery.dataTables.min.js")
+script(src= webRoot_href + "/3rd/dataTables/bootstrap-dataTables.js")
+script(src= webRoot_href + "/3rd/switch/bootstrap-switch.js")
+script(src= webRoot_href + "/3rd/iCheck/jquery.icheck.min.js")
+script(src= webRoot_href + "/3rd/buttons/buttons.js")
+script(src= webRoot_href + "/3rd/datepicker/bootstrap-datepicker.js")
+script(src= webRoot_href + "/3rd/datepicker/locales/bootstrap-datepicker.zh-CN.js")
+script(src= webRoot_href + "/3rd/select2/select2.min.js")
+script(src= webRoot_href + "/3rd/select2/select2_locale_zh-CN.js")
+script(src= webRoot_href + "/kindeditor/kindeditor.js")
+script(src= webRoot_href + "/kindeditor/lang/zh_CN.js")
+
+script(src= webRoot_href + "/javascripts/main.js")
+
+block scripts
+//custom scripts.

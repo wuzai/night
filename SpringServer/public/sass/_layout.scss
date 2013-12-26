@@ -1,0 +1,48 @@
+@import "compass/layout";
+@import "compass/typography/links/link-colors";
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+  display: block
+}
+
+audio, canvas, video {
+  display: inline-block;
+}
+
+audio:not([controls]) {
+  display: none
+}
+
+html {
+  font-size: 100%;
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%
+}
+
+body {
+  font: 400 12px 'Open Sans', HelveticaNeue, Helvetica, Arial;
+  color: #707070;
+  background-image: url("../images/bg.png");
+  overflow-x: hidden
+}
+
+strong, b {
+  font-weight: 600
+}
+
+i {
+  font-size: 14px
+}
+
+//link-colors($normal, $hover, $active, $visited, $focus);
+a {
+  @include link-colors(#78808a, #5a6573, #5a6573, #0088cc, #5a6573);
+  &:focus, &:hover, &:active {
+    cursor: pointer;
+    outline: 0 none;
+    text-decoration: none
+  }
+}
+
+@include sticky-footer(54px);

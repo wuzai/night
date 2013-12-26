@@ -1,0 +1,455 @@
+.fc {
+  direction: ltr;
+  text-align: left;
+  font-size: 1em;
+  table {
+    border-collapse: collapse;
+    border-spacing: 0
+  }
+  td, th {
+    padding: 0;
+    vertical-align: top
+  }
+  .fc-header-space {
+    padding-left: 10px
+  }
+  .fc-state-hover, .ui-state-hover {
+    z-index: 2
+  }
+
+}
+
+.fc-header {
+  position: relative;
+  td {
+    white-space: nowrap
+  }
+  .fc-corner-right {
+    margin-right: 0;
+    float: right
+  }
+  .ui-corner-right {
+    margin-right: 0
+  }
+  .fc-state-down {
+    z-index: 3
+  }
+  .fc-state-active, .ui-state-active {
+    z-index: 4
+  }
+}
+
+.fc-header-left {
+  text-align: left;
+  width: 100%;
+  .fc-button-inner {
+    border: none
+  }
+  .fc-button-content {
+    padding: 0 8px
+  }
+}
+
+.fc-header-center {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  width: 80%;
+  left: 10%;
+  line-height: 37px
+}
+
+.fc-button-inner {
+  border-left: 1px solid #d5d5d5
+}
+
+.fc-header-right {
+  text-align: right;
+  position: absolute;
+  top: -37px;
+  right: 0;
+  .fc-button-content {
+    height: 37px
+  }
+}
+
+.fc-header-right .fc-button-agendaDay .fc-button-inner {
+  @include border-top-right-radius(3px);
+}
+
+.fc-header-title {
+  display: inline-block;
+  vertical-align: top;
+  h2 {
+    font-size: 12px;
+    margin: 0
+  }
+  strong {
+    margin-top: 0;
+    white-space: nowrap;
+    padding: 8px 12px !important;
+    display: block
+  }
+}
+
+.fc-button-next {
+  float: right;
+  margin-right: -2px
+}
+
+.fc-view {
+  width: 100%;
+  overflow: hidden
+}
+
+.fc-border-separate thead {
+  background: #eaeaea;
+  background-image: inline-image("box-bg.svg");
+  @include background-image(linear-gradient(top, #fdfdfd, #eaeaea));
+  background-size: 100%;
+  height: 25px;
+  line-height: 25px
+}
+
+.fc-widget-header, .fc-widget-content {
+  border: 1px solid #ccc
+}
+
+.fc-state-highlight {
+  background: #f4f3e6
+}
+
+.fc-cell-overlay {
+  background: #99CCFF;
+  opacity: .2
+}
+
+.fc-button {
+  position: relative;
+  cursor: pointer
+}
+
+.fc-button-inner {
+  position: relative;
+  float: left;
+  overflow: hidden
+}
+
+.fc-button-content {
+  position: relative;
+  float: left;
+  height: 37px;
+  line-height: 37px;
+  padding: 0 14px;
+  white-space: nowrap
+}
+
+.fc-state-default {
+  .fc-button-effect {
+    position: absolute;
+    top: 50%;
+    left: 0
+  }
+}
+
+.fc-state-active {
+  color: #797979;
+  background: #f9f9f9;
+  @include box-shadow(0 -1px 0 #eaeaea inset);
+  .fc-button-inner {
+    color: #797979;
+    background: #f9f9f9;
+    @include box-shadow(0 -1px 0 #eaeaea inset);
+  }
+}
+
+.fc-first th {
+  padding-top: 1px
+}
+
+.fc-state-disabled {
+  color: #999;
+  border-color: #ddd;
+  cursor: default;
+  .fc-button-inner {
+    color: #999;
+    border-color: #ddd
+  }
+  fc-button-effect {
+    display: none
+  }
+}
+
+.fc-event {
+  border-style: solid;
+  border-width: 0;
+  font-size: .85em;
+  cursor: default
+}
+
+a.fc-event, .fc-event-draggable {
+  cursor: pointer
+}
+
+a.fc-event {
+  text-decoration: none
+}
+
+.fc-rtl .fc-event {
+  text-align: right
+}
+
+.fc-event-skin {
+  border-color: #32779A;
+  background-color: #729BB9;
+  color: #fff;
+  display: block;
+  padding: 1px 0;
+  font-size: 11px;
+  @include border-radius(2px);
+  margin-top: 1px
+}
+
+.fc-event-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-style: solid;
+  border-width: 0;
+  overflow: hidden
+}
+
+.fc-event-time, .fc-event-title {
+  padding: 0 2px 1px 5px;
+  display: block;
+  float: left;
+  line-height: 16px
+}
+
+.fc .ui-resizable-handle {
+  display: block;
+  position: absolute;
+  z-index: 99999;
+  overflow: hidden;
+  font-size: 300%;
+  line-height: 50%
+}
+
+.fc-event-hori {
+  margin-bottom: 1px;
+  .ui-resizable-e {
+    top: 0 !important;
+    right: -3px !important;
+    width: 7px !important;
+    height: 100% !important;
+    cursor: e-resize
+  }
+  .ui-resizable-w {
+    top: 0 !important;
+    left: -3px !important;
+    width: 7px !important;
+    height: 100% !important;
+    cursor: w-resize
+  }
+}
+
+.fc-corner-right {
+  margin-right: 1px;
+  .fc-button-inner, .fc-event-inner {
+    margin-right: 0
+  }
+}
+
+.fc-corner-top {
+  margin-top: 1px;
+  .fc-event-inner {
+    margin-top: -1px;
+    border-top-width: 1px
+  }
+}
+
+.fc-corner-bottom {
+  margin-bottom: 1px;
+  .fc-event-inner {
+    margin-bottom: -1px;
+    border-bottom-width: 1px
+  }
+}
+
+table.fc-border-separate {
+  border-collapse: separate
+}
+
+.fc-border-separate {
+  th {
+    border-width: 1px 0 0 1px;
+    &:first-child {
+      border-left: none
+    }
+  }
+  td {
+    border-width: 1px 0 0 1px;
+    &:first-child {
+      border-left: none
+    }
+  }
+}
+
+.fc-border-separate tr.fc-last {
+  th, td {
+    border-top-width: 1px
+  }
+}
+
+.fc-border-separate tbody tr.fc-first {
+  td, th {
+    border-top-width: 1px
+  }
+}
+
+.fc-widget-header {
+  text-align: center;
+  .fc-agenda-divider-inner {
+    background: #eee
+  }
+}
+
+.fc-day-number {
+  float: right;
+  padding: 6px 5px 2px 5px
+}
+
+.fc-cols {
+  .fc-other-month .fc-day-number {
+    @include opacity(.3);
+  }
+  .fc-event-time {
+    font-weight: 700
+  }
+}
+
+.fc-day-content {
+  clear: both;
+  padding: 5px 2px 3px
+}
+
+.fc-rtl .fc-cols {
+  .fc-day-number {
+    float: left
+  }
+  .fc-event-time {
+    float: right
+  }
+}
+
+.fc-agenda {
+  table {
+    border-collapse: separate
+  }
+  .fc-agenda-axis {
+    width: 50px;
+    padding: 0 4px;
+    vertical-align: middle;
+    text-align: right;
+    white-space: nowrap;
+    font-weight: 400
+  }
+  .fc-day-content {
+    padding: 2px 2px 1px
+  }
+  .ui-resizable-resizing {
+    overflow: hidden
+  }
+}
+
+.fc-agenda-days {
+  th {
+    text-align: center
+  }
+  .fc-agenda-axis {
+    border-right-width: 1px
+  }
+  .fc-col0 {
+    border-left-width: 0
+  }
+}
+
+.fc-agenda-allday {
+  th {
+    border-width: 0 1px
+  }
+  .fc-day-content {
+    min-height: 34px;
+    _height: 34px
+  }
+}
+
+.fc-agenda-divider-inner {
+  height: 2px;
+  overflow: hidden
+}
+
+.fc-agenda-slots {
+  th {
+    border-width: 1px 1px 0
+  }
+  td {
+    border-width: 1px 0 0;
+    background: none;
+    div {
+      height: 20px
+    }
+  }
+  tr.fc-slot0 {
+    th, td {
+      border-top-width: 0
+    }
+  }
+  tr.fc-minor {
+    th, td {
+      border-top-style: dotted
+    }
+    th.ui-widget-header {
+      *border-top-style: solid
+    }
+  }
+}
+
+.fc-event-vert {
+  border-width: 0 1px;
+  .fc-event-head, .fc-event-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    overflow: hidden
+  }
+  .fc-event-time {
+    white-space: nowrap;
+    font-size: 10px
+  }
+  .fc-event-bg {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    @include opacity(.3);
+  }
+  .ui-resizable-s {
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 8px !important;
+    overflow: hidden !important;
+    line-height: 8px !important;
+    font-size: 11px !important;
+    font-family: monospace;
+    text-align: center;
+    cursor: s-resize
+  }
+}
+
+.fc .ui-draggable-dragging .fc-event-bg, .fc-select-helper .fc-event-bg {
+  display: none
+}

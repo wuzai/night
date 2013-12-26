@@ -1,0 +1,27 @@
+!!! 5
+html(lang="zh-cn")
+  title 微信帐号绑定
+  include partials/head
+  body(style="background:none")
+    div(style='padding-top: 30px;')
+      .container.mainBody(style='padding-left: 5px;padding-right: 5px;')
+        form.form-weixininuser(method="post", action= webRoot_weixinapp + '/saveWeiXinInUser')
+          !=messages()
+          input(type='hidden',name='merchantId',value= merchantId)
+          input(type='hidden',name='FromUserName',value= FromUserName)
+          h5 微信帐号与贝客汇账户的绑定
+          .input-prepend
+            input(type='text', name='userName',placeholder='请输入电话号码')
+          .input-prepend
+            input.input-block-level(type='password', name='password',placeholder='请输入密码')
+          button.btn.btn-large.btn-warning.btn-block(type='submit') 绑定微信
+          span.help-block.input-help-box
+            div 在这里,您可以输入贝客汇用户帐号与微信帐号进行绑定,使您在关注微信的同时,获取商户的推送信息等.
+            div
+              | 如果您还没有贝客汇用户帐号,现在可以
+              a(style="color:blue",href= webRoot_weixinapp + '/openSignUpPage?merchantId='+merchantId+'&FromUserName='+FromUserName) 直接注册
+              | ,并绑定微信.
+
+    include partials/foot
+
+

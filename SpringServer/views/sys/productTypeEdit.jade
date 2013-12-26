@@ -1,0 +1,69 @@
+extends ../partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 产品类型修改
+          h5
+            | 修改会所产品类型
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  会所产品类型列表
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  修改产品类型信息
+          span.breadcrumb-arrow
+            span
+  #productTypeEdit.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-content
+            form.form-horizontal.fill-up(method="post", action= webRoot_wehere +'/club/editProductTypeSave')
+              input(type='hidden',name='productTypeId', value= productType._id)
+              .padded
+                .control-group
+                  label.control-label 产品类型名称
+                  .controls
+                    input(type='text',name='title', placeholder='产品类型名称',value= productType.title)
+                .control-group
+                  label.control-label 产品类型描述
+                  .controls
+                    input(type='text',name='intro', placeholder='产品类型描述',value= productType.intro)
+              .form-actions
+                span.pull-right
+                  button.btn.btn-blue(type='button') 提交
+                  button.btn.btn-default(type='button',margin_left="10px;") 返回
+
+block scripts
+  script
+
+    var webRoot_wehere = $("#webRoot_wehere").val();
+    $("#productTypeEdit .form-actions button.btn-default").click(function(){
+      window.location.href = webRoot_wehere +'/club/clubProductTypeList';
+    });
+    $('#productTypeEdit .form-actions button.btn-blue').click(function(e) {
+      var title = $("#productTypeEdit .control-group input[name='title']").val();
+      if(!title.trim()){
+        alert("产品类型名称不能为空.");
+        return false;
+      }
+      $("#productTypeEdit form.form-horizontal").submit();
+    });

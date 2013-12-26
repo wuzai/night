@@ -1,0 +1,105 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 用户评论
+          h5
+            | 用户对商户的评论、留言
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  用户评论
+          span.breadcrumb-arrow
+            span
+
+  #commentListDiv.container-fluid.padded
+    .row-fluid
+      - if(comments.length<1)
+        .span3
+        .span3
+          ul.chat-box.timeline
+            li.arrow-box-left
+              .avatar
+                img.avatar-small(src= webRoot_href + '/images/default-face.png')
+              .info
+                span.name
+                  strong 还没有人发表评论
+      - else
+        .span12
+          .box
+            .box-header
+              span.title 评论列表
+            .box-content
+              table.dTable.responsive
+                thead(style='display:none')
+                  tr
+                    th
+                tbody
+                  each row, i in comments
+                    tr
+                      td
+                        .span12
+                          ul.chat-box.timeline
+                            li.arrow-box-left.gray
+                              .avatar
+                                - var faceIcon = row.user&&row.user.faceIcon? row.user.faceIcon : '';
+                                img.avatar-small(src= imageRoot +  faceIcon)
+                              .info
+                                span.name
+                                  - if(row.commentType==='评价')
+                                    span.label.label-green= row.commentType
+                                  - else if(row.commentType==='咨询')
+                                    span.label.label-blue= row.commentType
+                                  - else
+                                    span.label.label-purple= row.commentType
+                                  strong.indent= row.user&&row.user.userName?row.user.userName:'游客'
+                                  | 评论星级:
+                                  strong= row.rating&&row.rating>0?row.rating:'未评'
+                                span.time
+                                  i.icon-time
+                                  span= row.createdAt
+                              .content
+                                blockquote= row.content
+
+        .box.closable-chat-box(style="display: none;")
+          .box-content.padded
+            .fields
+              .avatar
+                img.avatar-small(src= webRoot_href + '/images/default-face.png')
+              ul
+                li
+                  b
+                    | 添加评论
+                    a(href='#') Core Admin
+                li.note Click on the textarea below to expand it!
+            form.fill-up(action='/')
+              .chat-message-box(style='margin-bottom:15px')
+                textarea(name='ttt', rows='5', placeholder='添加一条评论 (点击发送!)',style='height:auto')
+              div
+                span.note An optional note can go here
+                .pull-right.faded-toolbar
+                  a.btn.btn-blue.btn-mini(href='#') 发送
+
+
+block scripts
+  script
+    $('#storeListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除该条记录?')) {
+        window.location.href = this.href;
+      }
+    });

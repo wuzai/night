@@ -1,0 +1,136 @@
+extends ../partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 新闻资讯
+          h5
+            = newsType=='hotNews'?'热点新闻内容':'时尚新闻内容'
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            = newsType=='hotNews'?'热点新闻列表':'时尚新闻列表'
+          span.breadcrumb-arrow
+            span
+  #newsInfoListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title
+            = newsType=='hotNews'?'热点新闻信息':'时尚新闻信息'
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 新闻标题
+                  th
+                    div 来源
+                  th
+                    div 发布日期
+                  th
+                    div 操作
+              tbody
+                each row, i in newsInfos
+                  tr
+                    td(width="10%",align="center")
+                      div= i+1
+                    td(width="50%")
+                      div= row.title
+                    td(width="15%",align="center")
+                      div= row.source
+                    td(width="15%",align="center")
+                      div= row.createdAt ? row.createdAt : '----'
+                    td(width="10%",align="center")
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="编辑", href= webRoot_wehere +'/newsInfo/editNewsInfo?newsInfoId='+row._id+'&newsType='+newsType)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/newsInfo/newsInfoDelete?newsInfoId='+row._id+'&newsType='+newsType)
+                            i.icon-trash
+
+          .box-footer.padded
+            span.pull-right
+              button.btn.btn-blue.btn-small(href="#addNewsInfoDialog",data-toggle="modal")
+                = newsType=='hotNews'?'新增热点新闻信息':'新增时尚新闻信息'
+
+  #addNewsInfoDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 750px; margin-left: -375px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3
+        = newsType=='hotNews'?'填写热点新闻内容':'填写时尚新闻内容'
+    .modal-body
+      .box-content.padded
+        form.separate-sections(method="post", action= webRoot_wehere +'/newsInfo/addNewsInfoSave',enctype='multipart/form-data')
+          input(type='hidden',name='newsType', value= newsType)
+          .control-group
+            label.control-label 标题
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='title', placeholder='标题')
+          .control-group
+            label.control-label 副标题
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='subhead', placeholder='副标题')
+          .control-group
+            label.control-label 来源
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='source', placeholder='来源')
+          .control-group
+            label.control-label 新闻内容
+            textarea#editor_id(name='content', style='width:700px;height:300px;',placeholder='请输入新闻内容')
+          .control-group
+            span 展示图片
+            .controls
+              input(type='file',name='postImage', style='width:200px')
+              span 为了图片显示效果最佳,建议选择图片尺寸为320*330
+    .modal-footer
+      button.btn.btn-primary 保存
+      button.btn(style='color: #333333',aria-hidden='true',data-dismiss='modal')
+        | 关闭
+
+block scripts
+  script
+    $('#newsInfoListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除该条记录?')) {
+        window.location.href = this.href;
+      }
+    });
+    KindEditor.ready(function(K) {
+      var webRoot_href = $("#webRoot_href").val();
+      window.editor = K.create('#editor_content',{
+          cssPath: webRoot_href + '/kindeditor/css/kindeditor-iframe.css',
+          uploadJson : webRoot_href + '/kindEditor/nodeJs/upload_json.js?dir=image'
+        }
+      );
+      K('#addNewsInfoDialog .modal-footer button.btn-primary').click(function(e) {
+        editor.sync();
+        var title = $("#addNewsInfoDialog .control-group input[name='title']").val();
+        if(!title.trim()){
+          alert("标题不能为空.");
+          return false;
+        }
+        $("#addNewsInfoDialog form.separate-sections").submit();
+      });
+    });

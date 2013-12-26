@@ -1,0 +1,149 @@
+!!! 5
+html(lang="zh-cn")
+  title 兑换贝客积分
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #point-memberToUserDiv.container.mainbody
+      input.param.merchantId(type='hidden',value= merchantId)
+      input.param.FromUserName(type='hidden',value= FromUserName)
+      input.param.userId(type='hidden',value= userId)
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          .box-content
+            .row-fluid
+              .pull-left(style='width:30%;')
+                - var image = merchant.logoImage?merchant.logoImage.imageUrl:''
+                img.top-pic1(src= imageRoot + image)
+              .pull-left(style='width:30%; margin:0 5%;')
+                - if(merchant.rate && Number(merchant.rate) && merchant.rate > 0)
+                  img.top-pic2(src='/images/exchange.png')
+                - else
+                  img.top-pic2(src='/images/exchange_stop.png')
+              .pull-right(style='width:30%;')
+                img.top-pic1(src= imageRoot + param.imageUrl)
+            .submit-point.box(style='border:none; background:none;box-shadow:none;')
+              input.memberId(type='hidden',value= param.memberId)
+              input.memberPoint(type='hidden',value= param.memberPoint)
+              input.rate(type='hidden',value= merchant.rate)
+              input.maxChangePoint(type='hidden',value= param.maxChangePoint)
+              .row-fluid
+                .box-content.padded5(style='margin-bottom:20px; ')
+                  - if(merchant.rate && Number(merchant.rate) && merchant.rate > 0)
+                    .row-fluid
+                      h5(style='color:#336')
+                        i.icon-sort
+                        | 温馨提示（积分兑换说明）
+                      .zh-title.bordertb
+                        | 积分兑换率：
+                        strong= merchant.rate
+                        | 会员积分=
+                        strong.red 1
+                        | 贝壳积分
+                    .zh-content
+                      h5
+                        i.icon-sort
+                        | 积分兑换说明
+                      .zh-content2= merchant.rateExplain?merchant.rateExplain:'暂无兑换说明'
+                  - else
+                    .row-fluid
+                      h5(style='color:#336')
+                        i.icon-sort
+                        | 该商户不支持积分兑换功能
+                .box.padded5
+                  .row-fluid
+                    .hyjfzz-title.pull-left
+                      span.pull-left.text-center.hyjfzz 我的会员积分
+                      span.pull-left.text-center.hyjfzz2
+                        strong= param.memberPoint
+                    .pull-left.zh-hr
+                    .hyjfzz-title.pull-left
+                      span.pull-left.text-center.hyjfzz 我的贝客积分
+                      span.pull-left.text-center.hyjfzz2
+                        strong= param.userPoint
+                .box.padded10
+                  .row-fluid
+                    - if(merchant.rate && Number(merchant.rate) && merchant.rate > 0)
+                      .hyjfzz-title.pull-left
+                        p.messageLog.text-warning= "【最多可兑换" + param.maxChangePoint + "贝客积分】"
+                        span.pull-left.text-center.hyjfzz
+                          .input-prepend
+                            input.point-input(type='number',min='0',max= param.maxChangePoint, onpaste="return false", placeholder='请输入要兑换的贝客积分数量')
+                        .pull-left.hyjfzz-title2
+                          button.exchange.btn.btn-large.btn-block.btn-primary.btn-blue(type='button', style='margin-bottom:0; margin-top:20px;')
+                            i.icon-hand-right.font-size24
+                              strong 兑 换
+                    - else
+                      button.disabled.btn.btn-large.btn-block.btn-primary.btn-blue(type='button', style='margin-bottom:0; margin-top:20px;')
+                        i.icon-hand-right.font-size24
+                          strong 该商户不支持积分兑换功能
+
+
+  include partials/footer
+  include partials/foot
+  script
+    $("#point-memberToUserDiv div.submit-point input.point-input").keyup(function(){
+      var point = $("#point-memberToUserDiv div.submit-point input.point-input").val();
+      var rate = $("#point-memberToUserDiv div.submit-point input.rate").val();
+      var maxChangePoint = $("#point-memberToUserDiv div.submit-point input.maxChangePoint").val();
+      var memberPoint = $("#point-memberToUserDiv div.submit-point input.memberPoint").val();
+      if(isInteger(point) && Number(point)){
+        if(Number(point) >= 0){
+          var changePoint = Number(rate)*Number(point);//需要的会员积分
+          if(Number(changePoint)<=Number(memberPoint)){
+            var text = "【最多可兑换" + maxChangePoint + "贝客积分】 " + point + " 贝客积分需要 " + changePoint + " 会员积分 "
+            $("#point-memberToUserDiv div.submit-point p.messageLog").text(text);
+          }else{
+            var text = "【最多可兑换" + maxChangePoint + "贝客积分】 " + "您没有足够的会员积分";
+            $("#point-memberToUserDiv div.submit-point p.messageLog").text(text);
+            return false;
+          }
+        }else{
+          $("#point-memberToUserDiv div.submit-point p.messageLog").text('输入积分必须大于0.');
+          return false;
+        }
+      }else{
+        $("#point-memberToUserDiv div.submit-point p.messageLog").text('输入积分不是整数，或积分为0.');
+        return false;
+      }
+    });
+
+    var merchantId = $("#point-memberToUserDiv input.param.merchantId").val();
+    var FromUserName = $("#point-memberToUserDiv input.param.FromUserName").val();
+    var userId = $("#point-memberToUserDiv input.param.userId").val();
+    $("#point-memberToUserDiv div.submit-point button.exchange").click(function(){
+      var point = $("#point-memberToUserDiv div.submit-point input.point-input").val();
+      var rate = $("#point-memberToUserDiv div.submit-point input.rate").val();
+      var maxChangePoint = $("#point-memberToUserDiv div.submit-point input.maxChangePoint").val();
+      var memberPoint = $("#point-memberToUserDiv div.submit-point input.memberPoint").val();
+      if(isInteger(point) && Number(point)){
+        if(Number(point) >= 0){
+          var changePoint = Number(rate)*Number(point);//需要的会员积分
+          if(Number(changePoint)<=Number(memberPoint)){
+            var webRoot_weixinapp = $("#webRoot_weixinapp").val();
+            var memberId = $("#point-memberToUserDiv div.submit-point input.memberId").val();
+            var params = {memberId:memberId,point:point};
+            $.getJSON(webRoot_weixinapp + '/memberPointToUser',params,function(data,status){
+              if(data&&data.status===200){
+                alert("积分兑换成功.");
+                window.location.href = webRoot_weixinapp + '/openMyPointPage?merchantId='+merchantId+'&FromUserName='+FromUserName + '&userId='+userId;
+              }else{
+                if(data&&data.error){
+                  alert(data.error);
+                  return false;
+                }
+              }
+            });
+          }else{
+            alert('您没有足够的会员积分.');
+            return false;
+          }
+        }else{
+          alert('输入积分必须大于0.');
+          return false;
+        }
+      }else{
+        alert('输入积分不是整数，或积分为0.');
+        return false;
+      }
+    });

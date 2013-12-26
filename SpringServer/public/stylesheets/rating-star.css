@@ -1,0 +1,25 @@
+
+/* rating-star box */
+#rating-star .fl{float:left;display:inline;}
+#rating-star .s_name{float:left;display:block;width:60px;text-align:right;}
+#rating-star .star_ul{background:url(../images/star.png) no-repeat 0 -150px;width:132px;z-index:10;position:relative;height:25px;}
+#rating-star .star_ul li{float:left;margin-right:1px;width:25px;height:25px;}
+#rating-star .star_ul li a{display:block;height:25px;position:absolute;left:0;top:0;text-indent:-999em;}
+#rating-star .star_ul li .active-star{background:url(../images/star.png) no-repeat;}
+#rating-star .star_ul li .one-star{width:25px;background-position:0 -120px;z-index:50;}
+#rating-star .star_ul li .two-star{width:51px;background-position:0 -90px;z-index:40;}
+#rating-star .star_ul li .three-star{width:79px;background-position:0 -60px;z-index:30;}
+#rating-star .star_ul li .four-star{width:105px;background-position:0 -30px;z-index:20;}
+#rating-star .star_ul li .five-star{width:129px;margin-right:0;background-position:0 0;z-index:10;}
+#rating-star .s_result{padding:6px 0 0 5px;}
+
+#rating-star .square_ul{background:url(../images/star.png) no-repeat 0 -222px;width:146px;z-index:10;position:relative;height:20px;}
+#rating-star .square_ul li{float:left;margin-right:1px;width:29px;height:20px;}
+#rating-star .square_ul li a{display:block;height:20px;position:absolute;left:0;top:0;text-indent:-999em;}
+#rating-star .square_ul li .active-square{background:url(../images/star.png) no-repeat;}
+#rating-star .square_ul li .square-1{width:29px;background-position:0 -243px;z-index:50;}
+#rating-star .square_ul li .square-2{width:58px;background-position:0 -264px;z-index:40;}
+#rating-star .square_ul li .square-3{width:87px;background-position:0 -285px;z-index:30;}
+#rating-star .square_ul li .square-4{width:116px;background-position:0 -306px;z-index:20;}
+#rating-star .square_ul li .square-5{width:145px;margin-right:0;background-position:0 -327px;z-index:10;}
+#rating-star .s_result_square{padding:4px 0 0 9px;}

@@ -1,0 +1,90 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 活动信息修改
+          h5
+            | 修改活动的详细信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  活动列表
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  修改信息
+          span.breadcrumb-arrow
+            span
+  #advertisementEdit.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title= advertisement.advertisementName
+          .box-content
+            form.form-horizontal.fill-up(method="post", action= webRoot_wehere +'/advertisement/editAdvertisementSave',enctype='multipart/form-data')
+              input(type='hidden',name='advertisementId', value= advertisement._id)
+              .padded
+                .control-group
+                  label.control-label 活动标题
+                  .controls
+                    input(type='text',name='title', placeholder='活动标题',value= advertisement.title)
+                .control-group
+                  label.control-label 活动内容
+                  .controls
+                    textarea#editor_content(name='content', style='width:700px;height:300px;',placeholder='请输入活动内容')= advertisement.content
+                .control-group.postImage
+                  .controls
+                    - var postImage = advertisement.postImage?advertisement.postImage.imageUrl:'';
+                    img.img-polaroid.img-rounded(src= imageRoot + postImage,width='220px',height='220px')
+                .control-group
+                  label.control-label 活动海报图
+                  .controls
+                    input(type='file',name='postImage', style='padding-left: 45px;width:300px')
+                    span 为了图片显示效果最佳,建议选择图片尺寸为320*330
+              .form-actions
+                button.btn.btn-blue(type='button') 提交
+                button.btn.btn-default(type='button') 返回
+
+block scripts
+  script
+    $("#advertisementEdit .control-group input[name='postImage']").change(function(){
+      $("#advertisementEdit .control-group.postImage").hide();
+    });
+    var webRoot = $("#webRoot_wehere").val();
+    $("#advertisementEdit .form-actions button.btn-default").click(function(){
+      window.location.href = webRoot +'/advertisement';
+    });
+    KindEditor.ready(function(K) {
+      var webRoot_href = $("#webRoot_href").val();
+      window.editor = K.create('#editor_content',{
+          cssPath: webRoot_href + '/kindeditor/css/kindeditor-iframe.css',
+          uploadJson : webRoot_href + '/kindEditor/nodeJs/upload_json.js?dir=image'
+        }
+      );
+      K('#advertisementEdit .form-actions button.btn-blue').click(function(e) {
+        editor.sync();
+        var title = $("#advertisementEdit .control-group input[name='title']").val();
+        if(!title.trim()){
+          alert("活动名称不能为空.");
+          return false;
+        }
+        $("#advertisementEdit form.form-horizontal").submit();
+      });
+    });

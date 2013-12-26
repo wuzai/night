@@ -1,0 +1,99 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-shopping-cart
+            | 资源供需信息修改
+          h5
+            | 修改资源供需的详细信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-shopping-cart
+            |  资源供需列表
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  修改信息
+          span.breadcrumb-arrow
+            span
+  #supplyDemandEdit.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title= supplyDemand.title
+            ul.box-toolbar
+              li
+                span.label.label-green= supplyDemand.type + "信息"
+          .box-content
+            form.form-horizontal.fill-up(method="post", action= webRoot_wehere +'/merchant/supplyDemandEditSave',enctype='multipart/form-data')
+              input(type='hidden',name='supplyDemandId', value= supplyDemand._id)
+              .padded
+                .control-group
+                  label.control-label 产品标题
+                  .controls
+                    input(type='text',name='title', placeholder='产品标题,即资源供需标题',value= supplyDemand.title)
+                .control-group
+                  label.control-label 描述信息
+                  .controls
+                    textarea#editorSupplyDemand_content(name='description', style='width:700px;height:300px;',placeholder='资源供需描述信息')= supplyDemand.description
+                .control-group
+                  ul.inline
+                    li
+                      label.control-label 活动开始日期
+                      .controls
+                        input.input-xlarge.datepicker(type='text', data-date-format='yyyy-mm-dd',name='fromDate', placeholder='资源供需信息开始日期',value= supplyDemand.fromDate)
+                    li
+                      label.control-label 活动结束日期
+                      .controls
+                        input.input-xlarge.datepicker(type='text', data-date-format='yyyy-mm-dd',name='toDate', placeholder='资源供需信息结束日期',value= supplyDemand.toDate)
+
+
+              .form-actions
+                button.btn.btn-blue(type='button') 提交
+                button.btn.btn-default(type='button') 返回
+
+block scripts
+  script
+    var webRoot = $("#webRoot_wehere").val();
+    $("#supplyDemandEdit .form-actions button.btn-default").click(function(){
+      window.location.href = webRoot +'/merchant/supplyDemandList';
+    });
+    KindEditor.ready(function(K) {
+      var webRoot_href = $("#webRoot_href").val();
+      window.editor = K.create('#editor_content',{
+          cssPath: webRoot_href + '/kindeditor/css/kindeditor-iframe.css',
+          uploadJson : webRoot_href + '/kindEditor/nodeJs/upload_json.js?dir=image'
+        }
+      );
+      K('#supplyDemandEdit .form-actions button.btn-blue').click(function(e) {
+        editor.sync();
+        var title = $("#supplyDemandEdit form.form-horizontal input[name='title']").val();
+        if(!title.trim()){
+          alert("资源供需标题不能为空.");
+          return false;
+        }
+        var fromDate = $("#supplyDemandEdit .control-group input[name='fromDate']").val();
+        var toDate = $("#supplyDemandEdit .control-group input[name='toDate']").val();
+        if(fromDate && toDate && new Date(fromDate) > new Date(toDate)){
+          alert("活动开始日期不能小于结束日期.");
+          return false;
+        }
+        $("#supplyDemandEdit form.form-horizontal").submit();
+      });
+    });

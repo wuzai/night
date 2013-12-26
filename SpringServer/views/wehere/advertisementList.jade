@@ -1,0 +1,118 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户活动
+          h5
+            | 商户发布的活动列表信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  活动列表
+          span.breadcrumb-arrow
+            span
+  #advertisementListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 活动信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 活动标题
+                  th
+                    div 活动发布时间
+                  th
+                    div 操作
+              tbody
+                each row, i in advertisements
+                  tr
+                    td(width="15%",align="center")
+                      div= i+1
+                    td
+                      div= row.title
+                    td(width="20%",align="center")
+                      div= row.createdAt
+                    td(width="15%",align="center")
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="编辑", href= webRoot_wehere +'/advertisement/editAdvertisement?advertisementId='+row._id)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/advertisement/advertisementDelete?advertisementId='+row._id)
+                            i.icon-trash
+
+          .box-footer.padded
+            span.pull-right
+              button.btn.btn-blue.btn-small(href="#addAdvertisementDialog",data-toggle="modal")
+                | 新增活动
+
+  #addAdvertisementDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 750px; margin-left: -375px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 填写活动信息
+    .modal-body
+      .box-content.padded
+        form.separate-sections(method="post", action= webRoot_wehere +'/advertisement/addAdvertisementSave',enctype='multipart/form-data')
+          input(type='hidden',name='merchantId', value= merchantId)
+          .control-group
+            label.control-label 活动标题
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='title', placeholder='活动标题')
+          .control-group
+            label.control-label 活动内容
+            textarea#editor_id(name='content', style='width:700px;height:300px;',placeholder='请输入活动内容')
+          .control-group
+            span 活动海报图
+            .controls
+              input(type='file',name='postImage', style='width:200px')
+              span 为了图片显示效果最佳,建议选择图片尺寸为320*330
+    .modal-footer
+      button.btn.btn-primary 保存
+      button.btn(style='color: #333333',aria-hidden='true',data-dismiss='modal')
+        | 关闭
+
+block scripts
+  script
+    $('#advertisementListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除该条记录?')) {
+        window.location.href = this.href;
+      }
+    });
+    KindEditor.ready(function(K) {
+      var webRoot_href = $("#webRoot_href").val();
+      window.editor = K.create('#editor_content',{
+          cssPath: webRoot_href + '/kindeditor/css/kindeditor-iframe.css',
+          uploadJson : webRoot_href + '/kindEditor/nodeJs/upload_json.js?dir=image'
+        }
+      );
+      K('#addAdvertisementDialog .modal-footer button.btn-primary').click(function(e) {
+        editor.sync();
+        var title = $("#addAdvertisementDialog .control-group input[name='title']").val();
+        if(!title.trim()){
+          alert("活动名称不能为空.");
+          return false;
+        }
+        $("#addAdvertisementDialog form.separate-sections").submit();
+      });
+    });

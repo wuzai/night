@@ -1,0 +1,200 @@
+!!! 5
+html(lang="zh-cn")
+  include partials/head
+  body
+    include partials/header
+    input#locationUpdateTime(type='hidden',value= locationUpdateTime)
+    .main-content
+      .container-fluid
+        .row-fluid
+          .area-top.clearfix
+            .pull-left.header
+              h3.title
+                i.icon-dashboard
+                | 商户信息修改
+              h5
+                | 修改商户的详细信息
+      .container-fluid.padded
+        !=messages()
+        .row-fluid
+          #breadcrumbs
+            .breadcrumb-button.blue
+              span.breadcrumb-label
+                i.icon-home
+                | 首页
+              span.breadcrumb-arrow
+                span
+            .breadcrumb-button
+              span.breadcrumb-label
+                i.icon-dashboard
+                |  商户详情
+              span.breadcrumb-arrow
+                span
+            .breadcrumb-button
+              span.breadcrumb-label
+                i.icon-dashboard
+                |  修改信息
+              span.breadcrumb-arrow
+                span
+      #merchantEdit.container-fluid.padded
+        .row-fluid
+          .span12
+            .box
+              .box-header
+                span.title= merchant.merchantName
+              .box-content
+                form.form-horizontal.fill-up(method="post", action= webRoot_wehere +'/merchant/editSave',enctype='multipart/form-data')
+                  input(type='hidden',name='merchantId', value= merchant._id)
+                  .padded
+                    .control-group
+                      label.control-label 商户名称
+                      .controls
+                        input(type='text',name='merchantName', placeholder='商户名称',value= merchant.merchantName)
+                    .control-group
+                      label.control-label 商户类型
+                      .controls
+                        select(name='merchantType',style='width:50%')
+                          each type in merchantTypeList
+                            - if(merchant.merchantType === type)
+                              option(value= type,selected='true')= type
+                            - else
+                              option(value= type)= type
+                    .control-group
+                      label.control-label 描述信息
+                      .controls
+                        textarea(name='description', rows='3',style='width: 100%;',placeholder='商户描述信息')= merchant.description
+                    .control-group.customerPhone
+                      label.control-label 客服电话
+                      .controls
+                        input(type='text',name='customerPhone', placeholder='客服电话',value= merchant.customerPhone)
+                    .control-group
+                      label.control-label 负责人电话
+                      .controls
+                        input(type='text',name='telPrincipalValue', placeholder='负责人电话',value= merchant.telPrincipal?merchant.telPrincipal.value:'')
+                    .control-group
+                      div
+                        label.control-label(style="margin-right:15px") 是否公开负责人电话
+                      .switch(data-on="danger", data-off="warning",data-on-label="公开",data-off-label="不公开")
+                        - if(merchant.telPrincipal&&merchant.telPrincipal.isPublic)
+                          input(type="checkbox", name="isPublicTel",checked)
+                        - else
+                          input(type="checkbox", name="isPublicTel")
+                    .control-group
+                      label.control-label 商户网站
+                      .controls
+                        input(type='text',name='webSite', placeholder='商户网站',value= merchant.webSite)
+                    .control-group.selectorAddress
+                      label.control-label 商户地址
+                      .controls
+                        select#selectProvince(name='province',style='width:30%',init= merchant.location?merchant.location.province:'')
+                          option 数据加载中...
+                        select#selectCity(name='city',style='width:30%;display:none',init= merchant.location?merchant.location.city:'')
+                        select#selectArea(name='area',style='width:30%;display:none',init= merchant.location?merchant.location.area:'')
+                    .control-group
+                      label.control-label 地区街道
+                      .controls
+                        input(type='text',name='street', placeholder='地区街道',value= merchant.location?merchant.location.street:'')
+                    .control-group
+                      label.control-label 地址位置其他描述
+                      .controls
+                        input(type='text',name='relevantText', placeholder='地址位置其他描述',value= merchant.location?merchant.location.relevantText:'')
+                    .control-group
+                      label.control-label 经度
+                      .controls
+                        input(type='text',name='longitude', placeholder='经度(经度范围:-180.00000---180.00000)',value= merchant.location?merchant.location.longitude:'')
+                    .control-group
+                      label.control-label 纬度
+                      .controls
+                        input(type='text',name='latitude', placeholder='纬度(纬度范围:-90.00000---90.00000)',value= merchant.location?merchant.location.latitude:'')
+                    .control-group
+                      label.control-label 商户介绍
+                      .controls
+                        textarea#editor_intro(name='intro', style='width:100%;height:300px;',placeholder='商户简介')= merchant.intro
+                    .control-group.logoImage
+                      .controls
+                        img.img-polaroid.img-rounded(src= imageRoot + merchant.logoImage,width='240px',height='150px')
+                    .control-group
+                      label.control-label 网站logo
+                      .controls
+                        input(type='file',name='logoImage', style='padding-left: 45px;width:50%')
+                        span 为了图片显示效果最佳,建议选择图片尺寸为320*200
+                    .control-group.postImage
+                      .controls
+                        - if(merchant.postImage&&merchant.postImage.length > 0)
+                          .span6
+                            #myCarousel.carousel.slide
+                              ol.carousel-indicators
+                                each row, i in merchant.postImage
+                                  - if (i==0)
+                                    li.active(data-target='#myCarousel', data-slide-to='#{i}')
+                                  - else
+                                    li(data-target='#myCarousel', data-slide-to='#{i}')
+                              .carousel-inner
+                                each row, i in merchant.postImage
+                                  - if(row)
+                                    - var c = i==0?'active':''
+                                    .item(class= c)
+                                      img(src= imageRoot + row.url, style='width:600px;height:350px',alt='')
+                                      a.deleteRedButtomImage.pull-right(href=webRoot_wehere +'/merchant/merchantDeleteImage?postImageId='+row._id+'&merchantId='+merchant._id,style="display:none;background:white;border:1px solid #000;margin-top: -16px;position:relative;")
+                                        i.icon-remove-sign(title='删除此图片',style="color:red")
+                              a.left.carousel-control(href='#myCarousel', data-slide='prev') ‹
+                              a.right.carousel-control(href='#myCarousel', data-slide='next') ›
+                    .control-group
+                      label.control-label 商户展示图
+                      .controls
+                        input(type='file',name='postImage', style='padding-left: 45px;width:50%')
+                        span 为了图片显示效果最佳,建议选择图片尺寸为320*330
+                  .form-actions
+                    button.btn.btn-blue(type='button') 提交
+                    button.btn.btn-default(type='button') 返回
+  include partials/foot
+  script(src= webRoot_href + "/javascripts/location.js")
+  script
+    $('#merchantEdit .customerPhone input').tagsInput({
+      width: '100%',
+      height: 'auto',
+      defaultText:'输入电话号码',
+      onAddTag:function(tag){
+        if(!isPhone(tag)){
+          alert('电话号码格式不正确.');
+          $(this).removeTag(tag);
+        }
+      }
+    });
+    $("#merchantEdit .control-group input[name='logoImage']").change(function(){
+      $("#merchantEdit .control-group.logoImage").hide();
+    });
+    var webRoot = $("#webRoot_wehere").val();
+    $("#merchantEdit .form-actions button.btn-default").click(function(){
+      window.location.href = webRoot +'/merchant/info';
+    });
+    $("#merchantEdit .form-actions button.btn-blue").click(function() {
+      var merchantName = $('#merchantEdit form.form-horizontal input[name="merchantName"]').val();
+      if(!merchantName.trim()){
+        alert("商户名称不能为空.");
+        return false;
+      }
+      var telPrincipal = $('#merchantEdit form.form-horizontal input[name="telPrincipalValue"]').val();
+      if(telPrincipal.trim()&&!isPhone(telPrincipal.trim())){
+        alert("请输入正确的负责人电话.");
+        return false;
+      }
+      var longitude =$('#merchantEdit form.form-horizontal input[name="longitude"]').val();
+      var mp =Number(longitude);
+      if(isNaN(mp)|| mp<-180 || mp>180){
+        alert("经度输入错误,请重新输入.");
+        return false;
+      }
+      var latitude = $('#merchantEdit form.form-horizontal input[name="latitude"]').val();
+      var np =Number(latitude.trim());
+      if(isNaN(np) || np<-90 || np>90){
+        alert("纬度输入错误,请重新输入.");
+        return false;
+      }
+      var webSite = $('#merchantEdit form.form-horizontal input[name="webSite"]').val();
+      if(webSite.trim()&&!isUrl(webSite.trim())){
+        alert("网站地址输入错误,请重新输入.");
+        return false;
+      }
+      $("#merchantEdit form.form-horizontal").submit();
+    });

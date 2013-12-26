@@ -1,0 +1,80 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户会员管理
+          h5
+            | 查看的管理商户会员
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  会员列表
+          span.breadcrumb-arrow
+            span
+  #storeListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 会员信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 会员号
+                  th
+                    div 会员电话
+                  th
+                    div 会员积分
+                  th
+                    div 会员状态
+                  th
+                    div 申请会员时间
+                  th
+                    div 操作
+              tbody
+                each row, i in members
+                  tr
+                    td
+                      div= i+1
+                    td
+                      div= row._id
+                    td
+                      div= row.user?row.user.userName:''
+                    td
+                      div= row.memberPoint?row.memberPoint:0
+                    td
+                      div= row.state==='0000-0000-0000'?'启用':'禁用'
+                    td
+                      div= row.createdAt
+                    td
+                      .btn-toolbar
+                        .btn-group
+                          - if(row.state==='0000-0000-0000')
+                            a.btn.btn-default(title="禁用", href= webRoot_wehere +'/merchant/memberDisEnabled?memberId='+row._id)
+                              | 禁用
+                          - else
+                            a.btn.btn-default(title="启用", href= webRoot_wehere +'/merchant/memberEnabled?memberId='+row._id)
+                              | 启用
+                          a.btn.btn-default(title="查看详情", href= webRoot_wehere +'/merchant/memberInfo?memberId='+row._id)
+                            | 详情
+
+
+block scripts
+  script

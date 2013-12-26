@@ -1,0 +1,94 @@
+extends ../partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户管理
+          h5
+            | 查看商户信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  商户列表
+          span.breadcrumb-arrow
+            span
+  #commentListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 商户列表
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 商户名
+                  th
+                    div 商户地址
+                  th
+                    div 商户状态
+                  th
+                    div 创建时间
+                  th
+                    div 操作
+              tbody
+                each row, i in merchants
+                  tr
+                    td(width="10%",align="center")
+                      = i+1
+                    td(width="35%")
+                      = row.merchantName
+                    td(width="20%")
+                      = row.address?row.address:'----'
+                    td(width="10%",align="center")
+                      = row.state=='0000-0000-1111'?'禁用':'启用'
+                    td(width="15%")
+                      = row.createdAt?row.createdAt:'----'
+                    td(width="10%",align="center")
+                      .btn-toolbar
+                        .btn-group
+                          - if(row.state=='0000-0000-0000')
+                            a.btn.btn-default.destroy_jy(title="禁用", href= webRoot_wehere +'/merchant/changeMerchantByState?merchantId='+row._id+'&merchantState=disable')
+                              i.icon-lock
+                          - else
+                            a.btn.btn-default.destroy_qy(title="启用", href= webRoot_wehere +'/merchant/changeMerchantByState?merchantId='+row._id+'&merchantState=enabled')
+                              i.icon-unlock
+                          a.btn.btn-default.destroy_sc(title="删除", href= webRoot_wehere +'/merchant/changeMerchantByState?merchantId='+row._id+'&merchantState=delete')
+                            i.icon-trash
+
+
+block scripts
+  script
+    $('#commentListDiv .destroy_sc').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除?')) {
+        window.location.href = this.href;
+      }
+    });
+    $('#commentListDiv .destroy_jy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要禁用?')) {
+        window.location.href = this.href;
+      }
+    });
+    $('#commentListDiv .destroy_qy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要启用?')) {
+        window.location.href = this.href;
+      }
+    });

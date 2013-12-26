@@ -1,0 +1,111 @@
+!!! 5
+html(lang="zh-cn")
+  title 商户活动详情
+  include partials/head
+  body
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container.mainbody
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          - var imagePic = advertisement.postImage?advertisement.postImage.imageUrl:''
+          - if(imagePic)
+            .box-content
+              .row-fluid
+                img.bagx-pic(src= imageRoot + imagePic)
+          - if(advertisement.videoUrl)
+            .box-content
+              .row-fluid
+                #jp_container.jp_video.jp-video(style="margin:10px auto;",url= advertisement.videoUrl)
+                  .jp-type-single
+                    #jquery_jplayer.jp_video.jp-jplayer(style="width:482px;")
+                    .jp-gui
+                      .jp-video-play
+                      .jp-interface
+                        .jp-progress
+                          .jp-seek-bar
+                            .jp-play-bar
+                        .jp-current-time
+                        .jp-duration
+                        .jp-title
+                          ul
+                            li= advertisement.title
+                        .jp-controls-holder
+                          ul.jp-controls
+                            li
+                              a.jp-play(href='javascript:;', tabindex='1', title='开始') play
+                            li
+                              a.jp-pause(href='javascript:;', tabindex='1', title='暂停') pause
+                            li
+                              a.jp-stop(href='javascript:;', tabindex='1', title='停止') stop
+                            li
+                              a.jp-mute(href='javascript:;', tabindex='1', title='静音') mute
+                            li
+                              a.jp-unmute(href='javascript:;', tabindex='1', title='取消静音') unmute
+                            li
+                              a.jp-volume-max(href='javascript:;', tabindex='1', title='最大音量') max volume
+                          .jp-volume-bar
+                            .jp-volume-bar-value
+                          ul.jp-toggles
+                            li
+                              a.jp-full-screen(href='javascript:;', tabindex='1', title='全屏模式') full screen
+                            li
+                              a.jp-restore-screen(href='javascript:;', tabindex='1', title='退出全屏模式') restore screen
+                            li
+                              a.jp-repeat(href='javascript:;', tabindex='1', title='循环播放') repeat
+                            li
+                              a.jp-repeat-off(href='javascript:;', tabindex='1', title='关闭循环播放') repeat off
+                    .jp-no-solution
+                      span Update Required
+                      | To play the media you will need to either update your browser to a recent version
+                      | or update your
+                      a(href='http://get.adobe.com/flashplayer/', target='_blank') Flash plugin
+                      | .
+
+          .box.padded5(style='margin-top:20px;')
+            .row-fluid
+              .shhdx-title.text-center
+                strong= advertisement.title
+              .box-content(style='margin-bottom:0;')
+                .row-fluid
+                  - if(advertisement.fromDate || advertisement.toDate)
+                    .box.padded5(style='margin-bottom:20px;')
+                      .row-fluid
+                        .shhdx-title.pull-left.text-center(style='margin-bottom:0;')
+                          - if(advertisement.fromDate)
+                            span.pull-left.width49
+                              | 活动开始日期：
+                              strong(style='color:#36C;')= advertisement.fromDate
+                          - if(advertisement.toDate)
+                            span.pull-right.width49
+                              | 活动结束日期：
+                              strong(style='color:#666;')= advertisement.toDate
+                  - if(advertisement.serviceItem)
+                    .box-content(style='margin-bottom:20px;')
+                      .row-fluid
+                        a.btn.btn-block.btn-warning(href= webRoot_weixinapp + '/openServiceItemInfo?pageNum=full&merchantId='+merchantId+ '&FromUserName='+ FromUserName+'&serviceItemId='+advertisement.serviceItem._id)
+                          i.icon-question-sign
+                          | 是否参加？
+                  - if(advertisement.content)
+                    .box.padded5
+                      .row-fluid
+                        .pull-left.duihuan3!= advertisement.content
+
+  include partials/footer
+  include partials/foot
+  link(rel="stylesheet", href= webRoot_href + "/3rd/jPlayer/skin/pink.flag/jplayer.pink.flag.css")
+  script(src= webRoot_href + "/3rd/jPlayer/jquery.jplayer.min.js")
+  script(src= webRoot_href + "/3rd/jPlayer/main.js")
+  script
+    $(document).ready(function(){
+      var url = $("#jp_container").attr('url');
+      if(url){
+        $("#jquery_jplayer.jp_video").jPlayer("setMedia",{
+          m4v:url,
+          ogv:url,
+          mp4:url,
+          webmv:url
+        });
+      }else{
+        $("#jp_container").hide();
+      }
+    });

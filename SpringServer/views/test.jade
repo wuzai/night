@@ -1,0 +1,50 @@
+!!! 5
+html(lang="zh-cn")
+  include ./wehere/partials/head
+  body
+    #storeImageView.container-fluid.padded
+      .row-fluid
+        .span2
+        .span4
+          .box
+            .box-content.padded
+              #myCarousel.carousel.slide
+                ol.carousel-indicators
+                  li(data-target='#myCarousel', data-slide-to='1')
+                .carousel-inner
+                  .item.active
+                    img(src= 'http://localhost:3001/fileServer/showImages?fileUrl=/sys/user/images/20131121/1385024886195_75f2feb13a7939e8.jpg', style='width:400px;height:250px',alt='')
+                    .carousel-caption
+                      p | xxxxxxxxx
+                  .item
+                    img(src= 'http://localhost:3001/fileServer/showImages?fileUrl=/sys/user/images/20131121/1385024886195_75f2feb13a7939e8.jpg', style='width:400px;height:250px',alt='')
+                    .carousel-caption
+                      p | xxxxxxxxx
+                a.left.carousel-control(href='#myCarousel', data-slide='prev') ‹
+                a.right.carousel-control(href='#myCarousel', data-slide='next') ›
+
+    #merchantEdit.container.padded
+      a.btn.btn-green(href='/api/v1/products?merchantId=529d31a1b72f7ad400000009', title='返回',style='color:white') 返回2
+      a.btn.btn-green(href='/api/v1/bulletins', title='返回',style='color:white') 返回1
+      .row-fluid
+        .span12
+          .box
+            .box-content
+              form.form-horizontal.fill-up(method="post", action= '/api/v1/followBulletins')
+                .padded
+
+                  .control-group
+                    label.control-label 内容
+                    .input-prepend
+                      span.add-on(href='#')
+                        i.icon-magic
+                      input(type='text',name='content', placeholder='内容')
+                  .control-group
+                .form-actions
+                  button.btn.btn-blue(type='button') 提交
+                  button.btn.btn-default(type='button') 返回
+  include ./wehere/partials/foot
+  script
+    $("#merchantEdit .form-actions button.btn-blue").click(function() {
+      $("#merchantEdit form.form-horizontal").submit();
+    });

@@ -1,0 +1,70 @@
+extends ../partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 帖子管理
+          h5
+            | 查看发布的帖子
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  帖子列表
+          span.breadcrumb-arrow
+            span
+  #productListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 帖子列表
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 标题
+                  th
+                    div 发帖人
+                  th
+                    div 操作
+              tbody
+                each row, i in bulletins
+                  tr
+                    td(width="15%",align="center")
+                      = i+1
+                    td(width="50%")
+                      = row.title
+                    td(width="20%",align="center")
+                      =row.user?(row.user.userName?row.user.userName:'----'):'----'
+                    td(width="15%",align="center")
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="查看跟帖", href= webRoot_wehere +'/message/followBulletinList?bulletinId='+row._id)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/message/bulletinDelete?bulletinId='+row._id)
+                            i.icon-trash
+
+
+block scripts
+  script
+    $('#productListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除?')) {
+        window.location.href = this.href;
+      }
+    });

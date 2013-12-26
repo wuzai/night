@@ -1,0 +1,93 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-legal
+            span 申领服务审核列表
+          h5
+            span 商户对用户的申领服务进行处理
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-legal
+            span 服务项目
+          span.breadcrumb-arrow
+            span
+  .container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 审核列表
+            ul.box-toolbar
+              li
+                a.btn.btn-warning.btn-small(title="刷新", href= webRoot_wehere +"/serviceAudit/serviceItemApply",style="color:white")
+                  i.icon-refresh
+                  |  刷 新
+          .box-content
+            table#serviceItemApply.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 会员号
+                  th
+                    div 用户名称
+                  th
+                    div 服务名称
+                  th
+                    div 服务类型
+                  th
+                    div 交易状态
+                  th
+                    div 审核
+              tbody
+                each row, i in sellRecords
+                  tr
+                    td= i+1
+                    td= row.member._id
+                    td= row.member.user?row.member.user.userName:''
+                    td= row.serviceItem.serviceItemName
+                    td
+                      - var type = row.serviceItem?row.serviceItem.serviceItemType:'';
+                      each row in serviceItemTypes
+                        - if(type === row.key)
+                          div= row.value
+                    td= row.process
+                    td
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="通过", href= webRoot_wehere +'/serviceAudit/serviceItemAuditPass?sellRecordId='+ row._id) 通过
+                          a.btn.btn-default(title="不通过", data-toggle="modal", href="#serviceItemAuditNoPassTxtDialog", ,onclick="openItemAuditNoPassTxtDialog('#{row._id}')") 不通过
+
+  #serviceItemAuditNoPassTxtDialog.modal.hide.wizard-modal.in(style='margin-top: -200px; width: 500px; margin-left: -275px; display: none;', aria-hidden='false')
+    form(method="get", action= webRoot_wehere +"/serviceAudit/serviceItemAuditNoPass")
+      .modal-header
+        button.close(type='button', data-dismiss='modal',aria-hidden='true') ×
+        h3 审核不通过理由
+      .modal-body.messageAlert
+        input.sellRecordId(type="hidden",name='sellRecordId')
+        textarea(name='noPassTxt', style='width:100%;height:100%;',placeholder='请输入审核不通过理由')
+      .modal-footer
+        button.btn.btn-default(data-dismiss="modal") 关 闭
+        button.btn.btn-blue(type="submit") 保存
+
+block scripts
+  script
+
+    function openItemAuditNoPassTxtDialog(sellRecordId){
+      $("#serviceItemAuditNoPassTxtDialog input.sellRecordId").val(sellRecordId);
+    }
+

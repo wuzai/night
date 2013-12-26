@@ -1,0 +1,162 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户门店
+          h5
+            | 商户的门店列表信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  门店列表
+          span.breadcrumb-arrow
+            span
+  #storeListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 门店信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 门店名称
+                  th
+                    div 负责人电话
+                  th
+                    div 门店地址
+                  th
+                    div 门店创建时间
+                  th
+                    div 操作
+              tbody
+                each row, i in stores
+                  tr
+                    td
+                      div= i+1
+                    td
+                      div= row.storeName
+                    td
+                      - if(row.isPublicTel)
+                        div.text-info(title='已公开')= row.telephone
+                      - else
+                        div.muted(title='未公开')= row.telephone
+                    td
+                      div= row.address
+                    td
+                      div= row.createdAt
+                    td
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="编辑", href= webRoot_wehere +'/merchant/storeEdit?storeId='+row._id)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/merchant/storeDelete?storeId='+row._id)
+                            i.icon-trash
+
+          .box-footer.padded
+            span.pull-right
+              button.btn.btn-blue.btn-small(href="#addStoreDialog",data-toggle="modal")
+                | 新增门店
+
+  #addStoreDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 750px; margin-left: -375px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 填写门店信息
+    .modal-body
+      .box-content.padded
+        form.separate-sections(method="post", action= webRoot_wehere +'/merchant/addStore',enctype='multipart/form-data')
+          input(type='hidden',name='merchantId', value= merchantId)
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-sitemap
+            input(type='text',name='storeName', placeholder='门店名称')
+          .control-group
+            label.control-label 描述信息：
+            textarea(name='description', rows='3',style='width: 100%;',placeholder='门店描述信息')
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-heart
+            input(type='text',name='slogan', placeholder='门店标语或宣传语')
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-phone
+            input(type='text',name='telephone', placeholder='门店负责人电话')
+          .control-group
+            span 是否公开负责人电话
+            .switch(data-on="danger", data-off="warning",data-on-label="公开",data-off-label="不公开")
+              input(type="checkbox", name="isPublicTel")
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-globe
+            input(type='text',name='address', placeholder='门店地址')
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-align-left
+            input(type='text',name='longitude', placeholder='经度(经度范围:-180.00000---180.00000)')
+          .input-prepend
+            span.add-on(href='#')
+              i.icon-align-right
+            input(type='text',name='latitude', placeholder='纬度(纬度范围:-90.00000---90.00000)')
+          .control-group
+            label.control-label 坐标描述：
+            textarea(name='relevantText', rows='3',style='width: 100%;',placeholder='地理位置的相关描述信息')
+          .control-group
+            label.control-label 门店图标：
+            .controls
+              input(type='file',name='vipImage', style='width:50%;')
+              span 为了图片显示效果最佳,建议选择图片尺寸为320*200
+
+    .modal-footer
+      button.btn.btn-primary 保存
+      button.btn(style='color: #333333',aria-hidden='true',data-dismiss='modal') 关 闭
+
+block scripts
+  script
+    $("#addStoreDialog .modal-footer button.btn-primary").click(function(){
+      var storeName = $("#addStoreDialog form.separate-sections input[name='storeName']").val();
+      if(!storeName.trim()){
+        alert("门店名称不能为空.");
+        return false;
+      }
+      var telephone = $("#addStoreDialog form.separate-sections input[name='telephone']").val();
+      if(telephone.trim()&&!isPhone(telephone.trim())){
+        alert("门店电话输入错误,请重新输入.");
+        return false;
+      }
+      var longitude = $("#addStoreDialog form.separate-sections input[name='longitude']").val();
+      var mp =Number(longitude.trim());
+      if(isNaN(mp) || mp<-180 || mp>180){
+        alert("经度输入错误,请重新输入.");
+        return false;
+      }
+      var latitude = $("#addStoreDialog form.separate-sections input[name='latitude']").val();
+      var np =Number(latitude.trim());
+      if(isNaN(np) || np<-90 || np>90){
+        alert("纬度输入错误,请重新输入.");
+        return false;
+      }
+      $("#addStoreDialog form.separate-sections").submit();
+    });
+    $('#storeListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除该条记录?')) {
+        window.location.href = this.href;
+      }
+    });

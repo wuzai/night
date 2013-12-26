@@ -1,0 +1,174 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 服务指南
+          h5
+            | 查看产品信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  产品列表
+          span.breadcrumb-arrow
+            span
+  #productListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 产品信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 产品
+                  th
+                    div 单价（元）
+                  th
+                    div 优惠价（元）
+                  th
+                    div 类型
+                  th
+                    div 操作
+              tbody
+                - if(products)
+                  each row, i in products
+                    tr
+                      td(width="10%",align="center")
+                        = i+1
+                      td(width="30%")
+                        = row.title
+                      td(width="15%",align="center")
+                        = row.originalPrice?row.originalPrice:'----'
+                      td(width="15%",align="center")
+                        = row.privilegePrice?row.privilegePrice:'----'
+                      td(width="20%",align="center")
+                        = row.productType?row.productType.title:'----'
+                      td(width="10%",align="center")
+                        .btn-toolbar
+                          .btn-group
+                            a.btn.btn-default(title="编辑", href= webRoot_wehere +'/club/editProduct?productId='+row._id)
+                              i.icon-edit
+                            a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/club/productDelete?productId='+row._id)
+                              i.icon-trash
+          .box-footer.padded
+            span.pull-right
+              button.btn.btn-blue.btn-small(href="#addProductDialog",data-toggle="modal")
+                | 新增产品
+
+  #addProductDialog.modal.hide.wizard-modal.in(style='margin-top: -239px; width: 750px; margin-left: -375px; display: none;', aria-hidden='false')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 填写产品信息
+    .modal-body
+      .box-content.padded
+        form.separate-sections(method="post", action= webRoot_wehere +'/club/addProductSave',enctype='multipart/form-data')
+          input(type='hidden',name='merchantId', value= merchantId)
+          .control-group
+            label.control-label 名称
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='title', placeholder='产品名称')
+          .control-group
+            div(style='font-size:14px; display:inline-block;')
+              span 类型
+              select.input-xlarge(name="productTypeId")
+                option(value) ---请选择产品所属类型---
+                each row in productTypes
+                  option(value= row._id)= row.title
+          .control-group
+            label.control-label 单价（元）
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='originalPrice', placeholder='单价 （小数点后最多两位）')
+          .control-group
+            label.control-label 优惠价（元）
+            .input-prepend
+              span.add-on(href='#')
+                i.icon-magic
+              input(type='text',name='privilegePrice', placeholder='优惠价 （小数点后最多两位）')
+          .control-group
+            label.control-label 产品介绍
+            textarea#editor_content(name='intro', style='width:670px;height:300px;',placeholder='请输入介绍内容')
+          .control-group
+            span 产品展示图
+            #zjzstId.controls
+              input.one(type='file',name='imageView', style='width:200px')
+            span 为了图片显示效果最佳,建议选择图片尺寸为320*330
+    .modal-footer
+      button.btn.btn-primary 保存
+      button.btn.btn-default(aria-hidden='true',data-dismiss='modal')
+        | 关闭
+//      button.btn.btn-default.zjzst
+//        | 增加展示图
+//      button.btn.btn-default.jszst
+//        | 减少展示图
+
+block scripts
+  script
+    $('#addProductDialog .modal-footer button.btn.zjzst').on('click',function(e){
+      var inputZjzst =$("<input type='file' name='imageView' style='width:200px' />");
+      $("#zjzstId").append(inputZjzst);
+    });
+    $('#addProductDialog .modal-footer button.btn.jszst').on('click',function(e){
+      var inputJszst =$('#zjzstId input[name="imageView"]:last');
+      if(!inputJszst.hasClass('one')){
+        inputJszst.remove();
+      }
+    });
+    $('#productListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除?')) {
+        window.location.href = this.href;
+      }
+    });
+    KindEditor.ready(function(K) {
+      var webRoot_href = $("#webRoot_href").val();
+      window.editor = K.create('#editor_content',{
+          cssPath: webRoot_href + '/kindeditor/css/kindeditor-iframe.css',
+          uploadJson : webRoot_href + '/kindEditor/nodeJs/upload_json.js?dir=image'
+        }
+      );
+      K('#addProductDialog .modal-footer button.btn-primary').click(function(e) {
+        editor.sync();
+        var title = $("#addProductDialog .control-group input[name='title']").val();
+        if(!title.trim()){
+          alert("产品名称不能为空.");
+          return false;
+        }
+        var productTypeId = $("#addProductDialog .control-group select[name='productTypeId']").val();
+        //if(!productTypeId.trim()){
+        //  alert("请选择产品所属类型.");
+        //  return false;
+       // }
+        var originalPrice = $('#addProductDialog .control-group input[name="originalPrice"]').val();
+        if(originalPrice&&!isPrice(originalPrice)){
+          alert("请输入正确价格！");
+          return false;
+        }
+        var privilegePrice = $('#addProductDialog .control-group input[name="privilegePrice"]').val();
+        if(privilegePrice&&!isPrice(privilegePrice)){
+          alert("请输入正确价格！");
+          return false;
+        }
+        $("#addProductDialog form.separate-sections").submit();
+      });
+    });

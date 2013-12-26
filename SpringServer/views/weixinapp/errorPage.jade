@@ -1,0 +1,18 @@
+extends partials/default
+
+block PageContent
+  .container.mainBody
+    .row-fluid
+      .span8.offset2
+        .error-box
+          .message-small Whoa! What are you doing here?
+          .message-big= error.status
+          .message-small= error.error
+          div(style='margin-top: 50px')
+            a.btn.btn-blue(href= webRoot_weixinapp )
+              i.icon-arrow-left
+              | 返回
+
+  include partials/footer
+  include partials/foot
+  script

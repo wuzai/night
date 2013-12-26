@@ -1,0 +1,480 @@
+.xchart {
+  .line {
+    stroke-width: 3px;
+    fill: none
+  }
+  .fill {
+    stroke-width: 0
+  }
+  circle {
+    stroke: #FFF;
+    stroke-width: 3px
+  }
+  .axis {
+    .domain {
+      fill: none
+    }
+    .tick {
+      stroke: #EEE;
+      stroke-width: 1px
+    }
+    text {
+      font-family: Helvetica, Arial, Verdana, sans-serif;
+      fill: #666;
+      font-size: 12px
+    }
+  }
+  .color0 {
+    .line {
+      stroke: #3880aa
+    }
+    rect, circle {
+      fill: #3880aa
+    }
+    .fill {
+      fill: rgba(56, 128, 170, 0.1)
+    }
+  }
+  .color0.comp {
+    .line {
+      stroke: #89bbd8
+    }
+    rect {
+      fill: #89bbd8
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #89bbd8
+    }
+  }
+  .color1 {
+    .line {
+      stroke: #4da944
+    }
+    rect, circle {
+      fill: #4da944
+    }
+    .fill {
+      fill: rgba(77, 169, 68, 0.1)
+    }
+  }
+  .color1.comp {
+    .line {
+      stroke: #9dd597
+    }
+    rect {
+      fill: #9dd597
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #9dd597
+    }
+  }
+  .color2 {
+    .line {
+      stroke: #f26522
+    }
+    rect, circle {
+      fill: #f26522
+    }
+    .fill {
+      fill: rgba(242, 101, 34, 0.1)
+    }
+  }
+  .color2.comp {
+    .line {
+      stroke: #f9b99a
+    }
+    rect {
+      fill: #f9b99a
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #f9b99a
+    }
+  }
+  .color3 {
+    .line {
+      stroke: #c6080d
+    }
+    rect, circle {
+      fill: #c6080d
+    }
+    .fill {
+      fill: rgba(198, 8, 13, 0.1)
+    }
+  }
+  .color3.comp {
+    .line {
+      stroke: #f8555a
+    }
+    rect {
+      fill: #f8555a
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #f8555a
+    }
+  }
+  .color4 {
+    .line {
+      stroke: #672d8b
+    }
+    rect, circle {
+      fill: #672d8b
+    }
+    .fill {
+      fill: rgba(103, 45, 139, 0.1)
+    }
+  }
+  .color4.comp {
+    .line {
+      stroke: #a869ce
+    }
+    rect {
+      fill: #a869ce
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #a869ce
+    }
+  }
+  .color5 {
+    .line {
+      stroke: #ce1797
+    }
+    rect, circle {
+      fill: #ce1797
+    }
+    .fill {
+      fill: rgba(206, 23, 151, 0.1)
+    }
+  }
+  .color5.comp {
+    .line {
+      stroke: #f075cb
+    }
+    rect {
+      fill: #f075cb
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #f075cb
+    }
+  }
+  .color6 {
+    .line {
+      stroke: #d9ce00
+    }
+    rect, circle {
+      fill: #d9ce00
+    }
+    .fill {
+      fill: rgba(217, 206, 0, 0.1)
+    }
+  }
+  .color6.comp {
+    .line {
+      stroke: #fff75a
+    }
+    rect {
+      fill: #fff75a
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #fff75a
+    }
+  }
+  .color7 {
+    .line {
+      stroke: #754c24
+    }
+    rect, circle {
+      fill: #754c24
+    }
+    .fill {
+      fill: rgba(117, 76, 36, 0.1)
+    }
+  }
+  .color7.comp {
+    .line {
+      stroke: #c98c50
+    }
+    rect {
+      fill: #c98c50
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #c98c50
+    }
+  }
+  .color8 {
+    .line {
+      stroke: #2eb9b4
+    }
+    rect, circle {
+      fill: #2eb9b4
+    }
+    .fill {
+      fill: rgba(46, 185, 180, 0.1)
+    }
+  }
+  .color8.comp {
+    .line {
+      stroke: #86e1de
+    }
+    rect {
+      fill: #86e1de
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #86e1de
+    }
+  }
+  .color9 {
+    .line {
+      stroke: #0e2e42
+    }
+    rect, circle {
+      fill: #0e2e42
+    }
+    .fill {
+      fill: rgba(14, 46, 66, 0.1)
+    }
+  }
+  .color9.comp {
+    .line {
+      stroke: #2477ab
+    }
+    rect {
+      fill: #2477ab
+    }
+    .fill {
+      display: none
+    }
+    circle, .pointer {
+      fill: #2477ab
+    }
+  }
+}
+
+.ex-tooltip {
+  position: absolute;
+  background: #EEE;
+  @include border-radius(3px);
+  padding: 5px;
+  @include box-shadow(0 1px 3px #000);
+  border-collapse: separate;
+  display: none
+}
+
+.justgage {
+  width: 200px;
+  height: 160px;
+  display: inline-block
+}
+
+.justgage.small {
+  width: 90px;
+  height: 70px
+}
+
+.easyPieChart {
+  position: relative;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0
+  }
+}
+
+.easyPieChart.easy-pie-chart-small {
+  font-size: 10px
+}
+
+.sparkline-box {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  .sparkline {
+    margin-top: 8px;
+    display: inline-block;
+    vertical-align: top;
+    height: 30px
+  }
+  .big {
+    width: 83px;
+    height: 30px
+  }
+  .sparkline-row {
+    *zoom: 1;
+    text-align: center;
+    padding: 0;
+    padding-right: 15px;
+    float: left;
+    border-right: 1px dotted #aaa;
+    border-left: 1px dotted #fff;
+    &:before, &:after {
+      display: table;
+      content: "";
+      line-height: 0
+    }
+    &:after {
+      clear: both
+    }
+    &:last-child {
+      border-right: none
+    }
+    :first-child {
+      border-left: none
+    }
+  }
+  h4 {
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+    min-width: 70px;
+    span {
+      color: #717e88;
+      font-size: 12px;
+      display: block;
+      text-align: center;
+      font-weight: 400
+    }
+  }
+  h4.red {
+    color: #c75d5d
+  }
+
+  h4.orange {
+    color: #ff9f01
+  }
+
+  h4.blue {
+    color: #6e97aa
+  }
+
+  h4.gray {
+    color: #6b787f
+  }
+
+  h4.green {
+    color: #8fae53
+  }
+
+  h4.dark-green {
+    color: #779148
+  }
+}
+
+.sparkline-box.side {
+  .sparkline {
+    margin-top: 5px
+  }
+  .sparkline-row {
+    padding: 0;
+    float: none;
+    border: none
+  }
+  h4 {
+    margin-right: 20px;
+    min-width: 70px;
+    text-shadow: none;
+    span {
+      color: inherit
+    }
+  }
+}
+
+.arrow-box-left {
+  position: relative;
+  background: #fafeff;
+  border: 1px solid #b5cdd7;
+  @include box-sizing(content-box);
+  @include box-shadow(0 1px 3px -1px rgba(0, 0, 0, 0.1));
+  &:after, &:before {
+    right: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none
+  }
+  &:after {
+    border-right-color: #fafeff;
+    border-width: 6px;
+    top: 7px
+  }
+  &:before {
+    border-right-color: #b5cdd7;
+    border-width: 7px;
+    top: 6px
+  }
+
+}
+
+.arrow-box-left.gray {
+  background: none;
+  border-color: #d8d8d8;
+  &:before {
+    border-right-color: #d8d8d8
+  }
+}
+
+.arrow-box-right {
+  position: relative;
+  background: #fafeff;
+  border: 1px solid #b5cdd7;
+  @include box-sizing(content-box);
+  @include box-shadow(0 1px 3px -1px rgba(0, 0, 0, 0.1));
+  &:after, &:before {
+    left: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none
+  }
+  &:after {
+    border-left-color: #fafeff;
+    border-width: 6px;
+    top: 7px
+  }
+  &:before {
+    border-left-color: #b5cdd7;
+    border-width: 7px;
+    top: 6px
+  }
+}
+
+.arrow-box-right.gray {
+  background: none;
+  border-color: #d8d8d8;
+  &:before {
+    border-left-color: #d8d8d8
+  }
+}

@@ -1,0 +1,50 @@
+!!! 5
+html(lang="zh-cn")
+  title 我的积分
+  include partials/head
+  body(style="background:none;padding-top: 10px;")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #myPointPageDiv.container.mainbody
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          .box-content
+            .row-fluid
+              img.jifen-pic(src= imageRoot + '/sys/web/images/rule3.png')
+          .box(style='border:none; background:none;box-shadow:none;')
+            .row-fluid
+              .box.padded5(style='margin-bottom:20px;')
+                .row-fluid
+                  .jifen-title.text-center(style='color:#AE000D;')
+                    strong 我的积分
+              .box.padded5
+                .row-fluid
+                  .jifen-title.pull-left
+                    a(href= webRoot_weixinapp + '/openPointHistoryList?type=member&merchantId='+merchantId+'&FromUserName='+FromUserName+'&userId='+userId)
+                      .pull-left(style='width:49%;')
+                        span.pull-left.text-center.jifen 我的会员积分
+                        span.pull-left.text-center.jifen2
+                          strong= param.memberPoint
+                    .pull-right.width49
+                      a.btn.btn-large.btn-block.btn-primary(href= webRoot_weixinapp + '/openMemberToMember?merchantId='+merchantId+'&FromUserName='+FromUserName+'&userId='+userId, style='margin-bottom:0;')
+                        i.icon-hand-right
+                        | 转赠积分
+              .box.padded5
+                .row-fluid
+                  .jifen-title.pull-left
+                    a(href= webRoot_weixinapp + '/openPointHistoryList?type=user&merchantId='+merchantId+'&FromUserName='+FromUserName+'&userId='+userId)
+                      .pull-left(style='width:49%;')
+                        span.pull-left.text-center.jifen 我的贝客积分
+                        span.pull-left.text-center.jifen2
+                          strong= param.userPoint
+                    .pull-right.width49
+                      a.btn-large.btn-block.btn.btn-info(href= webRoot_weixinapp + '/openUserToUser?merchantId='+merchantId+'&FromUserName='+FromUserName+'&userId='+userId, style='margin-bottom:0;')
+                        i.icon-hand-right
+                        | 转赠积分
+              hr
+              .box(style='border:none; background:none;box-shadow:none;')
+                a.btn.btn-block.btn-inverse.btn-large(href= webRoot_weixinapp + '/openMemberToUser?merchantId='+merchantId+'&FromUserName='+FromUserName+'&userId='+userId)
+                  i.icon-hand-right  兑换贝客积分
+
+  include partials/footer
+  include partials/foot
+

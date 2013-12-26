@@ -1,0 +1,142 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 服务项目
+          h5
+            | 商户的服务项目列表信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  服务列表
+          span.breadcrumb-arrow
+            span
+  #serviceItemListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 服务项目信息
+            ul.box-toolbar
+              li
+                a.btn.btn-warning.btn-small(title="刷新", href= webRoot_wehere +"/service/serviceItemList",style="color:white")
+                 i.icon-refresh
+                 |  刷 新
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 服务名称
+                  th
+                    div 服务类型
+                  th
+                    div 服务开始日期
+                  th
+                    div 服务结束日期
+                  th
+                    div 创建时间
+                  th
+                    div 操作
+              tbody
+                each row, i in serviceItems
+                  tr
+                    td
+                      div= i+1
+                    td
+                      div= row.serviceItemName
+                    td
+                      - var type = row.serviceItemType;
+                      each row in serviceItemTypes
+                        - if(type === row.key)
+                          div= row.value
+                    td
+                      div= row.fromDate ? row.fromDate : '---'
+                    td
+                      div= row.toDate ? row.toDate : '---'
+                    td
+                      div= row.createdAt
+                    td
+                      .btn-toolbar
+                        .btn-group
+                          a.btn.btn-default(title="编辑", href= webRoot_wehere +'/service/serviceItemEdit?serviceItemId='+row._id)
+                            i.icon-edit
+                          a.btn.btn-default.destroy(title="删除", href= webRoot_wehere +'/service/serviceItemDelete?serviceItemId='+row._id)
+                            i.icon-trash
+                          a.btn.btn-default(title="选择可用门店",data-toggle="modal", href="#chooseUsableStoresDialog",onclick="openUsableStoresDialog('#{row._id}')") 选择可用门店
+
+          .box-footer.padded
+            span.pull-right
+              a.btn.btn-blue.btn-small(title="新增服务", href= webRoot_wehere +'/service/openServiceItemAddPage',style="color:white")
+                | 新增服务
+
+  #chooseUsableStoresDialog.modal.hide.fade(style="width:30%")
+    form.form-horizontal(method="post", action= webRoot_wehere + "/service/usableStoresSave")
+      input.serviceItemId(type="hidden",name="serviceItemId")
+      .modal-header
+        button.close(type="button", data-dismiss="modal")
+        h6 选择可用门店
+      .modal-body
+        // Multiple Checkboxes
+      .modal-footer
+        button.btn.btn-default(data-dismiss="modal") 关 闭
+        button.btn.btn-blue(type="submit") 保存
+
+block scripts
+  script
+    $('#serviceItemListDiv .destroy').on('click', function (e) {
+      e.preventDefault();
+      if (confirm('确定要删除该条记录?')) {
+        window.location.href = this.href;
+      }
+    });
+    function openUsableStoresDialog(serviceItemId){
+      var webRoot = $("#webRoot_wehere").val();
+      $("#chooseUsableStoresDialog input.serviceItemId").val(serviceItemId);
+      $.getJSON(webRoot + '/service/findStoresByServiceItemId',{serviceItemId:serviceItemId},function(data,status){
+        var div = $("#chooseUsableStoresDialog .modal-body");
+        div.empty();
+        function openAlertDiv(div){
+          if(!div.find("div.alert").hasClass("alert")){
+            var alertDiv = $("<div/>").addClass("alert");
+            alertDiv.append($("<button type='button' data-dismiss='modal' />").addClass("close").text("×"));
+            alertDiv.append($("<strong/>").text("警告! ")).append($("<span/>").text("没有可选的门店"));
+            div.append(alertDiv);
+          }
+        }
+        if(data&&data.status===200){
+          var stores = data.stores;
+          if(stores.length > 0){
+            for(var i in stores){
+              var store = stores[i];
+              var option = $("<label/>").addClass("checkbox");
+              var input =  $("<input type='checkbox' name='usableStores' />").val(store._id);
+              if(store.selected){
+                input =  $("<input type='checkbox' name='usableStores' checked='true' />").val(store._id);
+              }
+              option.append(input).append($("<span/>").text(store.storeName));
+              div.append(option);
+            }
+          }else{
+            openAlertDiv(div);
+          }
+        }else{
+          openAlertDiv(div);
+        }
+      });
+    }

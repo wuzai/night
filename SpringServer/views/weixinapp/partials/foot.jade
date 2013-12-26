@@ -1,0 +1,23 @@
+.ex-tooltip
+#galleryOverlay(style='display: none;')
+  #gallerySlider
+  a#prevArrow
+    i.icon-angle-left.icon-4x
+  a#nextArrow
+    i.icon-angle-right.icon-4x
+
+script(src= webRoot_href + "/javascripts/jquery.min.js")
+script(type="text/javascript")
+  var ENV = {'FORCE_JQUERY':true};
+  window.jQuery || document.write('<script src= webRoot_href + "/javascripts/jquery.min.js"><\/script>')
+
+script(src= webRoot_href + "/javascripts/bootstrap.min.js")
+script(src= webRoot_href + "/3rd/switch/bootstrap-switch.js")
+script(src= webRoot_href + "/3rd/iCheck/jquery.icheck.min.js")
+script(src= webRoot_href + "/3rd/buttons/buttons.js")
+script(src= webRoot_href + "/javascripts/rating-star.js")
+
+script(src= webRoot_href + "/javascripts/main-weixinapp.js")
+
+block scripts
+//custom scripts.

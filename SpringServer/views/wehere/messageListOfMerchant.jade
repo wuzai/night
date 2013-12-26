@@ -1,0 +1,64 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户信息
+          h5
+            | 发送给商户的信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  商户信息
+          span.breadcrumb-arrow
+            span
+
+  #messageListOfMerchantDiv.container-fluid.padded
+    .row-fluid
+      - if(messageSendRecords.length<1)
+        .alert.alert-block
+          h4 暂时没有消息
+      - else
+        .span12
+          .box
+            .box-header
+              span.title 商户信息
+            .box-content
+              table.dTable.responsive
+                thead(style='display:none')
+                  tr
+                    th
+                tbody
+                  each row, i in messageSendRecords
+                    tr
+                      td
+                        .span12
+                          ul.chat-box.timeline
+                            li.arrow-box-left.gray
+                              .avatar
+                                img.avatar-small(src= imageRoot +  row.iconImage)
+                              .info
+                                span.name
+                                  strong.indent= row.title
+                                span.time
+                                  i.icon-time
+                                  span= row.sentTime
+                              .content
+                                blockquote= row.content
+
+
+block scripts
+  script

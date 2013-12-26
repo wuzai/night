@@ -1,0 +1,90 @@
+!!! 5
+html(lang="zh-cn")
+  title 转赠会员积分
+  include partials/head
+  body
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    #point-memberToMemberDiv.container.mainbody
+      input.param.merchantId(type='hidden',value= merchantId)
+      input.param.FromUserName(type='hidden',value= FromUserName)
+      input.param.userId(type='hidden',value= userId)
+      .row-fluid
+        .box.padded10(style='border:none; background:none;box-shadow:none;')
+          .box-content
+            .row-fluid
+              - var image = merchant.logoImage?merchant.logoImage.imageUrl:''
+              img.hyjfzz-pic(src= imageRoot + image)
+          .submit-point.box(style='border:none; background:none;box-shadow:none;')
+            input.memberId(type='hidden',value= param.memberId)
+            input.memberPoint(type='hidden',value= param.memberPoint)
+            .row-fluid
+              .box-content.padded5(style='margin-bottom:20px; ')
+                .row-fluid
+                  h5(style='color:#336')
+                    i.icon-sort
+                    | 会员积分转赠说明
+                  .hyjfzz-title.bordertb= merchant.largessExplain?merchant.largessExplain:"暂无转赠说明"
+              .box.padded5
+                .row-fluid
+                  .hyjfzz-title.pull-left
+                    span.pull-left.text-center.hyjfzz 我的会员积分
+                    span.pull-left.text-center.hyjfzz2
+                      strong= param.memberPoint
+              .box.padded10
+                .row-fluid
+                  .hyjfzz-title.pull-left
+                    span.pull-left.text-center.hyjfzz
+                      .input-prepend(style=' margin-bottom:20px;')
+                        input.telephone-input(type='text', placeholder='请输入对方手机号码')
+                      .input-prepend(style=' margin-bottom:20px;')
+                        input.point-input(type='number',min="0", placeholder='请输入转赠对方积分数量')
+                    .pull-left.hyjfzz-title2
+                      button.largess.btn.btn-large.btn-block.btn-primary.btn-blue(type='button', style='margin-bottom:0;')
+                        i.icon-hand-right.font-size24
+                          strong 转 赠
+
+  include partials/footer
+  include partials/foot
+  script
+    var merchantId = $("#point-memberToMemberDiv input.param.merchantId").val();
+    var FromUserName = $("#point-memberToMemberDiv input.param.FromUserName").val();
+    var userId = $("#point-memberToMemberDiv input.param.userId").val();
+    $("#point-memberToMemberDiv div.submit-point button.largess").click(function(){
+      var telephone = $("#point-memberToMemberDiv div.submit-point input.telephone-input").val();
+      var point = $("#point-memberToMemberDiv div.submit-point input.point-input").val();
+      var memberPoint = $("#point-memberToMemberDiv div.submit-point input.memberPoint").val();
+      if(telephone&&telephone.trim()){
+        if(isTelephone(telephone)){
+          if(isInteger(point) && Number(point) >= 0){
+            if(Number(point)<=Number(memberPoint)){
+              var webRoot_weixinapp = $("#webRoot_weixinapp").val();
+              var memberId = $("#point-memberToMemberDiv div.submit-point input.memberId").val();
+              var params = {fromMemberId:memberId,point:point,toUserName:telephone};
+              $.getJSON(webRoot_weixinapp + '/memberPointToMember',params,function(data,status){
+                if(data&&data.status===200){
+                  alert("会员积分转赠成功.");
+                  window.location.href = webRoot_weixinapp + '/openMyPointPage?merchantId='+merchantId+'&FromUserName='+FromUserName + '&userId='+userId;
+                }else{
+                  if(data&&data.error){
+                    alert(data.error);
+                    return false;
+                  }
+                }
+              });
+            }else{
+              alert('您输入的积分数不足.');
+              return false;
+            }
+          }else{
+             alert('输入积分不是整数，或积分小于0.');
+             return false;
+          }
+        }else{
+          alert("电话号码输入有误.");
+          return false;
+        }
+      }else{
+        alert("电话号码必须输入.");
+        return false;
+      }
+    });

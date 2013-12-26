@@ -1,0 +1,44 @@
+!!! 5
+html(lang="zh-cn")
+  title 商户门店
+  include partials/head
+  body(style="background:none")
+    input(type='hidden',id='webRoot_weixinapp',value= webRoot_weixinapp)
+    .container.mainbody.padded5
+      .row-fluid
+        - var len = stores.length;
+        - if(len < 1)
+          .alert.alert-block
+            h4 暂时没有相关门店信息
+        - for (var i = 0; i < len; i++)
+          - var store = stores[i];
+          if(store)
+            .box.padded5
+              .box-content
+                .box-content(style='border-bottom:1px dotted #ccc; padding:5px 0; margin-bottom:5px;')
+                  .row-fluid
+                    .shengluehao.mendian-title.pull-left
+                      strong= store.storeName
+                .box-content
+                  .row-fluid
+                    a(href= webRoot_weixinapp + '/openStoreInfo?merchantId='+merchantId+ '&FromUserName='+ FromUserName+'&storeId='+store._id)
+                      img.mendian-pic(src= imageRoot + store.vipImage)
+                  - if(store.slogan)
+                    .mendian-content.shengluehao
+                      strong= store.slogan
+                  .mendian-bottom
+                    - if(store.isPublicTel&&store.telephone)
+                      - var tel = "tel:" + store.telephone;
+                      a(href= tel)
+                        .telephone2
+                          i.icon-phone-sign
+                          span= store.telephone
+                    - if(store.address)
+                      a(href="http://api.map.baidu.com/geocoder?location="+store.location.latitude+","+store.location.longitude+"&coord_type=bd09ll&output=html&src=yourAppName")
+                        .address2
+                          i.icon-spin.icon-spinner(style='color:#ff0000')
+                          span= store.address
+
+
+  include partials/footer
+  include partials/foot

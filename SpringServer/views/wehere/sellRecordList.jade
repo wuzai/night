@@ -1,0 +1,74 @@
+extends partials/default
+block PageContent
+  .container-fluid
+    .row-fluid
+      .area-top.clearfix
+        .pull-left.header
+          h3.title
+            i.icon-dashboard
+            | 商户销售记录
+          h5
+            | 商户的销售记录列表信息
+  .container-fluid.padded
+    !=messages()
+    .row-fluid
+      #breadcrumbs
+        .breadcrumb-button.blue
+          span.breadcrumb-label
+            i.icon-home
+            | 首页
+          span.breadcrumb-arrow
+            span
+        .breadcrumb-button
+          span.breadcrumb-label
+            i.icon-dashboard
+            |  销售列表
+          span.breadcrumb-arrow
+            span
+  #storeListDiv.container-fluid.padded
+    .row-fluid
+      .span12
+        .box
+          .box-header
+            span.title 销售信息
+          .box-content
+            table.dTable.responsive
+              thead
+                tr
+                  th #
+                  th
+                    div 销售的服务项目
+                  th
+                    div 购买者
+                  th
+                    div 服务类型
+                  th
+                    div 销售状态
+                  th
+                    div 销售是否完成
+                  th
+                    div 销售时间
+              tbody
+                each row, i in sellRecords
+                  tr
+                    td
+                      div= i+1
+                    td
+                      div= row.serviceItem?row.serviceItem.serviceItemName:''
+                    td
+                      div= row.user?row.user.userName:''
+                    td
+                      - var type = row.serviceItem?row.serviceItem.serviceItemType:'';
+                      each row in serviceItemTypes
+                        - if(type === row.key)
+                          div= row.value
+                    td
+                      div= row.process
+                    td
+                      div= row.isSucceed
+                    td
+                      div= row.createdAt
+
+
+block scripts
+  script
